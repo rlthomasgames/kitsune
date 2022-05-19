@@ -1,5 +1,5 @@
 {
-  "name": "kitsune-library",
+  "name": "kitsune-wrapper-library",
   "version": "0.0.1",
   "description": "Initial setup for a shared library",
   "main": "dist/index.js",
