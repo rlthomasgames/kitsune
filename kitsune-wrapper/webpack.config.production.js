@@ -20,7 +20,11 @@ const moduleEntries = {
         import: 'kitsune-wrapper-library',
         dependOn: ['shared']
     },
-    shared: ['lodash', 'inversify', 'reflect-metadata'],
+    lodash: 'lodash',
+    shared: {
+        import: ['inversify', 'reflect-metadata'],
+        dependOn: ['lodash']
+    }
 };
 module.exports = {
     mode: 'development',
@@ -52,12 +56,13 @@ module.exports = {
     plugins: [
         new HtmlWebpackPlugin({
             template: 'src/index.html',
-            chunks: ['shared', 'kwl', 'index', 'wrapper']
+            chunks: ['shared', 'kwl', 'index', 'wrapper', 'lodash']
         }),
         new CopyPlugin({
             patterns: [
                 { from: 'assets/logo.png', to: 'assets/logo.png' },
                 { from: 'config/wrapper.json', to: 'config/wrapper.json' },
+                { from: '../kitsune.ico', to: 'favicon.ico' },
             ],
         }),
         new BundleAnalyzerPlugin({
@@ -92,7 +97,7 @@ const packageMinified = () => {
     const entries = Object.keys(moduleEntries);
     const includedMinified = ['main.js'];
     entries.forEach((name) => {
-        if (String(moduleEntries[name].import).includes('/modules/') || name === 'shared' || name === 'kwl'|| name === 'wrapper') {
+        if (String(moduleEntries[name].import).includes('/modules/') || name === 'shared' || name === 'kwl'|| name === 'wrapper' || name === 'lodash') {
             includedMinified.push(`modules/${name}.js`);
         }
     });
