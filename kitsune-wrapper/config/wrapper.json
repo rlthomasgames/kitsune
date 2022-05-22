@@ -1,0 +1,9 @@
+{
+  "version": 12,
+  "language": "en-US",
+  "gameConfig": "i win",
+  "layout": {
+    "name": "layout1"
+  },
+  "modules": []
+}
