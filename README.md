@@ -14,10 +14,13 @@ git clone https://github.com/rlthomasgames/kitsune.git
 ```
 
 Contains:
+````
 kitsune-wrapper           :  the wrapper
-kitsune-wrapper-library   :  the shared library
-kitsune-wrapper-examples  :  coming soon
 
+kitsune-wrapper-library   :  the shared library
+
+kitsune-wrapper-examples  :  coming soon
+````
 
 # Further reading
 
