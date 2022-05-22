@@ -1,5 +1,4 @@
-# Kitsune Wrapper
-
+<h1><img height="64px" src="./kitsune.ico" width="64px"/> Kitsune Wrapper</h1>
 Kitsune Wrapper  -  investigation into a simple modular wrapper for use with applications and games, 
 includes seperated extensions which can be optionally requested and utilized by app developers.
 To help speed up writing repetitive code for application bootstrap, connecting services, and general 
