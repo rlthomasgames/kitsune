@@ -1,8 +1,8 @@
 import {sayHello, sayGoodbye} from 'kitsune-wrapper-library';
-import Command from 'kitsune-wrapper-library/dist/base/interfaces/Command';
 import * as _ from 'lodash';
 import container from "./core/ioc/ioc_mapping";
 import CoreState from "./core/constants/CoreState";
+import Command from "kitsune-wrapper-library/dist/base/interfaces/Command";
 
 function init() {
     const element = document.createElement('div');

@@ -1,13 +1,11 @@
 {
-  "name": "libconsumer",
-  "version": "2.0.0",
+  "name": "kitsune-wrapper",
+  "version": "1.0.0",
   "description": "",
-  "main": "index.Ts",
+  "main": "index.ts",
   "scripts": {
     "test": "npx ts-node somefile",
-    "doitall": "npm i && npm run --prefix ../kitsune-wrapper-library build && npm link ../kitsune-wrapper-library",
     "linklib": "npm run --prefix ../kitsune-wrapper-library build && npm link ../kitsune-wrapper-library",
-    "install-beta": "npm install kitsune-wrapper-library@beta --save",
     "install-lib": "npm install kitsune-wrapper-library --save",
     "build": "webpack --mode=production",
     "watch": "webpack --watch",
@@ -17,6 +15,7 @@
   "license": "ISC",
   "dependencies": {
     "inversify": "^6.0.1",
+    "kitsune-wrapper-library": "^0.0.3",
     "reflect-metadata": "^0.1.13"
   },
   "devDependencies": {

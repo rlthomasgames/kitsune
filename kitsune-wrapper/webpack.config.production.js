@@ -10,7 +10,7 @@ const TerserPlugin = require("terser-webpack-plugin");
 const moduleEntries = {
     index: {
         import: './src/index.ts',
-        dependOn: ['lodash']
+        dependOn: ['lodash', 'inversify', 'kwl']
     },
     lodash: 'lodash',
     inversify: 'inversify',
