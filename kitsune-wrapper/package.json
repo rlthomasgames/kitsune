@@ -7,13 +7,19 @@
     "test": "npx ts-node somefile",
     "linklib": "npm run --prefix ../kitsune-wrapper-library build && npm link ../kitsune-wrapper-library",
     "install-lib": "npm install kitsune-wrapper-library --save",
+    "clean": "rmdir /s dist",
     "build": "webpack --mode=production",
     "watch": "webpack --watch",
-    "start": "webpack serve --mode=production --stats-error-details"
+    "start": "webpack serve --mode=production --stats-error-details",
+    "cb": "npm run clean && npm run build"
   },
   "author": "",
   "license": "ISC",
+  "browser": {
+    "[module-name]": false
+  },
   "dependencies": {
+    "lodash": "^4.17.21",
     "inversify": "^6.0.1",
     "kitsune-wrapper-library": "^0.0.3",
     "reflect-metadata": "^0.1.13"
@@ -22,7 +28,6 @@
     "@types/lodash": "^4.14.181",
     "copy-webpack-plugin": "^10.2.4",
     "html-webpack-plugin": "^5.5.0",
-    "lodash": "^4.17.21",
     "terser-webpack-plugin": "^5.3.1",
     "ts-loader": "^9.2.8",
     "ts-node": "^9.1.1",

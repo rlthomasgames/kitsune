@@ -10,17 +10,23 @@ const TerserPlugin = require("terser-webpack-plugin");
 const moduleEntries = {
     index: {
         import: './src/index.ts',
-        dependOn: ['lodash', 'inversify', 'kwl']
+        dependOn: ['wrapper']
     },
-    lodash: 'lodash',
-    inversify: 'inversify',
-    kwl: 'kitsune-wrapper-library'
+    wrapper: {
+        import: './src/core/Wrapper.ts',
+        dependOn: ['shared', 'kwl']
+    },
+    kwl: {
+        import: 'kitsune-wrapper-library',
+        dependOn: ['shared']
+    },
+    shared: ['lodash', 'inversify', 'reflect-metadata'],
 };
 module.exports = {
     mode: 'development',
     entry: moduleEntries,
     devtool: 'inline-source-map',
-    watch: true,
+    watch: false,
     devServer: {
         static: './dist',
     },
@@ -45,7 +51,8 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: 'src/index.html'
+            template: 'src/index.html',
+            chunks: ['shared', 'kwl', 'index', 'wrapper']
         }),
         new CopyPlugin({
             patterns: [
@@ -64,7 +71,10 @@ module.exports = {
         filename: (pathData) => {
             switch (pathData.chunk.name) {
                 case 'index':
-                    return 'index.js';
+                    return 'main.js';
+                    break;
+                case 'wrapper':
+                    return 'wrapper.js';
                     break;
                 default:
                     return 'modules/[name].js';
@@ -80,9 +90,9 @@ module.exports = {
 };
 const packageMinified = () => {
     const entries = Object.keys(moduleEntries);
-    const includedMinified = ['wrapper.js'];
+    const includedMinified = ['main.js'];
     entries.forEach((name) => {
-        if (String(moduleEntries[name].import).includes('/modules/')) {
+        if (String(moduleEntries[name].import).includes('/modules/') || name === 'shared' || name === 'kwl'|| name === 'wrapper') {
             includedMinified.push(`modules/${name}.js`);
         }
     });
