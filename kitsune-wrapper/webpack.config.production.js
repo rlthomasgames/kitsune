@@ -9,12 +9,12 @@ const TerserPlugin = require("terser-webpack-plugin");
 /*============================================*/
 const moduleEntries = {
     index: {
-        import: './src/index.ts',
+        import: './index.ts',
         dependOn: ['wrapper']
     },
     wrapper: {
-        import: './src/core/Wrapper.ts',
-        dependOn: ['shared', 'kwl']
+        import: './core/Wrapper.ts',
+        dependOn: ['shared', 'kwl'],
     },
     kwl: {
         import: 'kitsune-wrapper-library',
@@ -24,6 +24,10 @@ const moduleEntries = {
     shared: {
         import: ['inversify', 'reflect-metadata'],
         dependOn: ['lodash']
+    },
+    helloWorldExtension: {
+        import: './extensions/HelloWorldExtension.ts',
+        dependOn: ['shared', 'kwl'],
     }
 };
 module.exports = {
@@ -34,8 +38,8 @@ module.exports = {
     devServer: {
         static: './dist',
     },
-    externalsPresets: { node: false }, // in order to ignore built-in modules like path, fs, etc.
-    externals: [], // in order to ignore all modules in node_modules folder
+    externalsPresets: { node: false }, // in order to ignore built-in extensions like path, fs, etc.
+    externals: [], // in order to ignore all extensions in node_modules folder
     module: {
         rules: [
             {
@@ -55,14 +59,14 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: 'src/index.html',
+            template: './index.html',
             chunks: ['shared', 'kwl', 'index', 'wrapper', 'lodash']
         }),
         new CopyPlugin({
             patterns: [
-                { from: 'assets/logo.png', to: 'assets/logo.png' },
-                { from: 'config/wrapper.json', to: 'config/wrapper.json' },
-                { from: '../kitsune.ico', to: 'favicon.ico' },
+                { from: '../assets/logo.png', to: 'assets/logo.png' },
+                { from: '../config/wrapper.json', to: 'config/wrapper.json' },
+                { from: '../../kitsune.ico', to: 'favicon.ico' },
             ],
         }),
         new BundleAnalyzerPlugin({
@@ -81,8 +85,13 @@ module.exports = {
                 case 'wrapper':
                     return 'wrapper.js';
                     break;
+                case 'kwl':
+                case 'shared':
+                case 'lodash':
+                    return 'modules/[name].bundle.js';
+                    break;
                 default:
-                    return 'modules/[name].js';
+                    return 'extensions/[name].bundle.js';
             }
         },
         path: path.resolve(__dirname, 'dist')
@@ -91,14 +100,15 @@ module.exports = {
         hints: false,
         maxEntrypointSize: 512000,
         maxAssetSize: 512000
-    }
+    },
+    context: path.resolve(__dirname, './src/')
 };
 const packageMinified = () => {
     const entries = Object.keys(moduleEntries);
     const includedMinified = ['main.js'];
     entries.forEach((name) => {
-        if (String(moduleEntries[name].import).includes('/modules/') || name === 'shared' || name === 'kwl'|| name === 'wrapper' || name === 'lodash') {
-            includedMinified.push(`modules/${name}.js`);
+        if (String(moduleEntries[name].import).includes('extensions/')|| name === 'shared' || name === 'kwl'|| name === 'wrapper' || name === 'lodash') {
+            includedMinified.push(`modules/${name}.bundle.js`);
         }
     });
     const terserOptions = { include: includedMinified };

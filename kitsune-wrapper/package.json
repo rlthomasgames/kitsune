@@ -1,6 +1,6 @@
 {
   "name": "kitsune-wrapper",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "index.ts",
   "scripts": {
@@ -8,7 +8,7 @@
     "linklib": "npm run --prefix ../kitsune-wrapper-library build && npm link ../kitsune-wrapper-library",
     "install-lib": "npm install kitsune-wrapper-library --save",
     "clean": "rmdir /s dist",
-    "build": "webpack --mode=production",
+    "build": "webpack --mode=production --stats-error-details",
     "watch": "webpack --watch",
     "start": "webpack serve --mode=production --stats-error-details",
     "cb": "npm run clean && npm run build"
@@ -21,7 +21,7 @@
   "dependencies": {
     "lodash": "^4.17.21",
     "inversify": "^6.0.1",
-    "kitsune-wrapper-library": "^0.0.3",
+    "kitsune-wrapper-library": "^0.0.5",
     "reflect-metadata": "^0.1.13"
   },
   "devDependencies": {

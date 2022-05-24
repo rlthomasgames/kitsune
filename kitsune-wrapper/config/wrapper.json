@@ -3,7 +3,7 @@
   "language": "en-US",
   "gameConfig": "i win",
   "layout": {
-    "name": "layout1"
+    "name": "whatever"
   },
-  "modules": []
+  "modules": ["EmptyModule"]
 }
