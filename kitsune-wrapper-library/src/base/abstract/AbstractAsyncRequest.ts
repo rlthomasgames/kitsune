@@ -1,4 +1,4 @@
-import AsyncRequest from "../interfaces/AsyncRequest";
+import AsyncRequest from "../interfaces/IAsyncRequest";
 
 
 export class AbstractAsyncRequest implements AsyncRequest {
