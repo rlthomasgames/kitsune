@@ -1,4 +1,3 @@
-export {sayHello, sayGoodbye, working} from './hello-world';
 export {AbstractModule} from './base/abstract/AbstractModule';
 export {AbstractSoundService} from './base/abstract/AbstractSoundService';
 export {AbstractCommand} from './base/abstract/AbstractCommand';
