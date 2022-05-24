@@ -5,5 +5,7 @@
   "layout": {
     "name": "whatever"
   },
-  "modules": ["EmptyModule"]
+  "modules": [
+    { "moduleName":"HelloWorldExtension", "modulePath":"./extensions/helloWorldExtension.bundle.js" }
+  ]
 }

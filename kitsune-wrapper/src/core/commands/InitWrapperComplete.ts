@@ -19,8 +19,7 @@ export class InitWrapperComplete implements Command {
     }
 
     run() {
-        console.log('Wrapper INIT_COMPLETE!\n', 'try injecting into this');
-        console.log('checking here...', this._helloWorld);
+        console.log('Wrapper INITIALIZE COMPLETE!\n');
         this._helloWorld.startModule();
     }
 }

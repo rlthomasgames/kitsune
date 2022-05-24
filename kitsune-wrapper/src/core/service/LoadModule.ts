@@ -1,18 +1,19 @@
 import {injectable} from "inversify";
-import AsyncRequest from "kitsune-wrapper-library/dist/base/interfaces/AsyncRequest";
 import IInjectableExtensionModule from "kitsune-wrapper-library/dist/base/interfaces/IInjectableExtensionModule";
 import container from "../ioc/ioc_mapping";
+import {ExtensionValuedObject} from "../commands/InitWrapper";
+import IAsyncRequest from "kitsune-wrapper-library/dist/base/interfaces/IAsyncRequest";
 
 type Class = { new(...args: any[]): any; };
 
 @injectable()
-export class LoadModule implements AsyncRequest {
+export class LoadModule implements IAsyncRequest {
     constructor() {
     }
 
-    request(moduleName: string) {
-        if (moduleName !== null) {
-            return this.loadJS('./extensions/helloWorldExtension.bundle.js', 'HelloWorldExtension', 'test', document.head);
+    request(moduleVO: ExtensionValuedObject) {
+        if (moduleVO !== null) {
+            return this.loadJS(moduleVO.modulePath, moduleVO.moduleName, 'test', document.head);
         }
         return;
     }

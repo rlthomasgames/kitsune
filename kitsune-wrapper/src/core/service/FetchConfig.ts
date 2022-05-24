@@ -37,7 +37,6 @@ export class FetchConfig implements AsyncRequest {
     }
 
     configLoaded(fetchedConfig:IWrapperConfig) {
-        console.log('config loaded', fetchedConfig);
         const merge0 = _.merge(this.urlParams, this.baseConfig);
         this.finalConfig = Object.assign({}, fetchedConfig, merge0);
         this.finalConfig = _.merge(this.finalConfig, fetchedConfig);
