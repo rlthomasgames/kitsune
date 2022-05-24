@@ -19,10 +19,13 @@
     "url": "git+https://github.com/rlthomasgames/kitsune.git"
   },
   "keywords": [
-    "demo",
+    "wrapper",
     "typescript",
+    "modular",
     "library",
-    "hello world"
+    "injection",
+    "inversify",
+    "games"
   ],
   "author": "Rhys Thomas",
   "license": "MIT",
