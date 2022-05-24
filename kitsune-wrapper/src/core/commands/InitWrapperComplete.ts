@@ -1,11 +1,11 @@
 import {inject, injectable, postConstruct} from "inversify";
 import { TYPES } from "kitsune-wrapper-library";
-import Command from "kitsune-wrapper-library/dist/base/interfaces/Command";
 import {FetchConfig} from "../service/FetchConfig";
 import IInjectableExtensionModule from "kitsune-wrapper-library/dist/base/interfaces/IInjectableExtensionModule";
+import ICommand from "kitsune-wrapper-library/dist/base/interfaces/ICommand";
 
 @injectable()
-export class InitWrapperComplete implements Command {
+export class InitWrapperComplete implements ICommand {
 
     @inject(TYPES.FetchConfig)
     _wrapperConfig: FetchConfig;

@@ -26,7 +26,7 @@ const moduleEntries = {
         dependOn: ['lodash']
     },
     helloWorldExtension: {
-        import: './extensions/HelloWorldExtension.ts',
+        import: ['./extensions/HelloWorldExtension.ts', 'hwrld'],
         dependOn: ['shared', 'kwl'],
     }
 };

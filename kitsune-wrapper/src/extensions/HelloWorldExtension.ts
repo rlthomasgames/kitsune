@@ -1,13 +1,14 @@
 import {injectable} from "inversify";
 import {AbstractModule} from "kitsune-wrapper-library";
 import IInjectableExtensionModule from "kitsune-wrapper-library/dist/base/interfaces/IInjectableExtensionModule";
+import {sayHello} from "hwrld";
 
 @injectable()
 class HelloWorldExtension extends AbstractModule implements IInjectableExtensionModule {
     name: string = 'HelloWorldExtension';
 
     startModule() {
-        console.log('Hello from injected "Hello World" extension');
+        sayHello();
     }
 }
 
