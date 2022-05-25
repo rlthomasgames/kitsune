@@ -6,6 +6,7 @@
     "name": "whatever"
   },
   "modules": [
-    { "moduleName":"HelloWorldExtension", "modulePath":"./extensions/helloWorldExtension.bundle.js" }
+    { "moduleName":"HelloWorldExtension", "modulePath":"./extensions/helloWorldExtension.bundle.js" },
+    { "moduleName":"PixiFrameworkExtension", "modulePath":"./extensions/pixiFrameworkExtension.bundle.js" }
   ]
 }

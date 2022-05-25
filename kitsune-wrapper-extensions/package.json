@@ -1,0 +1,44 @@
+{
+  "name": "kitsune-wrapper-extensions",
+  "version": "0.0.1",
+  "description": "seperated extensions project for clean, light weight optional extensions for wrapper",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --mode=production --stats-error-details"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rlthomasgames/kitsune.git"
+  },
+  "keywords": [
+    "kitsune",
+    "wrapper",
+    "modular",
+    "dependency",
+    "injection",
+    "inversify",
+    "games"
+  ],
+  "author": "Rhys Thomas",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rlthomasgames/kitsune/issues"
+  },
+  "homepage": "https://github.com/rlthomasgames/kitsune#readme",
+  "dependencies": {
+    "pixi.js": "^6.3.2",
+    "hwrld": "^2.1.1"
+  },
+  "devDependencies": {
+    "typescript": "^4.2.3",
+    "webpack": "^5.72.0",
+    "webpack-cli": "^4.9.2",
+    "kitsune-wrapper-library": "^0.0.7",
+    "lodash": "^4.17.21",
+    "reflect-metadata": "^0.1.13",
+    "inversify": "^6.0.1",
+    "terser-webpack-plugin": "^5.3.1",
+    "ts-loader": "^9.2.8"
+  }
+}

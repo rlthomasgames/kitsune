@@ -1,4 +1,4 @@
-import {inject, injectable, postConstruct} from "inversify";
+import {inject, injectable, optional, postConstruct} from "inversify";
 import { TYPES } from "kitsune-wrapper-library";
 import {FetchConfig} from "../service/FetchConfig";
 import IInjectableExtensionModule from "kitsune-wrapper-library/dist/base/interfaces/IInjectableExtensionModule";
@@ -10,8 +10,13 @@ export class InitWrapperComplete implements ICommand {
     @inject(TYPES.FetchConfig)
     _wrapperConfig: FetchConfig;
 
+    @optional()
     @inject('HelloWorldExtension')
-    _helloWorld: IInjectableExtensionModule;
+    _helloWorld?: IInjectableExtensionModule;
+
+    @optional()
+    @inject('PixiFrameworkExtension')
+    _pixi?: IInjectableExtensionModule;
 
     @postConstruct()
     postConstruct() {
@@ -20,6 +25,7 @@ export class InitWrapperComplete implements ICommand {
 
     run() {
         console.log('Wrapper INITIALIZE COMPLETE!\n');
-        this._helloWorld.startModule();
+        this._helloWorld?.startModule();
+        this._pixi?.startModule();
     }
 }

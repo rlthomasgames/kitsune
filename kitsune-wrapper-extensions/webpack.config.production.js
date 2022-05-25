@@ -1,7 +1,4 @@
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CopyPlugin = require("copy-webpack-plugin");
-const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const TerserPlugin = require("terser-webpack-plugin");
 
 /*============================================*/
@@ -9,21 +6,13 @@ const TerserPlugin = require("terser-webpack-plugin");
 /*============================================*/
 const moduleEntries = {
     index: {
-        import: './index.ts',
-        dependOn: ['wrapper']
+        import: './index.ts'
     },
-    wrapper: {
-        import: './core/Wrapper.ts',
-        dependOn: ['shared', 'kwl'],
+    helloWorldExtension: {
+        import: ['./extensions/HelloWorldExtension.ts', 'hwrld']
     },
-    kwl: {
-        import: 'kitsune-wrapper-library',
-        dependOn: ['shared']
-    },
-    lodash: 'lodash',
-    shared: {
-        import: ['inversify', 'reflect-metadata'],
-        dependOn: ['lodash']
+    pixiFrameworkExtension: {
+        import: ['./extensions/PixiFrameworkExtension.ts', 'pixi.js']
     }
 };
 module.exports = {
@@ -54,21 +43,6 @@ module.exports = {
         ],
     },
     plugins: [
-        new HtmlWebpackPlugin({
-            template: './index.html',
-            chunks: ['shared', 'kwl', 'index', 'wrapper', 'lodash']
-        }),
-        new CopyPlugin({
-            patterns: [
-                { from: '../assets/logo.png', to: 'assets/logo.png' },
-                { from: '../config/wrapper.json', to: 'config/wrapper.json' },
-                { from: '../../kitsune.ico', to: 'favicon.ico' },
-            ],
-        }),
-        new BundleAnalyzerPlugin({
-            analyzerMode: "static",
-            openAnalyzer: false,
-        })
     ],
     output: {
         clean: true,
@@ -76,18 +50,10 @@ module.exports = {
         filename: (pathData) => {
             switch (pathData.chunk.name) {
                 case 'index':
-                    return 'main.js';
-                    break;
-                case 'wrapper':
-                    return 'wrapper.js';
-                    break;
-                case 'kwl':
-                case 'shared':
-                case 'lodash':
-                    return 'modules/[name].bundle.js';
+                    return 'index.js';
                     break;
                 default:
-                    return 'extensions/[name].bundle.js';
+                    return '../../kitsune-wrapper/dist/extensions/[name].bundle.js';
             }
         },
         path: path.resolve(__dirname, 'dist')
@@ -101,10 +67,10 @@ module.exports = {
 };
 const packageMinified = () => {
     const entries = Object.keys(moduleEntries);
-    const includedMinified = ['main.js'];
+    const includedMinified = ['index.js'];
     entries.forEach((name) => {
-        if (String(moduleEntries[name].import).includes('extensions/')|| name === 'shared' || name === 'kwl'|| name === 'wrapper' || name === 'lodash') {
-            includedMinified.push(`modules/${name}.bundle.js`);
+        if (String(moduleEntries[name].import).includes('extensions/')) {
+            includedMinified.push(`../../kitsune-wrapper/dist/extensions/${name}.bundle.js`);
         }
     });
     const terserOptions = { include: includedMinified };
