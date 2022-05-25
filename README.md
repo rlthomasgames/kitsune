@@ -1,8 +1,33 @@
 <h1><img height="64px" src="./kitsune.ico" width="64px"/> Kitsune Wrapper</h1>
-Kitsune Wrapper  -  investigation into a simple modular wrapper for use with applications and games. 
-Wrapper extensions are loaded during runtime initialization.
-Intention is to keep initial load time short and only inflating the wrapper size with required 
-modules specified by the application or game it fetches. It provides implementation of the modules instantiation and execution by the use of dependency injection and shared interfaces. 
+Kitsune Wrapper  -  a investigation into simple modular wrapper framework for use 
+with applications or games.
+
+Wrapper extensions are loaded during runtime without any prior knowledge or footprint
+of an extensions particular content, allowing developers to dictate when and which 
+extensions or modules are loaded.
+
+Intention is to keep wrappers initial load time as short as possible and only inflate the wrapper 
+size with required extensions specified by the application / game the wrapper hosts. 
+
+Current implementation should include examples of -
+    
+      ~   factory methods to extract extension's that are loaded           
+      ~   instantiation and execution of the extension's                 
+      ~   dependency injection providing accesibility of extension's
+      ~   loose coupling between all parts using a shared library of interfaces
+This should also help speed up implementing of boilerplate / common tasks which are often required.
+As well as hopefully some nice to haves.
+
+e.g
+
+
+      ~   asset loading
+      ~   third party services / platform integration
+      ~   general functionality ( sounds, display, communications... )
+      ~   I/O devices gamepads, webcams, microphones...
+      ~   NFT's management systems???
+      ~   etc. etc. etc.... 
+      
 
 # Usage
 
