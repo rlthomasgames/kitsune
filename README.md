@@ -10,7 +10,8 @@ Intention is to keep wrappers initial load time as short as possible and only in
 size with required extensions specified by the application / game the wrapper hosts. 
 
 Current implementation should include examples of -
-    
+
+      ~   loading external unknown modules    
       ~   factory methods to extract extension's that are loaded           
       ~   instantiation and execution of the extension's                 
       ~   dependency injection providing accesibility of extension's
