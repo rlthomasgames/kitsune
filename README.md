@@ -1,7 +1,8 @@
 <h1><img height="64px" src="./kitsune.ico" width="64px"/> Kitsune Wrapper</h1>
 Kitsune Wrapper  -  investigation into a simple modular wrapper for use with applications and games. 
 Wrapper extensions and functionality registered and loaded during runtime initialization.
-Hopefully keeping initial load time short and only inflating the wrapper as needed during runtime.
+Hopefully keeping initial load time short and only inflating the wrapper with required 
+modules specified by the game it loads and hosts.
 
 # Usage
 
@@ -47,19 +48,23 @@ current loading examples from monitoring the information in dev tools.
 
 Main branch of the project contains:
 ````
-kitsune-wrapper            :  the wrapper
+kitsune-wrapper                 :   the wrapper
 
-kitsune-wrapper-library    :  the shared library
+kitsune-wrapper-library         :   the shared library
 
-kitsune-wrapper-extensions :  early injectable extension examples, 
-                              dynamic loading and code execution of 
-                              external unlinked packages
+kitsune-wrapper-extensions      :   early injectable extension examples, 
+                                    dynamic loading and code execution of 
+                                    external unlinked packages
 
-kitsune-wrapper-examples   :  coming soon! - games and stuff :)
+kitsune-wrapper-app-examples    :   coming soon! - games and stuff :)
 ````
 
 # Further reading
 
 **More information coming...**
+<p style="font-size: smaller; font-style: italic; background-color: gray" onclick="alert('you sweaty scumbag fox')" content="In Japanese folklore, kitsune are foxes that possess paranormal
+abilities that increase as they get older and wiser." />
 
-<p style="font-size: smaller; font-style: italic">In Japanese folklore, kitsune are foxes that possess paranormal abilities that increase as they get older and wiser.</p>
+_In Japanese folklore, kitsune are foxes that possess paranormal
+abilities that increase as they get older and wiser._
+
