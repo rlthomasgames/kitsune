@@ -19,27 +19,26 @@ export class InitWrapper implements ICommand {
     private totalLoaded:number = 0;
 
     run() {
-        console.log('Wrapper INITIALIZE sequence started...\n');
-        this._wrapperConfig.request()?.then(() => {
-            console.log('requested wrapper config loading completed', (this._wrapperConfig as FetchConfig).getConfig());
+        this._wrapperConfig.request().then(() => {
             this.loadModules();
         });
     }
 
     loadModules() {
-        const modules : Array<ExtensionValuedObject> = (this._wrapperConfig as FetchConfig).getConfig().modules!;
+        const modules : Array<ExtensionValuedObject> = (this._wrapperConfig).getConfig().modules!;
+        const result = !modules ? true : false;
+        if(true === result) {
+            return null;
+        }
         this.totalModules = modules.length;
         if (this.totalModules === 0) {
             this.completeInit();
             return;
         }
         modules.forEach((module) => {
-            console.log('fetching wrapper extension ', module, ' specified in wrapper config');
             this._moduleLoader.request(module)?.then((moduleInstance: IInjectableExtensionModule) => {
-                console.log('wrapper extension ', module, ' finished loading');
                 this.totalLoaded++;
                 if(this.totalLoaded === this.totalModules) {
-                    console.log('loading all wrapper extensions from wrapper config completed : ', this.totalLoaded, 'extensions added in total');
                     this.completeInit();
                     return;
                 }

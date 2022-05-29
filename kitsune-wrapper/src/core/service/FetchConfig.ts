@@ -12,9 +12,6 @@ export class FetchConfig implements IAsyncRequest {
 
     name : 'FetchConfig';
 
-    constructor() {
-    }
-
     public request(): Promise<void> {
         const params = {};
         this.getUrlParams().forEach((value, key, parent) => {

@@ -24,7 +24,6 @@ export class InitWrapperComplete implements ICommand {
     }
 
     run() {
-        console.log('Wrapper INITIALIZE COMPLETE!\n');
         this._helloWorld?.startModule();
         this._pixi?.startModule();
     }

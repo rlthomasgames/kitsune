@@ -1,7 +1,6 @@
 import {Wrapper} from "./core/Wrapper";
 
-function init() {
-    new Wrapper();
-}
+// @ts-ignore
+new Wrapper();
 
-init();
+//document.getElementsByTagName('body')[0].innerText = JSON.stringify(kitsune);
