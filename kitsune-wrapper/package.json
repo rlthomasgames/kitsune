@@ -1,17 +1,31 @@
 {
   "name": "kitsune-wrapper",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "",
   "main": "index.ts",
+  "watch": {
+    "start": {
+      "patterns": [
+        "src"
+      ],
+      "extensions": "ts,html,js",
+      "quiet": false,
+      "legacyWatch": false,
+      "delay": 2500,
+      "runOnChangeOnly": false
+    }
+  },
   "scripts": {
     "test": "npx ts-node somefile",
     "linklib": "npm run --prefix ../kitsune-wrapper-library build && npm link ../kitsune-wrapper-library",
-    "install-lib": "npm install kitsune-wrapper-library --save",
-    "clean": "rmdir /s dist",
+    "install-local-lib": "npm install kitsune-wrapper-library --save",
+    "clean-output": "del dist /F /Q",
     "build": "webpack --mode=production --stats-error-details",
-    "watch": "webpack --watch",
-    "start": "webpack serve --mode=production --stats-error-details",
-    "cb": "npm run clean && npm run build"
+    "watch": "webpack --watch \"./\" \"./../../kitsune-wrapper-extensions/src\"",
+    "dev": "webpack serve --open --mode=development",
+    "extensions": "cd ../kitsune-wrapper-extensions/ && npm run build",
+    "build-with-extensions": "npm run build && npm run extensions",
+    "start": "npm run extensions && npm run dev"
   },
   "author": "Rhys Thomas",
   "license": "MIT",
@@ -28,14 +42,17 @@
     "@types/lodash": "^4.14.181",
     "copy-webpack-plugin": "^10.2.4",
     "html-webpack-plugin": "^5.5.0",
+    "npm-watch": "^0.11.0",
     "terser-webpack-plugin": "^5.3.1",
     "ts-loader": "^9.2.8",
     "ts-node": "^9.1.1",
     "typescript": "^4.2.3",
+    "watch-http-server": "^0.7.6",
     "webpack": "^5.72.0",
-    "webpack-cli": "^4.9.2",
     "webpack-bundle-analyzer": "^4.5.0",
+    "webpack-cli": "^4.9.2",
     "webpack-dev-server": "^4.8.1",
-    "webpack-node-externals": "^3.0.0"
+    "webpack-node-externals": "^3.0.0",
+    "webpack-watch-files-plugin": "^1.2.1"
   }
 }

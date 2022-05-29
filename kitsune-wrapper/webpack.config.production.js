@@ -27,7 +27,7 @@ const moduleEntries = {
     }
 };
 module.exports = {
-    mode: 'development',
+    mode: 'production',
     entry: moduleEntries,
     devtool: 'inline-source-map',
     watch: false,
@@ -35,7 +35,19 @@ module.exports = {
         static: './dist',
     },
     externalsPresets: { node: false }, // in order to ignore built-in extensions like path, fs, etc.
-    externals: [], // in order to ignore all extensions in node_modules folder
+    externals: [
+    ], // in order to ignore all extensions in node_modules folder
+    /*
+    externals: [
+            {
+            lodash: {
+                commonjs: 'lodash',
+                amd: 'lodash',
+                root: '_', // indicates global variable
+            },
+        }
+    ]
+    */
     module: {
         rules: [
             {
