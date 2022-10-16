@@ -5,7 +5,7 @@
   "main": "index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack --mode=production --stats-error-details"
+    "build": "webpack --mode=production --stats-error-details && cp -R config/. ../kitsune-wrapper/dist/config"
   },
   "repository": {
     "type": "git",
@@ -31,7 +31,6 @@
   "devDependencies": {
     "hwrld": "^2.1.1",
     "inversify": "^6.0.1",
-    "isolated-runtime": "^1.0.2",
     "kitsune-wrapper-library": "^0.0.7",
     "lodash": "^4.17.21",
     "pixi.js": "^6.3.2",

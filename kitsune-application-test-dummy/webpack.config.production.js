@@ -55,7 +55,7 @@ module.exports = {
                     return '[name].bundle.js';
             }
         },
-        path: path.resolve(__dirname, '../../kitsune-wrapper/dist/applications/test_dummy/')
+        path: path.resolve(__dirname, '../kitsune-wrapper/dist/applications/test_dummy/')
     },
     performance: {
         hints: false,

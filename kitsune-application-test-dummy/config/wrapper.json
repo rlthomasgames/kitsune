@@ -1,0 +1,13 @@
+{
+  "version": 12,
+  "language": "en-US",
+  "gameConfig": "i win",
+  "layout": {
+    "name": "whatever"
+  },
+  "modules": [
+    { "moduleName":"HelloWorldExtension", "modulePath":"./extensions/helloWorldExtension.bundle.js" },
+    { "moduleName":"PixiFrameworkExtension", "modulePath":"./extensions/pixiFrameworkExtension.bundle.js" }
+  ],
+  "application": "./applications/test_dummy/index.js"
+}
