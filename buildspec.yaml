@@ -1,0 +1,6 @@
+version: 0.2
+
+phases:
+  build:
+    commands:
+      - npm -v && cd kitsune-wrapper && npm i && npm run build && cd ../kitsune-wrapper-extensions && npm i && npm run build && cd ../kitsune-application-test-dummy && npm i && npm run build && cd ../kitsune-wrapper/dist && echo 'BUILD COMPLETE' && echo '$(ls)'
