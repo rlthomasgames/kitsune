@@ -1,3 +1,6 @@
+<p></p>
+<img width="480px" height="300px" src="./readme/kitsune-steamos-capture.png" width="64px"/>
+<p>wrapper running as executable on steamos device</p>
 <h1><img height="64px" src="./kitsune.ico" width="64px"/> Kitsune Wrapper</h1>
 Kitsune Wrapper  -  a investigation into simple modular wrapper framework for use 
 with applications or games.

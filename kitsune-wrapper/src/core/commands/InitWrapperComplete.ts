@@ -26,5 +26,10 @@ export class InitWrapperComplete implements ICommand {
     run() {
         this._helloWorld?.startModule();
         this._pixi?.startModule();
+        /*
+        global!.window!.document!.getElementById('kitsune-logo-info').addEventListener('click', ()=> {
+            global!.window!.location.href = "https://codepen.io/rlthomasgames/full/NWzqeLR";
+        })
+        */
     }
 }

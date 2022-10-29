@@ -25,7 +25,9 @@
     "dev": "webpack serve --open --mode=development",
     "extensions": "cd ../kitsune-wrapper-extensions/ && npm run build",
     "build-with-extensions": "npm run build && npm run extensions",
-    "start": "npm run extensions && npm run dev"
+    "start": "npm run extensions && npm run dev",
+    "build-and-run-steamos": "npm run build-with-extensions && cd cordova-kitsune-wrapper && npm run build_kitsune_electron",
+    "build-and-debug-steamos": "npm run build-with-extensions && cd cordova-kitsune-wrapper && npm run run_kitsune_electron"
   },
   "author": "Rhys Thomas",
   "license": "MIT",
@@ -41,6 +43,7 @@
   "devDependencies": {
     "@types/lodash": "^4.14.181",
     "copy-webpack-plugin": "^10.2.4",
+    "cordova": "^11.0.0",
     "html-webpack-plugin": "^5.5.0",
     "npm-watch": "^0.11.0",
     "terser-webpack-plugin": "^5.3.1",
