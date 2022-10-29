@@ -1,4 +1,4 @@
-<img width="1280px" height="800px" max-width="75%" max-height="auto" src="./readme/kitsune-steamos-capture.png" width="64px"/>
+<img width="55vw" height="auto" max-width="75%" max-height="auto" src="./readme/kitsune-steamos-capture.png" width="64px"/>
 <p>wrapper running as executable on steamos device</p>
 <h1><img height="64px" src="./kitsune.ico" width="64px"/> Kitsune Wrapper</h1>
 Kitsune Wrapper  -  a investigation into simple modular wrapper framework for use 
