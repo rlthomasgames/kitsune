@@ -1,0 +1,27 @@
+{
+  "name": "com.kitsune.wrapper",
+  "displayName": "KitsuneWrapper",
+  "version": "1.0.0",
+  "description": "A sample Apache Cordova application that responds to the deviceready event.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build_kitsune_electron": "cp -r ../dist/ ./www/kitsune-dist/ && cordova build electron --release --device && ./platforms/electron/build/linux-unpacked/com.kitsune.wrapper",
+    "run_kitsune_electron": "cp -r ../dist/ ./www/kitsune-dist/ && cordova build electron --debug --device && ./platforms/electron/build/linux-unpacked/com.kitsune.wrapper"
+  },
+  "keywords": [
+    "ecosystem:cordova"
+  ],
+  "author": "Apache Cordova Team",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "cordova-electron": "^3.1.0",
+    "cordova-windows": "^7.0.1"
+  },
+  "cordova": {
+    "platforms": [
+      "windows",
+      "electron"
+    ]
+  }
+}

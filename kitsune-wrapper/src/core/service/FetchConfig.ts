@@ -48,7 +48,7 @@ const baseConfig: IWrapperConfig = {
     version: 0,
     securityToken: "none",
     language: "en-UK",
-    gameConfig: "localhost:9090/config/lobby.json",
+    //gameConfig: "localhost:9090/config/lobby.json",
     platformAddress: "localhost:7070/socket",
     layout: {
         name: "layout0"
