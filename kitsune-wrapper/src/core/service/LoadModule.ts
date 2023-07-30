@@ -24,6 +24,7 @@ export class LoadModule implements IAsyncRequest {
                 // @ts-ignore
                 const kitsuneExtensionFactories = window['kitsuneExtensionFactories'];
                 const extension: Class = kitsuneExtensionFactories.get(extensionName);
+                console.log(`binding ${extensionName} with ${extension} from kitsuneExtensionFactories: ${kitsuneExtensionFactories}`);
                 container.bind<IInjectableExtensionModule>(extensionName).to(extension);
                 const instance: IInjectableExtensionModule = container.get(extensionName);
                 resolved(instance);

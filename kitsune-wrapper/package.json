@@ -25,7 +25,9 @@
     "dev": "webpack serve --open --mode=development",
     "extensions": "cd ../kitsune-wrapper-extensions/ && npm run build",
     "build-with-extensions": "npm run build && npm run extensions",
-    "start": "npm run extensions && npm run dev"
+    "start": "npm run extensions && npm run dev",
+    "prestart": "npm run build-with-extensions",
+    "start-electron": "electron ./dist/main.js --no-sandbox"
   },
   "author": "Rhys Thomas",
   "license": "MIT",
@@ -34,13 +36,13 @@
   },
   "dependencies": {
     "inversify": "^6.0.1",
-    "kitsune-wrapper-library": "^0.0.7",
     "lodash": "^4.17.21",
     "reflect-metadata": "^0.1.13"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.181",
     "copy-webpack-plugin": "^10.2.4",
+    "electron": "^25.3.2",
     "html-webpack-plugin": "^5.5.0",
     "npm-watch": "^0.11.0",
     "terser-webpack-plugin": "^5.3.1",

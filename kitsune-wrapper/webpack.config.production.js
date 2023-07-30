@@ -85,6 +85,7 @@ module.exports = {
     output: {
         clean: true,
         publicPath: '',
+        globalObject: 'this',
         filename: (pathData) => {
             switch (pathData.chunk.name) {
                 case 'index':

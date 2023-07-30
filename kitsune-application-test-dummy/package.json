@@ -4,6 +4,7 @@
   "description": "A testing application used for early wrapper development",
   "main": "index.ts",
   "scripts": {
+    "linklib": "npm run --prefix ../kitsune-wrapper-library build && npm link ../kitsune-wrapper-library",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --mode=production --stats-error-details && cp -R config/. ../kitsune-wrapper/dist/config"
   },

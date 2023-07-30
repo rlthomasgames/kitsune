@@ -6,10 +6,12 @@ import {Application} from "pixi.js";
 @injectable()
 class PixiFrameworkExtension extends AbstractModule implements IInjectableExtensionModule {
     name: string = 'PixiFrameworkExtension';
+    container: Application;
 
     startModule() {
         const pixiApplication = new Application();
         console.log('we are using pixijs framework here', pixiApplication);
+        this.container = pixiApplication;
     }
 }
 

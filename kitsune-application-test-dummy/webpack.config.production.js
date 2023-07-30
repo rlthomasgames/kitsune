@@ -6,7 +6,7 @@ const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 /*  MUST ADD ENTRY HERE FOR EACH NEW MODULE   */
 /*============================================*/
 const moduleEntries = {
-    index: {
+    application: {
         import: './index.ts'
     }
 };
@@ -48,7 +48,7 @@ module.exports = {
         publicPath: '',
         filename: (pathData) => {
             switch (pathData.chunk.name) {
-                case 'index':
+                case 'application':
                     return 'index.js';
                     break;
                 default:

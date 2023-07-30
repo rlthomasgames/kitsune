@@ -9,6 +9,11 @@ class HelloWorldExtension extends AbstractModule implements IInjectableExtension
 
     startModule() {
         sayHello();
+        console.log('\n');
+        console.log('\n');
+        console.log('If your seeing this then no application specified in wrapper.json - so nothing to load');
+        console.log('\n');
+        console.log('\n');
     }
 }
 

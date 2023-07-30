@@ -46,6 +46,8 @@ export class InitWrapper implements ICommand {
         })
     }
 
+
+
     completeInit() {
         container.get(CoreState.INIT_COMPLETE);
     }
