@@ -32,7 +32,7 @@
   "bugs": {
     "url": "..."
   },
-  "homepage": "http://polygonprophecy.com",
+  "homepage": "https://polygonprophecy.com",
   "devDependencies": {},
   "dependencies": {
     "typescript": "^4.2.3"
