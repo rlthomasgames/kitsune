@@ -32,7 +32,7 @@
   "devDependencies": {
     "hwrld": "^2.1.1",
     "inversify": "^6.0.1",
-    "kitsune-wrapper-library": "^0.0.7",
+    "kitsune-wrapper-library": "^0.0.8",
     "lodash": "^4.17.21",
     "pixi.js": "^6.3.2",
     "reflect-metadata": "^0.1.13",
