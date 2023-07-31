@@ -17,10 +17,6 @@ export class InitWrapperComplete implements ICommand {
     @inject('HelloWorldExtension')
     _helloWorld?: IInjectableExtensionModule;
 
-    @optional()
-    @inject('PixiFrameworkExtension')
-    _pixi?: IInjectableExtensionModule;
-
     @inject(TYPES.LoadModule)
     _moduleLoader: LoadModule;
 

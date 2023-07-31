@@ -7,7 +7,8 @@
   },
   "modules": [
     { "moduleName":"HelloWorldExtension", "modulePath":"./extensions/helloWorldExtension.bundle.js" },
-    { "moduleName":"PixiFrameworkExtension", "modulePath":"./extensions/pixiFrameworkExtension.bundle.js" }
+    { "moduleName":"PixiFrameworkExtension", "modulePath":"./extensions/pixiFrameworkExtension.bundle.js" },
+    { "moduleName":"ThreeFrameworkExtension", "modulePath":"./extensions/threeFrameworkExtension.bundle.js" }
   ],
   "application": "./applications/test_dummy/index.js"
 }

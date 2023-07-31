@@ -13,6 +13,9 @@ const moduleEntries = {
     },
     pixiFrameworkExtension: {
         import: ['./extensions/PixiFrameworkExtension.ts', 'pixi.js']
+    },
+    threeFrameworkExtension: {
+        import: ['./extensions/ThreeFrameworkExtension.ts', 'three']
     }
 };
 module.exports = {
