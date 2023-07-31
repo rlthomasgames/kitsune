@@ -1,5 +1,6 @@
 const path = require('path');
 const TerserPlugin = require("terser-webpack-plugin");
+const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 
 /*============================================*/
 /*  MUST ADD ENTRY HERE FOR EACH NEW MODULE   */
@@ -46,6 +47,10 @@ module.exports = {
         ],
     },
     plugins: [
+        new BundleAnalyzerPlugin({
+            analyzerMode: "static",
+            openAnalyzer: false,
+        })
     ],
     output: {
         clean: true,
