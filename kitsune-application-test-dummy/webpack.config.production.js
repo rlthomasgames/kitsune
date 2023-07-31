@@ -11,7 +11,7 @@ const moduleEntries = {
     }
 };
 module.exports = {
-    mode: 'development',
+    mode: 'production',
     entry: moduleEntries,
     devtool: 'inline-source-map',
     watch: false,

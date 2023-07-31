@@ -1,6 +1,7 @@
 const path = require('path');
 const TerserPlugin = require("terser-webpack-plugin");
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
+const CompressionPlugin = require("compression-webpack-plugin");
 
 /*============================================*/
 /*  MUST ADD ENTRY HERE FOR EACH NEW MODULE   */
@@ -20,7 +21,7 @@ const moduleEntries = {
     }
 };
 module.exports = {
-    mode: 'development',
+    mode: 'production',
     entry: moduleEntries,
     devtool: 'inline-source-map',
     watch: false,
@@ -47,6 +48,10 @@ module.exports = {
         ],
     },
     plugins: [
+        new CompressionPlugin({
+            algorithm: 'gzip',
+            test: /.js$|.css$/,
+        }),
         new BundleAnalyzerPlugin({
             analyzerMode: "static",
             openAnalyzer: false,
