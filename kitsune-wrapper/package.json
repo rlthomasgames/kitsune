@@ -26,8 +26,7 @@
     "extensions": "cd ../kitsune-wrapper-extensions/ && npm run build",
     "build-with-extensions": "npm run build && npm run extensions",
     "start": "npm run extensions && npm run dev",
-    "prestart": "npm run build-with-extensions",
-    "start-electron": "electron ./dist/main.js --no-sandbox"
+    "prestart": "npm run build-with-extensions"
   },
   "author": "Rhys Thomas",
   "license": "MIT",
@@ -43,7 +42,6 @@
   "devDependencies": {
     "@types/lodash": "^4.14.181",
     "copy-webpack-plugin": "^10.2.4",
-    "electron": "^25.3.2",
     "fflate": "^0.8.0",
     "html-webpack-plugin": "^5.5.0",
     "npm-watch": "^0.11.0",

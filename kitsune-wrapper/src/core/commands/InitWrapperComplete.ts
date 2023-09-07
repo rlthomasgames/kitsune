@@ -38,7 +38,7 @@ export class InitWrapperComplete implements ICommand {
         console.log('loading app now');
         this._moduleLoader.request({moduleName: 'application', modulePath:pathToApp }, false)?.then((moduleInstance: IInjectableExtensionModule) => {
 
-        }).finally(()=>{
+        }).then(()=>{
             container.get(CoreState.START_APPLICATION);
         });
     }
