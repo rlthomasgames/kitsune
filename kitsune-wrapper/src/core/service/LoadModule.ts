@@ -97,8 +97,7 @@ export class LoadModule implements IAsyncRequest {
                                 const scriptTag = document.createElement('script');
                                 scriptTag.type = 'text/javascript';
                                 scriptTag.src = blobURL;
-                                scriptTag.setAttribute('priority', 'highest')
-                                scriptTag.setAttribute('fetchpriority', 'highest')
+                                scriptTag.setAttribute('priority', 'highest');
                                 scriptTag.onload = () => {
                                     const extension: Class = KitsuneHelper.getKitsuneFactories().get(parameters.moduleName) as unknown as Class;
                                     container.bind<IInjectableExtensionModule>(parameters.moduleName).to(extension);
