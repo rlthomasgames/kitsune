@@ -14,7 +14,6 @@ export class StartApplication implements ICommand {
     }
 
     run(): void {
-        console.log(`now classes can communicate with ${this._application}`);
         if (this._application) {
             this._application?.startModule();
         } else {

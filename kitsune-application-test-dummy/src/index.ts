@@ -3,9 +3,11 @@ import IInjectableExtensionModule from "kitsune-wrapper-library/dist/base/interf
 import {inject, injectable} from "inversify";
 import BaseApplication from "kitsune-wrapper-library/dist/base/application/BaseApplication";
 import {WebGLRenderer} from 'three';
+import KitsuneHelper from "kitsune-wrapper-library/dist/base/helper/KitsuneHelper";
 
 @injectable()
 export class application extends BaseApplication implements IInjectableExtensionModule {
+    name: string = 'application';
 
     @inject('PixiFrameworkExtension')
     _pixi: IInjectableExtensionModule;
@@ -13,7 +15,6 @@ export class application extends BaseApplication implements IInjectableExtension
     @inject('ThreeFrameworkExtension')
     _three: IInjectableExtensionModule;
     constructor() {
-        console.log("instantiated application");
         super();
     }
 
@@ -36,8 +37,5 @@ declare type ThreeContainer = {
     renderer:WebGLRenderer,
 }
 
-// @ts-ignore
-let kitsuneExtensionFactories = window['kitsuneExtensionFactories'];
-console.log('adding class into kitsune extension factory', application);
-kitsuneExtensionFactories.set('application', application);
+KitsuneHelper.getKitsuneFactories().set('application', application);
 

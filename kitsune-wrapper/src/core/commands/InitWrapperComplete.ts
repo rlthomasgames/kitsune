@@ -6,6 +6,7 @@ import ICommand from "kitsune-wrapper-library/dist/base/interfaces/ICommand";
 import {LoadModule} from "../service/LoadModule";
 import container from "../ioc/ioc_mapping";
 import CoreState from "../constants/CoreState";
+import {ExtensionValuedObject} from "./InitWrapper";
 
 @injectable()
 export class InitWrapperComplete implements ICommand {
@@ -26,7 +27,7 @@ export class InitWrapperComplete implements ICommand {
     }
 
     run() {
-        const application = this._wrapperConfig.getConfig().application;
+        const application = this._wrapperConfig.getConfig().application as ExtensionValuedObject;
         if(application != undefined) {
             this.loadApplication(application);
         } else {
@@ -34,12 +35,10 @@ export class InitWrapperComplete implements ICommand {
         }
     }
 
-    loadApplication(pathToApp:string) {
-        console.log('loading app now');
-        this._moduleLoader.request({moduleName: 'application', modulePath:pathToApp }, false)?.then((moduleInstance: IInjectableExtensionModule) => {
-
-        }).then(()=>{
+    loadApplication(applicationValuedObject:ExtensionValuedObject) {
+        // @ts-ignore
+        this._moduleLoader.request(applicationValuedObject!, false).then((returnedApplicationInstance)=>{
             container.get(CoreState.START_APPLICATION);
-        });
+        })
     }
 }

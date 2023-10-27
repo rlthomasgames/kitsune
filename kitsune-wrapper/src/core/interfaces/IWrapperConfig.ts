@@ -5,7 +5,7 @@ export default interface IWrapperConfig {
     version?: number;
     language?: string;
     modules?:Array<ExtensionValuedObject>;
-    application?: string;
+    application?: ExtensionValuedObject;
     securityToken?: string;
     gameConfig?: string;
     platformAddress?: string;

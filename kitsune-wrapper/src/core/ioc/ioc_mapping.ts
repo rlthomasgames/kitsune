@@ -15,7 +15,7 @@ let container = new Container({ skipBaseClassChecks: true });
 
 container.bind<ICommand>(CoreState.INIT).to(InitWrapper);
 container.bind<IAsyncRequest>(TYPES.FetchConfig).to(FetchConfig).inSingletonScope();
-container.bind<LoadModule>(TYPES.LoadModule).to(LoadModule);
+container.bind<LoadModule>(TYPES.LoadModule).to(LoadModule).inSingletonScope();
 container.bind<ICommand>(CoreState.INIT_COMPLETE).to(InitWrapperComplete);
 container.bind<ICommand>(CoreState.START_APPLICATION).to(StartApplication);
 

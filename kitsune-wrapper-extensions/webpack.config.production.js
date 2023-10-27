@@ -2,6 +2,7 @@ const path = require('path');
 const TerserPlugin = require("terser-webpack-plugin");
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const CompressionPlugin = require("compression-webpack-plugin");
+const {size} = require("lodash/collection");
 
 /*============================================*/
 /*  MUST ADD ENTRY HERE FOR EACH NEW MODULE   */
@@ -43,8 +44,31 @@ module.exports = {
         extensions: ['.tsx', '.ts', '.js'],
     },
     optimization: {
+        mangleExports: 'size',
+        mangleWasmImports: true,
+        mergeDuplicateChunks: true,
         minimize: true,
         minimizer: [
+            new TerserPlugin({
+                parallel: true,
+                terserOptions: {
+                    // https://github.com/webpack-contrib/terser-webpack-plugin#terseroptions
+                    ecma: undefined,
+                    parse: {},
+                    compress: {},
+                    mangle: true, // Note `mangle.properties` is `false` by default.
+                    module: true,
+                    // Deprecated
+                    output: null,
+                    format: null,
+                    toplevel: false,
+                    nameCache: null,
+                    ie8: false,
+                    keep_classnames: undefined,
+                    keep_fnames: false,
+                    safari10: false,
+                },
+            }),
         ],
     },
     plugins: [

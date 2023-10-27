@@ -31,6 +31,7 @@
   "homepage": "https://github.com/rlthomasgames/kitsune#readme",
   "devDependencies": {
     "@types/three": "^0.154.0",
+    "http-server": "^14.1.1",
     "hwrld": "^2.1.1",
     "inversify": "^6.0.1",
     "kitsune-wrapper-library": "^0.0.8",

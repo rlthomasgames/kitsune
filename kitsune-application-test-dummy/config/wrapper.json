@@ -6,9 +6,9 @@
     "name": "whatever"
   },
   "modules": [
-    { "moduleName":"HelloWorldExtension", "modulePath":"./extensions/helloWorldExtension.bundle.js" },
-    { "moduleName":"PixiFrameworkExtension", "modulePath":"./extensions/pixiFrameworkExtension.bundle.js" },
-    { "moduleName":"ThreeFrameworkExtension", "modulePath":"./extensions/threeFrameworkExtension.bundle.js" }
+    { "moduleName":"HelloWorldExtension", "modulePath":"./extensions/helloWorldExtension.bundle.js", "gzipped": true},
+    { "moduleName":"PixiFrameworkExtension", "modulePath":"./extensions/pixiFrameworkExtension.bundle.js", "gzipped":  true},
+    { "moduleName":"ThreeFrameworkExtension", "modulePath":"./extensions/threeFrameworkExtension.bundle.js", "gzipped":  true }
   ],
-  "application": "./applications/test_dummy/index.js"
+  "application": {"moduleName":"application", "modulePath":"./applications/test_dummy/index.js", "gzipped":  false}
 }

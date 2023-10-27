@@ -25,10 +25,9 @@ export class InitWrapper implements ICommand {
     }
 
     loadModules() {
-        const modules : Array<ExtensionValuedObject> = (this._wrapperConfig).getConfig().modules!;
-        const result = !modules ? true : false;
-        if(true === result) {
-            return null;
+        const modules : Array<ExtensionValuedObject> | undefined = (this._wrapperConfig).getConfig().modules;
+        if(!modules) {
+            return;
         }
         this.totalModules = modules.length;
         if (this.totalModules === 0) {
@@ -36,9 +35,9 @@ export class InitWrapper implements ICommand {
             return;
         }
         modules.forEach((module) => {
-            this._moduleLoader.request(module)?.then((moduleInstance: IInjectableExtensionModule) => {
+            this._moduleLoader.request(module, true)?.then((moduleInstance: IInjectableExtensionModule) => {
                 this.totalLoaded++;
-                if(this.totalLoaded === this.totalModules) {
+                if (this.totalLoaded === this.totalModules) {
                     this.completeInit();
                     return;
                 }
@@ -56,4 +55,5 @@ export class InitWrapper implements ICommand {
 export type ExtensionValuedObject = {
     moduleName: string;
     modulePath: string;
+    gzipped?: boolean | undefined;
 }
