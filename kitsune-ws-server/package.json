@@ -1,0 +1,42 @@
+{
+  "name": "kitsune-ws-server",
+  "version": "1.0.0",
+  "description": "kitsune-ws-server",
+  "main": "kws-server.ts",
+  "watch": {
+    "start": {
+      "patterns": [
+        "src"
+      ],
+      "extensions": "ts,html,js",
+      "quiet": false,
+      "legacyWatch": false,
+      "delay": 2500,
+      "runOnChangeOnly": false
+    }
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rlthomasgames/kitsune.git"
+  },
+  "keywords": [
+    "web",
+    "socket",
+    "wrapper",
+    "server",
+    "auth0"
+  ],
+  "author": "Rhys Thomas",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rlthomasgames/kitsune/issues"
+  },
+  "homepage": "https://github.com/rlthomasgames/kitsune#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "socket.io": "^4.7.2"
+  }
+}
