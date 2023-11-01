@@ -6,6 +6,7 @@ import container from "../ioc/ioc_mapping";
 import CoreState from "../constants/CoreState";
 import IInjectableExtensionModule from "kitsune-wrapper-library/dist/base/interfaces/IInjectableExtensionModule";
 import ICommand from "kitsune-wrapper-library/dist/base/interfaces/ICommand";
+import {io, Socket} from "socket.io-client";
 
 @injectable()
 export class InitWrapper implements ICommand {
@@ -15,10 +16,20 @@ export class InitWrapper implements ICommand {
     @inject(TYPES.LoadModule)
     _moduleLoader: LoadModule;
 
+    private socket: Socket;
+
     private totalModules:number;
     private totalLoaded:number = 0;
 
     run() {
+        sessionStorage.clear();
+        const newSessionKey = JSON.stringify(Date.now() + crypto.randomUUID());
+        sessionStorage.setItem('sessionKey', newSessionKey);
+        this.socket = io('ws://localhost:3000', {port:3000, autoConnect:false, host:'http://localhost:3000', upgrade:true});
+        this.socket.on('connect', ()=> {
+            console.log('connect', this.socket, 'get ready to send new session key', newSessionKey);
+        })
+        this.socket.connect();
         this._wrapperConfig.request().then(() => {
             this.loadModules();
         });
