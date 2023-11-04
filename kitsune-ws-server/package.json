@@ -4,12 +4,14 @@
   "description": "<h1><img height=\"64px\" src=\"../kitsune.ico\" width=\"64px\"/> Kitsune WS Server</h1> Kitsune WS Server - web socket server to deliver the kitsune wrapper authorization, data messaging, asset streaming...",
   "main": "index.ts",
   "scripts": {
+    "linklib": "npm run --prefix ../kitsune-wrapper-library build && npm link ../kitsune-wrapper-library",
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "jsonwebtoken": "^9.0.2",
     "socket.io": "^4.7.2"
   },
   "optionalDependencies": {
@@ -17,5 +19,7 @@
     "utf-8-validate": "^5.0.10"
   },
   "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.4",
+    "kitsune-wrapper-library": "^0.0.9"
   }
 }

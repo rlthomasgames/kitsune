@@ -7,6 +7,7 @@ import CoreState from "../constants/CoreState";
 import IInjectableExtensionModule from "kitsune-wrapper-library/dist/base/interfaces/IInjectableExtensionModule";
 import ICommand from "kitsune-wrapper-library/dist/base/interfaces/ICommand";
 import {io, Socket} from "socket.io-client";
+import {AUTH_TOKEN, AuthMsg, CONNECT, SOCK_ID} from "../../../../kitsune-wrapper-library/src/base/constants/SockConn";
 
 @injectable()
 export class InitWrapper implements ICommand {
@@ -16,6 +17,7 @@ export class InitWrapper implements ICommand {
     @inject(TYPES.LoadModule)
     _moduleLoader: LoadModule;
 
+    private clientMap: Map<string, Socket | string | boolean | number>;
     private socket: Socket;
 
     private totalModules:number;
@@ -23,16 +25,44 @@ export class InitWrapper implements ICommand {
 
     run() {
         sessionStorage.clear();
-        const newSessionKey = JSON.stringify(Date.now() + crypto.randomUUID());
-        sessionStorage.setItem('sessionKey', newSessionKey);
-        this.socket = io('ws://localhost:3000', {port:3000, autoConnect:false, host:'http://localhost:3000', upgrade:true});
-        this.socket.on('connect', ()=> {
-            console.log('connect', this.socket, 'get ready to send new session key', newSessionKey);
-        })
-        this.socket.connect();
-        this._wrapperConfig.request().then(() => {
-            this.loadModules();
+        this.clientMap = new Map<string, Socket | string | boolean | number>();
+        const newSessionKey = crypto.randomUUID();
+        sessionStorage.setItem('kitsune_session', newSessionKey);
+
+        const cookieApplication = `kitsune=kitsuneWrapper;`
+        const cookieToSession = `session=${newSessionKey};`;
+        const cookieUser = `user=genericUser;`
+        const cookieExpires = `expires=${new Date(Date.now() + 3600000)}`;
+
+        document.cookie = `${cookieApplication} ${cookieUser} ${cookieToSession} ${cookieExpires}`;
+
+        this.socket = io('ws://localhost:3000',
+            {
+                autoConnect: false,
+                host: 'http://localhost:3000',
+                port: 3000,
+                transports: ["websocket", "polling"],
+                upgrade: true,
+                auth: {
+                    token: newSessionKey
+                },
+            });
+
+        this.socket.on(CONNECT, ()=> {
+            console.log('connect established :', this.socket);
+            this.clientMap.set(CONNECT, true);
+            this.clientMap.set(SOCK_ID, this.socket.id);
         });
+
+        this.socket.on(AUTH_TOKEN, (authMsg : AuthMsg) => {
+            console.log('received  auth token', authMsg);
+            sessionStorage.setItem(AUTH_TOKEN, authMsg.auth_token);
+            this.clientMap.set(AUTH_TOKEN, true);
+            this._wrapperConfig.request().then(() => {
+                this.loadModules();
+            });
+        })
+        this.socket.connect().open();
     }
 
     loadModules() {

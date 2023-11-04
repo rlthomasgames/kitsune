@@ -103,6 +103,7 @@ export class LoadModule implements IAsyncRequest {
                                     container.bind<IInjectableExtensionModule>(parameters.moduleName).to(extension);
                                     const instance: IInjectableExtensionModule = container.get(parameters.moduleName);
                                     resolved(instance);
+                                    URL.revokeObjectURL(blobURL);
                                 }
                                 scriptTag.onerror = (error) => {
                                     rejected(error);
