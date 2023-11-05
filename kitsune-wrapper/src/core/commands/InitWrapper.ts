@@ -7,7 +7,8 @@ import CoreState from "../constants/CoreState";
 import IInjectableExtensionModule from "kitsune-wrapper-library/dist/base/interfaces/IInjectableExtensionModule";
 import ICommand from "kitsune-wrapper-library/dist/base/interfaces/ICommand";
 import {io, Socket} from "socket.io-client";
-import {AUTH_TOKEN, AuthMsg, CONNECT, SOCK_ID} from "../../../../kitsune-wrapper-library/src/base/constants/SockConn";
+import {AuthMsg, SOCK} from "../../../../kitsune-wrapper-library/src/base/constants/SockConn";
+import * as fflate from "fflate";
 
 @injectable()
 export class InitWrapper implements ICommand {
@@ -22,6 +23,8 @@ export class InitWrapper implements ICommand {
 
     private totalModules:number;
     private totalLoaded:number = 0;
+
+    // TODO : !!!!!!!IMPORTANT!!!!!!!! - clean web sockets and gzip out into separate command and / or module !!!
 
     run() {
         sessionStorage.clear();
@@ -48,22 +51,49 @@ export class InitWrapper implements ICommand {
                 },
             });
 
-        this.socket.on(CONNECT, ()=> {
+        this.socket.on(SOCK.CONNECT, ()=> {
             console.log('connect established :', this.socket);
-            this.clientMap.set(CONNECT, true);
-            this.clientMap.set(SOCK_ID, this.socket.id);
+            this.clientMap.set(SOCK.CONNECT, true);
+            this.clientMap.set(SOCK.SOCK_ID, this.socket.id);
         });
 
-        this.socket.on(AUTH_TOKEN, (authMsg : AuthMsg) => {
+        this.socket.on(SOCK.AUTH_TOKEN, (authMsg : AuthMsg) => {
             console.log('received  auth token', authMsg);
-            sessionStorage.setItem(AUTH_TOKEN, authMsg.auth_token);
-            this.clientMap.set(AUTH_TOKEN, true);
+            sessionStorage.setItem(SOCK.AUTH_TOKEN, authMsg.auth_token);
+            this.clientMap.set(SOCK.AUTH_TOKEN, true);
+            const originalPayload = { gzip_test: true };
+            this.sendGZipEmit(originalPayload).then((sent)=>{
+                console.log(`gzip object sent result : ${sent} : ${originalPayload}`)
+            });
             this._wrapperConfig.request().then(() => {
                 this.loadModules();
             });
         })
         this.socket.connect().open();
     }
+
+    async sendGZipEmit( payload: Object): Promise<boolean> {
+        const payString = JSON.stringify(payload);
+        // TODO ? possibly encrypt data here, REMINDER: but MUST-DO on server side more probable
+        let promiseSent: void | Promise<boolean>;
+        promiseSent = new Promise((resolve, reject)=>{
+            fflate.gzip(fflate.strToU8(payString), (err, data) => {
+                //
+                if (err) {
+                    resolve(false);
+                    console.warn(err?.stack, err);
+                    console.error(err);
+                    throw new Error(`${SOCK.GZIP_TEST} failed : ${err}`);
+                } else if( data) {
+                    resolve(true);
+                    this.socket.emit(SOCK.GZIP_TEST, data);
+                }
+            });
+        })
+        return await promiseSent;
+    }
+
+
 
     loadModules() {
         const modules : Array<ExtensionValuedObject> | undefined = (this._wrapperConfig).getConfig().modules;
