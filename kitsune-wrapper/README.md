@@ -6,15 +6,13 @@ Hopefully keeping initial load time short and only inflating the wrapper as need
 
 # Usage
 
-build and run wrapper
+build all modules and launch wrapper and web socket server:
 ```
-npm i
-npm run start
+from root "kitsune" folder execute...
 
-or 
+npm run build-from-scratch
 
-npm i
-npm run build
+then open your browser to localhost:8080
 ```
 
 Contains:

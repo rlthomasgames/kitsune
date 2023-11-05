@@ -39,36 +39,18 @@ git clone https://github.com/rlthomasgames/kitsune.git
 
 _**'kitsune-wrapper-library'**_ is included but no need to link this library
 directly unless you want to extend upon it, package.json already has
-the library referenced for installing so the best option to run
-everything is to load up the _**'kitsune-wrapper'**_ project first
-and run these commands:
+the library referenced for installing.
+To build and launch..
+
+build all modules and launch wrapper and web socket server:
 ```
-    npm i
-    npm run build
+from root "kitsune" folder execute...
+
+npm run build-from-scratch
+
+then open your browser to localhost:8080
 ```
 
-this will build the wrapper as a production build,
-development build methodology is still under development.
-once wrapper has built open the _**'kitsune-wrapper-extensions'**_ project 
-and run the same commands:
-```
-    npm i
-    npm run build
-```
-
-this will build 2 example extensions and deliver the output modules
-to the wrappers' dist folder.
-
-currently, the project structure and relative locations of folders
-are slightly important, changes to make it more flexible
-are hopefully coming soon.
-
-once both projects successfully build. you can host the dist folder using...    
-**_http-server_**   package from npm, just install it globally and run this command
-from a command line within the _**'kitsune-wrapper'**_ dist folder.
-```
-http-server ./
-```
 load up localhost:8080 in your browser and you'll be able to observe
 current loading examples from monitoring the information in dev tools.
 
@@ -82,13 +64,15 @@ kitsune-wrapper-extensions      :   early injectable extension examples,
                                     dynamic loading and code execution of 
                                     external unlinked packages
 
-kitsune-wrapper-app-examples    :   coming soon! - games and stuff :)
+kitsune-application-test-dummy  :   rough WIP application
+
+kitsune-ws-server               :   rough WIP web socket server
 ````
 
 # Further reading
 
 **More information coming...**
-<p style="font-size: smaller; font-style: italic; background-color: gray" onclick="alert('you sweaty scumbag fox')" content="In Japanese folklore, kitsune are foxes that possess paranormal
+<p style="font-size: smaller; font-style: italic" onclick="alert('you sweaty scumbag fox')" content="In Japanese folklore, kitsune are foxes that possess paranormal
 abilities that increase as they get older and wiser." />
 
 _In Japanese folklore, kitsune are foxes that possess paranormal
