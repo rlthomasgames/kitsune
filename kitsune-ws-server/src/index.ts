@@ -1,10 +1,10 @@
-import {Server, Socket, Event} from "socket.io"
+import {Event, Server, Socket} from "socket.io"
 // import { authenticate } from "socketio-jwt-auth";
 import * as http from "http";
 import * as jwt from "jsonwebtoken";
 import * as fflate from "fflate";
-import {SOCK} from "kitsune-wrapper-library";
 import {strFromU8} from "fflate";
+import {SOCK} from "kitsune-wrapper-library";
 
 // TODO : CLEAN INTO A PROPER ENGINE ( modular classes) FOR BETTER SERVER STRUCTURE !!!!!! - currently just vanilla :P
 
@@ -18,6 +18,7 @@ const server: Server = new Server(httpServer, {
         methods: ["GET", "POST"]
     }
 });
+
 server.on('connection', async (socket: Socket) => {
     if (socket.handshake.auth && socket.handshake.auth.token) {
         const jwtToken = jwt.sign({
