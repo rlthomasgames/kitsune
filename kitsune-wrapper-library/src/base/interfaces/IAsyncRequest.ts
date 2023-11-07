@@ -1,3 +1,3 @@
 export default interface IAsyncRequest {
-    request(valuedObject?: unknown, gzipped?: boolean): Promise<unknown>;
+    request(valuedObject?: unknown, gzipped?: boolean): Promise<unknown> | undefined;
 }
