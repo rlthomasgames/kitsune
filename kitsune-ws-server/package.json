@@ -21,6 +21,6 @@
   },
   "devDependencies": {
     "@types/jsonwebtoken": "^9.0.4",
-    "kitsune-wrapper-library": "^0.0.14"
+    "kitsune-wrapper-library": "^0.0.15"
   }
 }
