@@ -12,6 +12,7 @@ export interface ISOCK {
     readonly SOCK_ID : string;
     readonly GZIP_TEST : string;
     readonly KICK : string;
+    readonly CONNECTION: string;
 }
 
 export const SOCK:ISOCK = {
@@ -20,4 +21,5 @@ export const SOCK:ISOCK = {
     KICK: "disconnect",
     SOCK_ID: "SOCK_ID",
     GZIP_TEST: "GZIP",
+    CONNECTION: 'connection'
 }

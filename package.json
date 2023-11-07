@@ -19,6 +19,7 @@
     "build-from-scratch": "npm i && npm run install-all && npm run build-library && npm run relink-library-to-all && npm run build-all-modules && npm run launch-all"
   },
   "devDependencies": {
-    "concurrently": "^8.2.2"
+    "concurrently": "^8.2.2",
+    "http-server": "^14.1.1"
   }
 }
