@@ -10,5 +10,6 @@
     { "moduleName":"PixiFrameworkExtension", "modulePath":"./extensions/pixiFrameworkExtension.bundle.js", "gzipped":  true},
     { "moduleName":"ThreeFrameworkExtension", "modulePath":"./extensions/threeFrameworkExtension.bundle.js", "gzipped":  true }
   ],
-  "application": {"moduleName":"application", "modulePath":"./applications/test_dummy/index.js", "gzipped":  false}
+  "application": {"moduleName":"application", "modulePath":"./applications/test_dummy/index.js", "gzipped":  false},
+  "assetPacks": ["81d96cd2ae3b0418c03755031305a5ca612acf549eac4e672da9b18f18a4f1f2"]
 }
