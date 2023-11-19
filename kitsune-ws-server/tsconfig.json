@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "target": "es2017",
-    "module": "NodeNext"
+    "module": "NodeNext",
+    "forceConsistentCasingInFileNames": true
   }
 }

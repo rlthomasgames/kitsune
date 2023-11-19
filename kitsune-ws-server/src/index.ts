@@ -1,4 +1,5 @@
 import {defaultEventHandler, KitsuneSockFactory} from "./KitsuneSockFactory";
+import {AssetPackSplitter} from "./cms/AssetPackSplitter";
 
 const promisedSServer = KitsuneSockFactory.createServer(defaultEventHandler);
 
@@ -19,4 +20,7 @@ promisedSServer.then((kServer) => {
         ================= MAIN KSOCK SERVER ==================== \n
         ======================================================== \n`,
         KVerboseLog.log(kServer));
+
+    console.log('testing asset splitting');
+    const assetSplitter = new AssetPackSplitter('');
 });

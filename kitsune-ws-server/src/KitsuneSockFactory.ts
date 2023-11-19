@@ -6,9 +6,9 @@ import * as fflate from "fflate";
 import {strFromU8} from "fflate";
 import {KVerboseLog} from "./index";
 
-export type SockEventHandler = (event: Event, next) => void;
+export type SockEventHandler = (event: Event, next: Function) => void;
 
-export const defaultEventHandler = (event: Event, next) => {
+export const defaultEventHandler = (event: Event, next: Function) => {
     console.log(`server received ${event}`);
     console.log(`${event.map((value, index, array) => {
         console.log(`map: ${value} | index: ${index} | array: ${array}`);
