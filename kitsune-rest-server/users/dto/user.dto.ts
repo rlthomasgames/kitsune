@@ -8,4 +8,5 @@ export interface UserDto {
    priveledges?: string;
    userID?: string;
    secretKey?:string;
+   registrationKey?:string;
 }

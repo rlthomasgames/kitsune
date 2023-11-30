@@ -1,5 +1,5 @@
 import * as fs from "fs";
-import sha256 = require("sha256");
+import sha256 from "sha256";
 import {strToU8} from "fflate";
 
 /*========================================

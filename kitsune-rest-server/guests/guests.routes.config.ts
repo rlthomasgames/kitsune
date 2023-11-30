@@ -1,6 +1,6 @@
 import {CommonRoutesConfig} from '../common/common.routes.config';
-import UsersController from './controllers/users.controller';
-import UsersMiddleware from './middleware/users.middleware';
+import UsersController from './controllers/guests.controller';
+import UsersMiddleware from './middleware/guests.middleware';
 import express from 'express';
 
 export class UsersRoutes extends CommonRoutesConfig {
@@ -12,9 +12,6 @@ export class UsersRoutes extends CommonRoutesConfig {
         this.app.route(`/users`)
             .get(UsersController.listUsers)
             .post(
-                UsersMiddleware.validateEmailFormat,
-                UsersMiddleware.validateRequiredUserBodyFields,
-                UsersMiddleware.validateSameEmailDoesntExist,
                 UsersMiddleware.registerNewUserKey,
                 UsersController.createUser);
 
@@ -25,13 +22,10 @@ export class UsersRoutes extends CommonRoutesConfig {
             .delete(UsersController.removeUser);
 
         this.app.put(`/users/:userId`,[
-            UsersMiddleware.validateRequiredUserBodyFields,
-            UsersMiddleware.validateSameEmailBelongToSameUser,
             UsersController.put
         ]);
 
         this.app.patch(`/users/:userId`, [
-            UsersMiddleware.validatePatchEmail,
             UsersController.patch
         ]);
 

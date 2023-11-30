@@ -1,12 +1,10 @@
 import express from 'express';
-import usersService from '../services/users.service';
+import usersService from '../services/guests.service';
 import argon2 from 'argon2';
 import debug from 'debug';
-import {UserDto} from "../dto/user.dto";
-import shortid from "shortid";
 
 const log: debug.IDebugger = debug('app:users-controller');
-class UsersController {
+class GuestsController {
     async listUsers(req: express.Request, res: express.Response) {
         console.log('creating register key');
         const users = await usersService.list(100, 0);
@@ -48,4 +46,4 @@ class UsersController {
     }
 }
 
-export default new UsersController();
+export default new GuestsController();
