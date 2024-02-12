@@ -1,6 +1,7 @@
 export default class KitsuneHelper {
 
     private static singletonInstance: KitsuneHelper;
+
     constructor() {
         if(!window[`kitsuneExtensionFactories`]) {
             this.createSingleton();
