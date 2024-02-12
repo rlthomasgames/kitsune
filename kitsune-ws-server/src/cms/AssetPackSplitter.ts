@@ -24,17 +24,18 @@ export class AssetPackSplitter {
     private assetsSuffix = '.gz';
     private assetsPacketsPrefix: string = './cms/packets/';
     private splitPartSize = 500;
+    private promiseOfManifest:Promise<IAssetPacksManifest>;
 
     constructor(urlGZIP: string) {
         if (RUN_TEST) {
             urlGZIP = `${this.assetsLocationPrefix}${testGzip}${this.assetsSuffix}` //test
-            this.splitWithManifest(urlGZIP).then((value) => {
+            this.promiseOfManifest = this.splitWithManifest(urlGZIP).then((value) => {
                 return value;
             });
         }
     }
 
-    async splitWithManifest(url) {
+    async splitWithManifest(url:string) {
         const manifest = this.splitAssets(url);
         return await manifest.then((returnedManifest) => {
             console.log('manifest', returnedManifest);
@@ -67,7 +68,9 @@ export class AssetPackSplitter {
             })
             console.log('all packets', packets);
             const paths: Array<string> = [];
-            const uniqueID = sha256(url, {asString: true});
+            // @ts-ignore
+            const encoder = new TextEncoder();
+            const uniqueID = encoder.encode(url.slice(0,12)).join('');
             fs.opendir(this.assetsPacketsPrefix, (err, dir) => {
                 console.log('open dir', this.assetsPacketsPrefix, err, dir);
                 if (!err) {
@@ -84,19 +87,19 @@ export class AssetPackSplitter {
                             });
                             paths.push(`${packetFileName}`);
                         });
-                        console.log('manifest should be ', {
-                            uniqueID,
-                            pathsToParts: paths
-                        });
                     })
                 }
                 dir.close(() => {
+                    fs.promises.writeFile(`${uniqueID}.pak`, JSON.stringify({
+                        uniqueID,
+                        pathsToParts: paths
+                    }));
                     resolve({
                         uniqueID,
                         pathsToParts: paths
                     });
                 });
-            })
+            });
         });
     }
 
@@ -111,6 +114,10 @@ export class AssetPackSplitter {
     async getFileSize(url: string) {
         const stats = await fs.promises.stat(url);
         return stats.size;
+    }
+
+    getManifest() {
+        return this.promiseOfManifest;
     }
 }
 

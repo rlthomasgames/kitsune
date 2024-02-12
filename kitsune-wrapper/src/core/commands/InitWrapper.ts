@@ -67,6 +67,10 @@ export class InitWrapper implements ICommand {
                 this.loadModules();
             });
         })
+
+        this.socket.on(SOCK.AP_RES, (responseData:unknown)=>{
+            console.log('received asset pack response...', responseData);
+        })
         this.socket.connect().open();
     }
 

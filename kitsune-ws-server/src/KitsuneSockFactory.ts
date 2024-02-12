@@ -3,7 +3,7 @@ import * as jwt from "jsonwebtoken";
 import * as http from "http";
 import {SOCK} from "kitsune-wrapper-library";
 import * as fflate from "fflate";
-import {strFromU8} from "fflate";
+import {strFromU8, strToU8} from "fflate";
 import {KVerboseLog} from "./index";
 import * as fs from "fs";
 
@@ -44,12 +44,13 @@ export const defaultEventHandler = (event: Event, next: Function) => {
                             fs.read(fd, (err, bytesRead, buffer)=>{
                                 completeBuffer = completeBuffer.concat(buffer.toString())
                                 console.log('data to send pak', index , pak, completeBuffer);
+                                if(index >= arrayPaks.length-1){
+                                    console.log(`sending asset pack - ${arrayPaks.length} paks combined into ${completeBuffer.length} length string / stream`)
+                                    const newUint8 = strToU8(completeBuffer), arrayBufferN = sendWhenPromised(new Blob([newUint8]).arrayBuffer());
+                                }
                             })
                         })
                     })
-                    if(socketUsed != undefined) {
-                        socketUsed.socket.emit(SOCK.AP_RES, completeBuffer)
-                    }
                 }
             })
             next();
@@ -60,6 +61,16 @@ export const defaultEventHandler = (event: Event, next: Function) => {
             return;
     }
 };
+
+interface T {
+}
+
+const sendWhenPromised = async (payload:Promise<T|unknown>) => {
+    if(socketUsed) {
+    socketUsed.socket.emit(SOCK.AP_RES, await payload);
+    }
+    return {socket:socketUsed, payload:payload}
+}
 
 export class KitsuneSockFactory {
     static async createServer(eventHandler: SockEventHandler): Promise<KitsuneSock> {
