@@ -14,6 +14,7 @@ export interface ISOCK {
     readonly AP_REQ : string;
     readonly KICK : string;
     readonly CONNECTION: string;
+    readonly AP_RES: string;
 }
 
 export const SOCK:ISOCK = {
@@ -23,5 +24,6 @@ export const SOCK:ISOCK = {
     SOCK_ID: "SOCK_ID",
     GZIP_TEST: "GZIP",
     AP_REQ: "assetPackREQ",
-    CONNECTION: 'connection'
+    CONNECTION: 'connection',
+    AP_RES: 'assetPackRES'
 }

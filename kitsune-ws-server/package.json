@@ -23,6 +23,6 @@
   "devDependencies": {
     "@types/jsonwebtoken": "^9.0.4",
     "@types/sha256": "^0.2.2",
-    "kitsune-wrapper-library": "^0.0.15"
+    "kitsune-wrapper-library": "^0.0.17"
   }
 }
