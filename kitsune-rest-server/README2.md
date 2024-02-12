@@ -1,5 +1,4 @@
 INSTALL MONGODB - LINUX - debian
-
 echo "deb [ arch=amd64,arm64,i386 signed-by=/usr/share/keyrings/mongodb-server-7.0.gpg ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/7.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-7.0.list
 
 sudo apt-get update
@@ -21,7 +20,7 @@ sudo systemctl start mongod
 
 get postman and mogodb compass applications they come in usefull
 
-
+sudo mkdir /home/rhys/mongo && sudo systemctl start mongod --dbpath /home/rhys/mongo
 
 
 

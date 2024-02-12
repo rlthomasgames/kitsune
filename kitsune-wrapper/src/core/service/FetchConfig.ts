@@ -45,6 +45,7 @@ export class FetchConfig implements IAsyncRequest {
 }
 
 const baseConfig: IWrapperConfig = {
+    assetPacks: "",
     version: 0,
     securityToken: "none",
     language: "en-UK",

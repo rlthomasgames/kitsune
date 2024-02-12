@@ -5,6 +5,9 @@ import {SOCK} from "kitsune-wrapper-library";
 import * as fflate from "fflate";
 import {strFromU8} from "fflate";
 import {KVerboseLog} from "./index";
+import * as fs from "fs";
+
+let socketUsed: KitsuneSock;
 
 export type SockEventHandler = (event: Event, next: Function) => void;
 
@@ -23,9 +26,31 @@ export const defaultEventHandler = (event: Event, next: Function) => {
                 const asString = strFromU8(new Uint8Array(arrayBuf));
                 console.log(`UNZIPPED:`);
                 console.log(
-                    `${KVerboseLog.log("as Uint8Array :") + "\n"}${KVerboseLog.log(unzipped + "") + "\n"}${KVerboseLog.log("as String :") + "\n"}${KVerboseLog.log(`${asString}`) + "\n"}${KVerboseLog.log("as JSON object :")}`
+                    `${KVerboseLog.log("as Uint8Array :") + "\n"}${KVerboseLog.log(unzipped + "") + "\n"}
+                    ${KVerboseLog.log("as String :") + "\n"}${KVerboseLog.log(`${asString}`) + "\n"}
+                    ${KVerboseLog.log("as JSON object :")}`
                 );
-                console.log(JSON.parse(asString));
+                const object = JSON.parse(`${asString}`);
+                console.log('current object', object);
+                const assetReq: boolean = object[SOCK.AP_REQ] != undefined;
+                let completeBuffer: string = '';
+                if(assetReq) {
+                    const arrayPaks = object[SOCK.AP_REQ] as Array<string>;
+                    console.log('trying to load : ', arrayPaks);
+                    arrayPaks.forEach((pak:string, index)=>{
+                        console.log('trying to open : ', pak, index);
+                        fs.open(pak, (value, fd)=>{
+                            console.log('?error? : ', value, fd);
+                            fs.read(fd, (err, bytesRead, buffer)=>{
+                                completeBuffer = completeBuffer.concat(buffer.toString())
+                                console.log('data to send pak', index , pak, completeBuffer);
+                            })
+                        })
+                    })
+                    if(socketUsed != undefined) {
+                        socketUsed.socket.emit(SOCK.AP_RES, completeBuffer)
+                    }
+                }
             })
             next();
             return;
@@ -74,10 +99,16 @@ export class KitsuneSockFactory {
                             socket.disconnect();
                         }
                     });
-                    resolve(new KitsuneSock(secretKey, server, socket));
+                    resolve(socketUsed = new KitsuneSock(secretKey, server, socket));
                 } else {
                     socket.emit(SOCK.KICK, {});
                 }
+            });
+            server.on(SOCK.GZIP_TEST, async (socket: Socket) => {
+                console.log('ready to send the asset data r0', socket);
+            });
+            server.on(SOCK.AP_REQ, async (socket: Socket) => {
+                console.log('ready to send the asset data r1', socket);
             });
             server.listen(3000);
 
@@ -93,7 +124,7 @@ export class KitsuneSockFactory {
 export class KitsuneSock {
     private readonly secretKey: string;
     private server: Server;
-    private socket: Socket;
+    public socket: Socket;
 
     constructor(secret_key: string, server: Server, socket: Socket) {
         this.secretKey = secret_key;

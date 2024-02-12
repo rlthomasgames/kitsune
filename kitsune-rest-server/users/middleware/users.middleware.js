@@ -29,31 +29,42 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const users_service_1 = __importDefault(require("../services/users.service"));
 const debug_1 = __importDefault(require("debug"));
 const EmailValidator = __importStar(require("email-validator"));
+const shortid_1 = __importDefault(require("shortid"));
+const argon2_1 = __importDefault(require("argon2"));
 const log = (0, debug_1.default)('app:users-controller');
 class UsersMiddleware {
     constructor() {
         // Here we need to use an arrow function to bind `this` correctly
         this.validatePatchEmail = async (req, res, next) => {
-            if (req.body.email) {
+            if (await this.validateSameEmailBelongToSameUser(req, res, next) == true) {
                 log('Validating email', req.body.email);
-                this.validateSameEmailBelongToSameUser(req, res, next);
-            }
-            else {
                 next();
             }
+            return false;
         };
     }
+    async signInAsUser(email, password) {
+        return;
+    }
+    async signInAsGuest(guestID) {
+        return;
+    }
     async validateEmailFormat(req, res, next) {
-        if (req.body && req.body.email && EmailValidator.validate(req.body.email)) {
+        console.log('validating email format', req.body.email);
+        if (req.body != undefined && req.body.email != undefined && EmailValidator.validate(req.body.email)) {
             next();
         }
         else {
-            res.status(400).send({ error: `invalid email format` });
+            res.status(400).send({ error: `invalid email format`, source: req.body.email });
         }
+    }
+    async registerNewUserKey(req, res, next) {
+        req.body.registrationKey = await argon2_1.default.hash(Date.now() + shortid_1.default.generate());
+        next();
     }
     async validateRequiredUserBodyFields(req, res, next) {
         console.log('checking..', req, req.body);
-        if (req.body && req.body.email && req.body.password) {
+        if (req.body && req.body.email != undefined && req.body.password != undefined) {
             next();
         }
         else {
@@ -70,25 +81,31 @@ class UsersMiddleware {
         }
     }
     async validateSameEmailBelongToSameUser(req, res, next) {
-        const user = await users_service_1.default.getUserByEmail(req.body.email);
-        if (user && user._id === req.params.userId) {
+        const emailReq = await users_service_1.default.getUserByEmail(req.body.email);
+        const IDReq = await users_service_1.default.readById(req.body.userID);
+        if (emailReq.email == IDReq.email && IDReq.userID == emailReq.userID) {
             next();
+            return true;
         }
         else {
-            res.status(400).send({ error: `Invalid email` });
+            //res.status(404).send({error: `User ID and email mismatch`});
+            return false;
         }
     }
     async validateUserExists(req, res, next) {
         const user = await users_service_1.default.readById(req.params.userId);
         if (user) {
+            res.status(200).send(user);
             next();
+            return true;
         }
         else {
-            res.status(404).send({ error: `User ${req.params.userId} not found` });
+            res.status(404).send({ error: `User not found` });
+            return false;
         }
     }
     async extractUserId(req, res, next) {
-        req.body._id = req.params.userId;
+        req.body.userID = req.params.userId;
         next();
     }
 }

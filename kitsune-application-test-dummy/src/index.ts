@@ -4,10 +4,22 @@ import {inject, injectable} from "inversify";
 import BaseApplication from "kitsune-wrapper-library/dist/base/application/BaseApplication";
 import {WebGLRenderer} from 'three';
 import KitsuneHelper from "kitsune-wrapper-library/dist/base/helper/KitsuneHelper";
+import {TYPES} from "kitsune-wrapper-library";
+import IAsyncRequest from "kitsune-wrapper-library/dist/base/interfaces/IAsyncRequest";
 
+interface IConciseConfig {
+    assetPacks: string;
+}
+
+export interface ICanFetchConfig {
+    getConfig: ()=>IConciseConfig;
+}
 @injectable()
 export class application extends BaseApplication implements IInjectableExtensionModule {
     name: string = 'application';
+
+    @inject(TYPES.FetchConfig)
+    _wrapperConfig: IAsyncRequest & ICanFetchConfig;
 
     @inject('PixiFrameworkExtension')
     _pixi: IInjectableExtensionModule;

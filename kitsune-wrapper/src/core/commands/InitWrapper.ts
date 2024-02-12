@@ -54,17 +54,15 @@ export class InitWrapper implements ICommand {
         this.socket.on(SOCK.CONNECT, ()=> {
             console.log('connect established :', this.socket);
             this.clientMap.set(SOCK.CONNECT, true);
-            this.clientMap.set(SOCK.SOCK_ID, this.socket.id);
+            if(this.socket.id) {
+                this.clientMap.set(SOCK.SOCK_ID, this.socket.id);
+            }
         });
 
         this.socket.on(SOCK.AUTH_TOKEN, (authMsg : AuthMsg) => {
             console.log('received  auth token', authMsg);
             sessionStorage.setItem(SOCK.AUTH_TOKEN, authMsg.auth_token);
             this.clientMap.set(SOCK.AUTH_TOKEN, true);
-            const originalPayload = { gzip_test: true };
-            this.sendGZipEmit(originalPayload).then((sent)=>{
-                console.log(`gzip object sent result : ${sent} : ${originalPayload}`)
-            });
             this._wrapperConfig.request().then(() => {
                 this.loadModules();
             });
@@ -120,6 +118,10 @@ export class InitWrapper implements ICommand {
 
     completeInit() {
         container.get(CoreState.INIT_COMPLETE);
+        const originalPayload = { assetPackREQ: this._wrapperConfig.getConfig().assetPacks };
+        this.sendGZipEmit(originalPayload).then((value)=>{
+            console.log('on full filled =', value);
+        });
     }
 }
 

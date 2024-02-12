@@ -11,5 +11,9 @@
     { "moduleName":"ThreeFrameworkExtension", "modulePath":"./extensions/threeFrameworkExtension.bundle.js", "gzipped":  true }
   ],
   "application": {"moduleName":"application", "modulePath":"./applications/test_dummy/index.js", "gzipped":  false},
-  "assetPacks": ["81d96cd2ae3b0418c03755031305a5ca612acf549eac4e672da9b18f18a4f1f2"]
+  "uniqueID": "4647991091154711711210811197100",
+  "assetPacks":[
+    "./cms/packets/4647991091154711711210811197100/0",
+    "./cms/packets/4647991091154711711210811197100/1",
+    "./cms/packets/4647991091154711711210811197100/2"]
 }

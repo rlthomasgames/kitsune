@@ -14,7 +14,7 @@ class UsersRoutes extends common_routes_config_1.CommonRoutesConfig {
     configureRoutes() {
         this.app.route(`/users`)
             .get(users_controller_1.default.listUsers)
-            .post(users_middleware_1.default.validateEmailFormat, users_middleware_1.default.validateRequiredUserBodyFields, users_middleware_1.default.validateSameEmailDoesntExist, users_controller_1.default.createUser);
+            .post(users_middleware_1.default.validateEmailFormat, users_middleware_1.default.validateRequiredUserBodyFields, users_middleware_1.default.validateSameEmailDoesntExist, users_middleware_1.default.registerNewUserKey, users_controller_1.default.createUser);
         this.app.param(`userId`, users_middleware_1.default.extractUserId);
         this.app.route(`/users/:userId`)
             .all(users_middleware_1.default.validateUserExists)
