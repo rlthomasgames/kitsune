@@ -11,9 +11,7 @@
     { "moduleName":"ThreeFrameworkExtension", "modulePath":"./extensions/threeFrameworkExtension.bundle.js", "gzipped":  true }
   ],
   "application": {"moduleName":"application", "modulePath":"./applications/test_dummy/index.js", "gzipped":  false},
-  "uniqueID": "4647991091154711711210811197100",
+  "uniqueID": null,
   "assetPacks":[
-    "./cms/packets/4647991091154711711210811197100/0",
-    "./cms/packets/4647991091154711711210811197100/1",
-    "./cms/packets/4647991091154711711210811197100/2"]
+    ]
 }
