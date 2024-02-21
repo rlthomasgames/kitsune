@@ -11,8 +11,9 @@
             right: 0px !important;
             bottom: 0px !important;
             top: 0px !important;
-            background-color: #C1C1C1;
-            background: linear-gradient(180deg, rgba(179,179,179,1) 0%, rgba(193,193,193,1) 11%, rgba(217,217,217,1) 89%, rgba(213,213,213,1) 100%);
+            background-color: #707070;
+            background: radial-gradient(1024px, rgba(0, 0, 0, 0.57) 0%, rgba(117, 61, 41, 0.55) 11%, rgba(255, 81, 12, 0.34) 89%, rgba(255, 135, 0, 0.44) 100%);
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.09) 0%, rgba(117, 61, 41, 0.19) 11%, rgba(117, 61, 41, 0.12) 89%, rgba(255, 81, 12, 0.05) 100%);
         }
         #content {
 
@@ -34,18 +35,147 @@
             justify-content: right;
             display: flex;
             width: 100%;
+            height: 145px;
             position: absolute;
             opacity: 0.75;
             overflow: hidden;
         }
         .logoImage {
-            position: relative;
+            position: absolute;
             bottom: -1px;
             opacity: 0.45;
             width: 64px;
             height: 64px;
             mix-blend-mode: multiply;
+            pointer-events: auto;
+            cursor: pointer;
+            #inactive {
+                mix-blend-mode: multiply;
+                pointer-events: auto;
+                cursor: none;
+            }
+            #active {
+
+            }
         }
+        div.kMenu {
+            visibility: visible;
+            display: flex;
+            right:120px;
+        }
+
+        div.kMenu.default {
+                visibility: hidden;
+                display: none;
+        }
+
+        div.kMenu.active {
+                visibility: visible;
+                display: flex;
+                position: absolute;
+                pointer-events: auto;
+                cursor: pointer;
+                z-index: 1984;
+                bottom: initial;
+                transform: initial;
+            }
+        div.kMenu.inactive {
+                visibility: hidden;
+                display: none;
+                position: fixed;
+                bottom: -1984px;
+                pointer-events: none;
+                cursor: default;
+                z-index: -1;
+                transform: translateY(-50%);
+            }
+        #fileInput {
+
+        }
+        #fileInput:after{
+                     content:"<br />";
+                     white-space: pre; /* or pre-wrap */
+                 }
+        #uploadButton{
+
+        }
+        div.container_square_textInput {
+            margin-top: 0;
+            margin-bottom: 0;
+            padding: 10px 15px;
+            text-align: center;
+            background-color: transparent;
+            box-shadow: rgba(0, 0, 0, 1) 6px 10px 10px -15px;
+            margin: 0;
+            position: relative;
+            text-transform: uppercase;
+        }
+        @media (min-width: 50rem)
+        .grid-col-span-2 {
+            grid-column: span 2;
+        }
+
+        .card{
+            align-content: flex-start;
+            align-items: flex-start;
+            flex: max-content;
+            backdrop-filter: blur(9px) saturate(20%) !important;
+            -webkit-backdrop-filter: blur(9px) saturate(180%) !important;
+            background-color: rgba(255,255,255, 0.35) !important;
+            border-radius:  12px !important;
+            border: 3px solid rgba(209, 213, 219, 0.38) !important;
+            height: 145px;
+            flex-wrap: nowrap;
+            padding: 10px 15px;
+            border-radius: 12px;
+            margin: 3px;
+            position: relative;
+            border: 4px solid rgba(80, 80, 80, 0.65);
+            background-color: rgba(0.5, 0.5, 0.5, 0.5);
+            text-transform: uppercase;
+            backdrop-filter: blur(7px) saturate(5%);
+            z-index: 1984;
+            flex-direction: column;
+        }
+        .element {
+            border: 6px groove rgba(242, 235, 235, 0.7);
+            border-radius: 10px;
+            transform: translate(0px, -200px);
+            background-color: rgba(255, 255, 255, 0.5);
+            color: rgba(0, 0, 0, 0.88);
+            box-shadow: -3px -3px 47px 23px rgba(0, 0, 0, 0.32);
+            transition: transform 332ms ease-out 92ms;
+            animation: cssAnimation_0 1168ms infinite ease-in 69ms;
+            backdrop-filter:
+                    blur(9px)
+                    saturate(266%)
+                    grayscale(53%)
+                    sepia(60%)
+                    hue-rotate(110deg)
+                    contrast(63%);
+            -webkit-backdrop-filter:
+                    blur(9px)
+                    saturate(266%)
+                    grayscale(53%)
+                    sepia(60%)
+                    hue-rotate(110deg)
+                    contrast(63%);
+        }
+
+        @keyframes cssAnimation_0 {
+            from {
+                background-color: rgba(255, 255, 255, 0.5);
+            }
+
+            to {
+                background-color: rgba(255, 255, 255, 0.22);
+            }
+        }
+
+        .element:active {
+            transform: translate(0px, 43px);
+        }
+
     </style>
 </head>
 <body class="bg">
@@ -53,7 +183,17 @@
     <div id="content"></div>
 </div>
 <div class="logoAlign">
-    <img src="../assets/logo.png" class="logoImage">
+    <img src="../assets/logo.png" class="logoImage" id="logo"; style="cursor: pointer;">
+    <div id="kitsuneMenuContainer" class="kMenu default card grid-col-span-2" >
+        <form ref='uploadForm'
+              id='uploadForm'
+              action='http://localhost:8000/upload'
+              method='post'
+              encType="multipart/form-data">
+            <input type="file" id="fileInput" name="files[]" multiple accept="*/*"/>
+            <input type="button" id="uploadButton" value="submit_assets">Upload Files</input>
+        </form>
+    </div>
 </div>
 </body>
 </html>

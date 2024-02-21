@@ -81,7 +81,7 @@ export class KitsuneSockFactory {
                 cookie: true,
                 transports: ["websocket", "polling"],
                 cors: {
-                    origin: 'http://localhost:8080',
+                    origin: 'http://localhost:8000',
                     methods: ["GET", "POST"]
                 }
             });

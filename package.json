@@ -15,14 +15,18 @@
     "relink-library-to-all": "concurrently --kill-others \"npm run linklib-wrapper & npm run linklib-wrapper-extensions & npm run linklib-wrapper-application & npm run linklib-ws-server\"",
     "build-all-modules": "concurrently --kill-others \"npm run build --prefix ./kitsune-wrapper && npm run build --prefix ./kitsune-wrapper-extensions && npm run build --prefix ./kitsune-application-test-dummy && npm run build --prefix ./kitsune-ws-server\"",
     "start-mongodb": "sudo systemctl start mongod",
-    "launch-application": "http-server ./kitsune-wrapper/dist",
+    "launch-application": "http-server ./kitsune-wrapper/dist -g -p 8080 -t0 --cors=Access-Control-Allow-Origin,localhost:8000,localhost:3000,localhost:8080,localhost:8090,localhost:3090,Access-Control-Allow-Headers,Origin,X-Requested-With,Content-Type,Accept",
     "launch-server": "cd ./kitsune-ws-server/src && node index.js",
     "launch-rest-server": "cd ./kitsune-rest-server && tsc",
+    "launch-without-mongo": "sudo npm run launch-rest-server && concurrently --kill-others \"sudo npm run launch-application & npm run launch-server\"",
     "launch-all": "npm run start-mongodb && npm run launch-rest-server && concurrently --kill-others \"npm run launch-application & npm run launch-server\"",
     "build-from-scratch": "npm i && npm run install-all && npm run build-library && npm run relink-library-to-all && npm run build-all-modules && npm run launch-all"
   },
   "devDependencies": {
     "concurrently": "^8.2.2",
     "http-server": "^14.1.1"
+  },
+  "dependencies": {
+    "all": "^0.0.0"
   }
 }

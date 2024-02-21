@@ -1,7 +1,18 @@
 {
   "compilerOptions": {
-    "target": "es2017",
     "module": "NodeNext",
-    "forceConsistentCasingInFileNames": true
-  }
+    "target": "es2017",
+    "declaration": true,
+    "outDir": "./dist",
+    "forceConsistentCasingInFileNames": true,
+    "lib": [
+      "dom",
+      "es5",
+      "scripthost",
+      "es2015"
+    ]
+  },
+  "include": [
+    "src/**/*"
+  ]
 }

@@ -15,7 +15,7 @@ const routes: Array<CommonRoutesConfig> = [];
 const debugLog: debug.IDebugger = debug('app');
 
 app.use(bodyparser.json());
-app.use(cors());
+app.use(cors({origin:'http://localhost:8080'}));
 
 app.use(expressWinston.logger({
     transports: [

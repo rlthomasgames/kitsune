@@ -1,5 +1,4 @@
 import * as fs from "fs";
-import sha256 from "sha256";
 import {strToU8} from "fflate";
 
 /*========================================
@@ -16,23 +15,19 @@ import {strToU8} from "fflate";
   O: uniqueID<string>, amount of packets<number>
 
 ======================================= */
-const RUN_TEST: boolean = true;
-const testGzip = '81d96cd2ae3b0418c03755031305a5ca612acf549eac4e672da9b18f18a4f1f2'
 
-export class AssetPackSplitter {
-    private assetsLocationPrefix = './cms/uploaded/';
+class AssetPackSplitter {
+    private assetsLocationPrefix = '../kitsune-asset-store/uploaded/';
     private assetsSuffix = '.gz';
-    private assetsPacketsPrefix: string = './cms/packets/';
-    private splitPartSize = 500;
+    private assetsPacketsPrefix: string = '../kitsune-asset-store/packets/';
+    private splitPartSize = 256840;
     private promiseOfManifest:Promise<IAssetPacksManifest>;
 
     constructor(urlGZIP: string) {
-        if (RUN_TEST) {
-            urlGZIP = `${this.assetsLocationPrefix}${testGzip}${this.assetsSuffix}` //test
+            urlGZIP = `${this.assetsLocationPrefix}${urlGZIP}${this.assetsSuffix}` //test
             this.promiseOfManifest = this.splitWithManifest(urlGZIP).then((value) => {
                 return value;
             });
-        }
     }
 
     async splitWithManifest(url:string) {
@@ -44,23 +39,24 @@ export class AssetPackSplitter {
     }
 
     async splitAssets(url: string) {
+        const txtDecoder: TextDecoder = new TextDecoder();
         const fileSize = await this.getFileSize(url);
         const numParts = this.numParts(fileSize);
         return await new Promise<IAssetPacksManifest>((resolve, reject) => {
             const packets: Array<Array<string>> = [];
             fs.open(url, (err, fd) => {
                 fs.read(fd, (err2, bytesRead, buffer) => {
-                    const wholeString = buffer.toString();
+                    const wholeString = txtDecoder.decode(buffer, {stream:true});
+                    console.log('cheeck in : ', wholeString);
                     const array: Array<string> = wholeString.split('');
-                    console.log('buffer = ', buffer, 'byte length = ', buffer.byteLength, 'array length = ', array.length, bytesRead);
-                    console.log(array);
+                    console.log('buffer = ', buffer.byteLength, 'array length = ', array.length, 'totalBytesRead..', bytesRead);
                     for (let i = 0; i < numParts; i++) {
                         let part: Array<string> = [];
-                        for (let j = 0; j < this.splitPartSize; j++) {
+                        for (let j= 0; j < this.splitPartSize; j++) {
                             part.push(array[j]);
+                            //console.log('part ', part.length, ' of packet ', packets.length, ` has uniqueIndex: ${ Math.floor(Math.sqrt(i + (j*j)/i)) } index within packet`, packets.length-1);
                         }
                         packets.push(part);
-                        console.log('part ', i, ' = ', part);
                         array.splice(0, this.splitPartSize);
                     }
                 })
@@ -104,7 +100,7 @@ export class AssetPackSplitter {
     }
 
     numParts(size: number) {
-        const parts = Math.ceil(size / this.splitPartSize);
+        const parts = Math.abs(size / this.splitPartSize);
         if (parts < 1) {
             return 1;
         }
@@ -120,6 +116,8 @@ export class AssetPackSplitter {
         return this.promiseOfManifest;
     }
 }
+
+export {AssetPackSplitter as default, AssetPackSplitter};
 
 export interface IAssetPacksManifest {
     uniqueID: string;

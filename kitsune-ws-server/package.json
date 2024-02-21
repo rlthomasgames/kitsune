@@ -2,11 +2,17 @@
   "name": "kitsune-ws-server",
   "version": "1.0.0",
   "description": "<h1><img height=\"64px\" src=\"../kitsune.ico\" width=\"64px\"/> Kitsune WS Server</h1> Kitsune WS Server - web socket server to deliver the kitsune wrapper authorization, data messaging, asset streaming...",
-  "main": "index.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "./dist"
+    ],
   "scripts": {
     "linklib": "npm run --prefix ../kitsune-wrapper-library build && npm link ../kitsune-wrapper-library",
     "build": "tsc",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node ./dist/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "flush-store": "cd ../kitsune-asset-store/ && rm ./packets/**/* -r -f"
   },
   "author": "",
   "license": "ISC",

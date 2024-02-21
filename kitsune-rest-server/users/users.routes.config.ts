@@ -3,6 +3,16 @@ import UsersController from './controllers/users.controller';
 import UsersMiddleware from './middleware/users.middleware';
 import express from 'express';
 
+export class Ext extends CommonRoutesConfig {
+    constructor(app, name) {
+        super(app, name);
+    }
+
+    configureRoutes() {
+        return undefined;
+    }
+}
+
 export class UsersRoutes extends CommonRoutesConfig {
     constructor(app: express.Application) {
         super(app, 'UsersRoutes');

@@ -1,5 +1,4 @@
-import {defaultEventHandler, KitsuneSockFactory} from "./KitsuneSockFactory";
-import {AssetPackSplitter} from "./cms/AssetPackSplitter";
+import {defaultEventHandler, KitsuneSockFactory} from "./KitsuneSockFactory"
 
 const promisedSServer = KitsuneSockFactory.createServer(defaultEventHandler);
 
@@ -21,6 +20,10 @@ promisedSServer.then((kServer) => {
         ======================================================== \n`,
         KVerboseLog.log(kServer));
 
-    console.log('testing asset splitting');
-    const assetSplitter = new AssetPackSplitter('');
+    //console.log('testing asset splitting');
+    //const assetSplitter = new AssetPackSplitter('asset_pack.tar');
 });
+
+const kMenuVisible = (visible:boolean) => {
+
+}

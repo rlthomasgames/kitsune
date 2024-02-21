@@ -68,9 +68,21 @@ export class InitWrapper implements ICommand {
             });
         })
 
-        this.socket.on(SOCK.AP_RES, (responseData:unknown)=>{
-            console.log('received asset pack response...', responseData);
-        })
+        this.socket.on(SOCK.AP_RES, (responseData:ArrayBuffer)=>{
+            const textDecoder = new TextDecoder();
+            const decodedString = textDecoder.decode(responseData, {stream:false});
+            console.log('check we get here', responseData, decodedString);
+            /*
+            const decodedString2 = fflate.gunzip(new Uint8Array(responseData), {consume:true}, (vals)=>{
+                console.log('check we get here', responseData, decodedString);
+            });
+
+             */
+            //console.log('d12', decodedString2());
+            //const gzipFile:File = <File>new Blob([responseData as ArrayBuffer]);
+            //const deflated = fflate.gunzipSync(strToU8(decodedString));
+            console.log('received asset pack response...', 'a', /*deflated,*/ 'b', decodedString);
+        });
         this.socket.connect().open();
     }
 

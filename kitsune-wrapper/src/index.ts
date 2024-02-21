@@ -1,8 +1,9 @@
 import {Wrapper} from "./core/Wrapper";
 
-const self = this;
+const app = this;
 
-console.log(self);
+console.log(app);
 
 new Wrapper();
+
 

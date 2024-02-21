@@ -34,6 +34,9 @@ module.exports = {
     devServer: {
         open: true,
         static: './dist',
+        host: 'localhost',
+        https: true,
+        port: 8080
     },
     externalsPresets: { node: false }, // in order to ignore built-in extensions like path, fs, etc.
     externals: [], // in order to ignore all extensions in node_modules folder
