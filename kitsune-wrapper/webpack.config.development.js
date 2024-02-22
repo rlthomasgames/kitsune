@@ -4,6 +4,7 @@ const CopyPlugin = require("copy-webpack-plugin");
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const TerserPlugin = require("terser-webpack-plugin");
 const WatchPlugin = require('webpack-watch-files-plugin');
+const NodePolyfillPlugin = require("node-polyfill-webpack-plugin");
 
 /*============================================*/
 /*  MUST ADD ENTRY HERE FOR EACH NEW MODULE   */
@@ -77,7 +78,8 @@ module.exports = {
             files: [
                 './../kitsune-wrapper-extensions/src/**/*.js',
             ]
-        })
+        }),
+        new NodePolyfillPlugin()
     ],
     output: {
         clean: true,

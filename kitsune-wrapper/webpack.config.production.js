@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require("copy-webpack-plugin");
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const TerserPlugin = require("terser-webpack-plugin");
+const NodePolyfillPlugin = require("node-polyfill-webpack-plugin");
 
 /*============================================*/
 /*  MUST ADD ENTRY HERE FOR EACH NEW MODULE   */
@@ -34,7 +35,7 @@ module.exports = {
     devServer: {
         static: './dist',
     },
-    externalsPresets: { node: false }, // in order to ignore built-in extensions like path, fs, etc.
+    externalsPresets: { node: true }, // in order to ignore built-in extensions like path, fs, etc.
     externals: [
     ], // in order to ignore all extensions in node_modules folder
     /*
@@ -80,7 +81,8 @@ module.exports = {
         new BundleAnalyzerPlugin({
             analyzerMode: "static",
             openAnalyzer: false,
-        })
+        }),
+        new NodePolyfillPlugin()
     ],
     output: {
         clean: true,

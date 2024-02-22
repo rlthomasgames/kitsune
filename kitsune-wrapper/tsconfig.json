@@ -13,6 +13,7 @@
     "noResolve": false,
     "noUnusedParameters": false,
     "noUnusedLocals": true,
-    "strictNullChecks": true
+    "strictNullChecks": true,
+    "allowSyntheticDefaultImports": true
   }
 }

@@ -4,6 +4,9 @@ import ICommand from "kitsune-wrapper-library/dist/base/interfaces/ICommand";
 import KitsuneHelper from "kitsune-wrapper-library/dist/base/helper/KitsuneHelper";
 import {FlateError, Zip, ZipInputFile, zip, AsyncZippableFile, AsyncZippable} from "fflate";
 import {bytesToBase64} from "./encoding/Base64";
+import {Transform} from "stream-browserify";
+
+const kChar = '🦊';
 
 type PathAndData = {path:string, data:ArrayBuffer, file:File, index:number};
 
@@ -19,6 +22,8 @@ export class Wrapper {
         const kMenu = document.getElementById('kitsuneMenuContainer');
         const logo = document.getElementById('logo');
         const uploadButton = document.getElementById('uploadButton');
+        const  backClickDiv = document.getElementById('backCli')
+
         const fileInput = document.getElementById('fileInput') as HTMLInputElement;
         const buttonActions = {
             closemenu: () => {
@@ -26,6 +31,7 @@ export class Wrapper {
                 logo!.addEventListener('click', buttonActions.openMenu);
                 kMenu!.classList.remove('default');
                 kMenu!.classList.remove('active');
+                backClickDiv!.classList.remove('active');
                 kMenu!.classList.add('inactive');
                 uploadButton!.removeEventListener('click', buttonActions.submitAssets);
             },
@@ -35,81 +41,12 @@ export class Wrapper {
                 kMenu!.classList.remove('default');
                 kMenu!.classList.remove('inactive');
                 kMenu!.classList.add('active');
+                backClickDiv!.classList.add('active');
                 uploadButton!.addEventListener('click', buttonActions.submitAssets);
             },
             submitAssets: async () => {
                 console.log('submitting')
-                //let zippedData: Uint8Array = new Uint8Array();
-                const totalFiles = fileInput.files!.length;
-                const all_files = new Zip();
-                all_files.ondata = this.onZipInputData;
-                console.log(all_files);
-                const collectedZippedData:Array<Uint8Array> = [];
-                this.loadFilesAsArrayofBuffers(fileInput.files!, (buffers)=>{
-                    const assetPackUID = crypto.randomUUID();
-                    console.log('sending with assetpack id ', assetPackUID)
-                    buffers.forEach((bufferAndPath, index)=>{
-                        // 1 . create zip header info
-                        const zipInput: ZipInputFile = {
-                            size: bufferAndPath.file.size,
-                            crc: 0,
-                            filename: this.fileNameFromPath(bufferAndPath.path),
-                            compression: 0,
-                            mtime: Date.now(),
-                            ondata: (err, data, final) => {
-                                console.log('ondata from zip[input', err, data, final)
-                                return data;
-                            }
-                        };
-                        all_files.add(zipInput);
-                        const zipData = new Uint8Array(bufferAndPath.data);
-                        const fileStructure: {[x:string] : string} | AsyncZippable = {[bufferAndPath.path as string]: zipData as AsyncZippableFile};
-                        const receipt = JSON.stringify(fileStructure);
-                        console.log('here is the receipt of single file structure\n\n\n\r', receipt);
-                        zip(fileStructure, {
-                            comment:`Kitsune Wrapper Asset |${assetPackUID}| : ${bufferAndPath.path} `,
-                            mtime: Date.now(),
-                            mem:12,
-                            level:4,
-                        }, (err, data)=>{
-                            if(err){
-                                console.log('error??', err);
-                            }
-                            if(data){
-                                console.log('this is the zipped bytearray for file ', bufferAndPath.file.name, data);
-                                collectedZippedData.push(data);
-                                if(collectedZippedData.length === totalFiles){
-                                    collectedZippedData.forEach((zippedFile)=>{
-                                        console.log('now converting each zipped ')
-                                        const base64String = bytesToBase64(zippedFile);
-                                        this.uploadFile(base64String);
-                                    })
-                                    /*
-                                    let finalZipDataToSend = new Uint8Array([]);
-                                    while(collectedZippedData.length > 0) {
-                                        finalZipDataToSend = this.concatUint8Arrays(finalZipDataToSend, collectedZippedData[0]);
-                                        collectedZippedData.splice(0,1);
-                                        if(collectedZippedData.length == 0){
-                                            //const asBuffer = this.bufferFromByteArr(finalZipDataToSend);
-                                            //const asString = strFromU8(finalZipDataToSend);
-                                            const base64String = bytesToBase64(finalZipDataToSend);
-                                            console.log('sending data : \n', base64String);
-                                            //console.log('here is the buffer', asBuffer);
-                                            this.uploadFile(base64String)
-
-                                        }
-                                    }
-                                     */
-                                }
-                            }
-                        })
-                        if(index == buffers.length-1){
-                            all_files.end();
-                            console.log('ready to send zip', all_files);
-                            console.log('collected data might need concatting into one', collectedZippedData);
-                        }
-                    })
-                });
+                fileInput.files ? this.uploadAllFiles(fileInput.files) : console.log('no files selected');
             }
         }
 
@@ -122,75 +59,117 @@ export class Wrapper {
         console.log('ondata from whole zip', err, data, final);
     }
 
-    async awaitedFetch(url: string, body: Blob) {
-        return await fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'text/xml'
-            },
-            body: body
-        })
-            .then(
-                (value) => {
-                    return value;
-                },
-                (reason) => {
-
-                })
-    }
-
-    concatUint8Arrays(a:Uint8Array, b:Uint8Array){
-        const merged : Uint8Array = new Uint8Array(a.length+b.length);
-        merged.set(a);
-        merged.set(b, a.length)
-        return merged;
-    }
-
     async uploadFile(file:string) {
         //const formData = new FormData()
         //formData.set("files", file, "file.txt");
         console.log('strigified', file);
-        return fetch(`http://localhost:8081/upload`, { method:"POST", body:JSON.stringify({files:file}), headers: {
+        const objectPackage = {files:kChar};
+        let injectableString = JSON.stringify(objectPackage);
+        console.log('kChar Injectable Object as JSON String: \n', injectableString);
+        injectableString = injectableString.replace(kChar, file);
+        //const jsonStream = parser();
+        const inoutStream: Transform = new Transform({
+            transform(chunk:any, encoding:any, callback:Function) {
+                this.push(chunk);
+                callback();
+            },
+        });
+        (inoutStream as unknown as any).write(injectableString, undefined, (error: any) => {
+            error ? console.log('write stream error', error) : ()=>{
+                console.log('write stream completed');
+            }
+        })
+        return this.asyncAwait(fetch(`http://localhost:8081/upload`, {
+            method:"POST",
+            body:(inoutStream as unknown as any).read(),
+            headers: {
             'Content-Type': 'application/json'
-        }, mode:"cors" /* ... */ });
-    }
-
-    httpCall(method: string, url:string, data:string, callback:(rText:string)=>void) {
-        const thedata = new FormData();
-        //const jsonStringFromBlob = JSON.stringify(new Blob([data], {type:'application/zip'}));
-        //thedata.append('file', new File([data], 'assets.zip', {type:'text/plain'}), 'assets.zip');
-        const file = new File([data], 'assets.zip', {type:'text/plain'})
-        console.log('the file', file);
-        thedata.set('body', JSON.stringify(file), 'assets.zip');
-        var xhr = new XMLHttpRequest();
-        xhr.open(method, url, true);
-        if (callback) xhr.onload = function(ev) {
-            console.log(`httpCall ${url} | ${method} - Progress = ${ev.loaded} / ${ev.total}`)
-            callback(xhr['responseText']);
-        };
-        if (data != null) {
-            console.log('we have data to send', data, 'in form', thedata)
-            xhr.setRequestHeader('Content-Type', 'application/json');
-            const jsonString = JSON.stringify(file);
-            console.log('json string =', jsonString, thedata);
-            xhr.send(jsonString);
-        } else {
-            xhr.send();
-        }
-        return xhr;
-    }
-
-    bufferFromByteArr(fileByteArray: Uint8Array) {
-        return this.asyncAwait(new Blob([fileByteArray]).arrayBuffer()) as ArrayBuffer
+        }, mode:"cors" /* ... */ })) as Response;
     }
 
     asyncAwait(p:Promise<any>) {
-        return <Awaited<any>>p;
+        return <Awaited<any>>p.then((val)=>val);
     }
 
     fileNameFromPath(path: string)  {
         let arr = path.split('/');
         return arr[arr.length - 1].split('.')[0] as string
+    }
+
+    uploadAllFiles(inputFiles:FileList) {
+        //let zippedData: Uint8Array = new Uint8Array();
+        const totalFiles = inputFiles.length;
+        const all_files = new Zip();
+        all_files.ondata = this.onZipInputData;
+        console.log(all_files);
+        const collectedZippedData:Array<Uint8Array> = [];
+        this.loadFilesAsArrayofBuffers(inputFiles!, (buffers)=>{
+            const assetPackUID = crypto.randomUUID();
+            console.log('sending with assetpack id ', assetPackUID)
+            buffers.forEach((bufferAndPath, index)=>{
+                // 1 . create zip header info
+                const zipInput: ZipInputFile = {
+                    size: bufferAndPath.file.size,
+                    crc: 0,
+                    filename: this.fileNameFromPath(bufferAndPath.path),
+                    compression: 0,
+                    mtime: Date.now(),
+                    ondata: (err, data, final) => {
+                        console.log('ondata from zip[input', err, data, final)
+                        return data;
+                    }
+                };
+                all_files.add(zipInput);
+                const zipData = new Uint8Array(bufferAndPath.data);
+                const fileStructure: {[x:string] : string} | AsyncZippable = {[bufferAndPath.path as string]: zipData as AsyncZippableFile};
+                zip(fileStructure, {
+                    comment:`Kitsune Wrapper Asset |${assetPackUID}| : ${bufferAndPath.path} `,
+                    mtime: Date.now(),
+                    mem:12,
+                    level:4,
+                }, (err, data)=>{
+                    if(err){
+                        console.log('error??', err);
+                    }
+                    if(data){
+                        console.log('this is the zipped bytearray for file ', bufferAndPath.file.name, data);
+                        collectedZippedData.push(data);
+                        if(collectedZippedData.length === totalFiles){
+                            let expectedResponses = 0;
+                            let finalResp = 0;
+                            collectedZippedData.forEach((zippedFile)=>{
+                                console.log('now converting each zipped ')
+                                const base64String = bytesToBase64(zippedFile);
+                                const uploadResponse = <Awaited<Response>>this.asyncAwait(this.uploadFile(base64String)) as unknown as Promise<Response>;
+                                uploadResponse.finally(()=>{
+                                    finalResp++;
+                                    console.log('got finally?', uploadResponse);
+                                    if(finalResp == totalFiles) {
+                                        console.log(`\n\n\n${kChar} < UPLOAD VERIFIED ${finalResp} / ${totalFiles}\n`);
+                                    }
+                                })
+                                console.log(`${kChar} : upload response`, uploadResponse);
+                                expectedResponses++;
+                                console.log(`${kChar} < uploaded ${expectedResponses} / ${totalFiles}`);
+                                if (uploadResponse) {
+                                    console.log(`${kChar} < abnormal response status`, uploadResponse, uploadResponse);
+                                }
+                                if(expectedResponses === totalFiles) {
+
+                                    console.log(`${kChar} < all files packed successfully by server!`);
+
+                                }
+                            })
+                        }
+                    }
+                })
+                if(index == buffers.length-1){
+                    all_files.end();
+                    console.log('ready to send zip', all_files);
+                    console.log('collected data might need concatting into one', collectedZippedData);
+                }
+            })
+        });
     }
 
     loadFilesAsArrayofBuffers(files:FileList, cb:(buffers:Array<PathAndData>)=>void){
@@ -213,7 +192,7 @@ export class Wrapper {
             let fileByteArray: Uint8Array;
             let fileBuffer: ArrayBuffer;
             fileReader.onload = (e) => {
-                console.log('fileReader got on load', e)
+                console.log(`${kChar} | Loading file ${filePath} - `, `${Math.floor(e.loaded*(100/e.total))}%`);
                 if(e.target)
                     fileBuffer = e.target!.result as ArrayBuffer;
                 fileByteArray = new Uint8Array(e.target!.result as ArrayBuffer);
