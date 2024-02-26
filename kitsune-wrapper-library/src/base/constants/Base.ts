@@ -3,4 +3,5 @@ export const TYPES = {
     Command: Symbol.for("Command"),
     LoadModule: Symbol.for("LoadModule"),
     InjectionTest: Symbol.for("InjectionTest"),
+    Socket: Symbol.for("Socket"),
 };
