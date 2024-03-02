@@ -1,32 +1,36 @@
 {
   "scripts": {
+    "help": "node ./help.js",
     "install-wrapper-library": "npm install --prefix ./kitsune-wrapper-library",
     "install-wrapper": "npm install --prefix ./kitsune-wrapper",
     "install-wrapper-extensions": "npm install --prefix ./kitsune-wrapper-extensions",
     "install-wrapper-application": "npm install --prefix ./kitsune-application-test-dummy",
     "install-ws-server": "npm install --prefix ./kitsune-ws-server",
     "install-rest-server": "npm install --prefix ./kitsune-rest-server",
+    "install-asse5ts-store": "npm install --prefix ./kitsune-assets-store",
     "install-all": "concurrently --kill-others \"npm run install-wrapper-library & npm run install-wrapper & npm run install-wrapper-extensions & npm run install-wrapper-application & npm run install-ws-server\"",
     "build-library": "npm run build --prefix ./kitsune-wrapper-library",
     "linklib-wrapper": "npm link --prefix ./kitsune-wrapper-library --prefix ./kitsune-wrapper",
     "linklib-wrapper-extensions": "npm link --prefix ./kitsune-wrapper-library --prefix ./kitsune-wrapper-extensions",
     "linklib-wrapper-application": "npm link --prefix ../kitsune-wrapper-library --prefix ./kitsune-application-test-dummy",
     "linklib-ws-server": "npm link --prefix ./kitsune-wrapper-library --prefix ./kitsune-ws-server",
+    "linklib-assets-store": "npm link --prefix ./kitsune-wrapper-library --prefix ./kitsune-assets-store",
     "relink-library-to-all": "concurrently --kill-others \"npm run linklib-wrapper & npm run linklib-wrapper-extensions & npm run linklib-wrapper-application & npm run linklib-ws-server\"",
-    "build-all-modules": "concurrently --kill-others \"npm run build --prefix ./kitsune-wrapper && npm run build --prefix ./kitsune-wrapper-extensions && npm run build --prefix ./kitsune-application-test-dummy && npm run build --prefix ./kitsune-ws-server\"",
+    "build-all-modules": "sudo whoami | concurrently --kill-others \"sudo npm run build --prefix ./kitsune-wrapper && npm run build --prefix ./kitsune-wrapper-extensions && npm run build --prefix ./kitsune-application-test-dummy && npm run build --prefix ./kitsune-ws-server\"",
     "start-mongodb": "sudo systemctl start mongod",
-    "launch-application": "http-server ./kitsune-wrapper/dist -g -p 8080 -t0 --cors=Access-Control-Allow-Origin,localhost:8000,localhost:3000,localhost:8080,localhost:8090,localhost:3090,Access-Control-Allow-Headers,Origin,X-Requested-With,Content-Type,Accept",
+    "launch-application": "http-server ./kitsune-wrapper/dist -g -S -p 8080 -t0 --cors=Access-Control-Allow-Origin,localhost:8000,localhost:3000,localhost:8080,localhost:8090,localhost:3090,Access-Control-Allow-Headers,Origin,X-Requested-With,Content-Type,Accept",
     "launch-server": "cd ./kitsune-ws-server/src && node index.js",
     "launch-rest-server": "cd ./kitsune-rest-server && tsc",
     "launch-without-mongo": "sudo npm run launch-rest-server && concurrently --kill-others \"sudo npm run launch-application & npm run launch-server\"",
     "launch-all": "npm run start-mongodb && npm run launch-rest-server && concurrently --kill-others \"npm run launch-application & npm run launch-server\"",
-    "build-from-scratch": "npm i && npm run install-all && npm run build-library && npm run relink-library-to-all && npm run build-all-modules && npm run launch-all"
+    "build-from-scratch": "npm i && npm run install-all && npm run build-library && npm run relink-library-to-all && npm run build-all-modules && npm run launch-all\"",
+
+     "launch-kitsune-servers": "echo '$0' && cd ./kitsune-wrapper-library && npm --watch run build",
+     "wrapper-server-launch": "npm run linklib && npm run build && npm run start;"
   },
   "devDependencies": {
     "concurrently": "^8.2.2",
-    "http-server": "^14.1.1"
-  },
-  "dependencies": {
-    "all": "^0.0.0"
+    "http-server": "^14.1.1",
+    "colors": "^1.4.0"
   }
 }

@@ -18,4 +18,10 @@ export default class KitsuneHelper {
         }
         return window[`kitsuneExtensionFactories`];
     }
+
+    public static asyncAwait(p:Promise<any>) {
+        return <Awaited<any>>p.then((val)=>val);
+    }
+
+    static readonly kChar = '🦊';
 }

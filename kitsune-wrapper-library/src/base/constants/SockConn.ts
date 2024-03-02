@@ -6,23 +6,24 @@ export type AuthMsg = MsgObject & {
     auth_token: string
 };
 
-export interface ISOCK {
-    readonly AUTH_TOKEN: string;
-    readonly CONNECT: string;
-    readonly SOCK_ID : string;
-    readonly GZIP_TEST : string;
-    readonly AP_REQ : string;
-    readonly KICK : string;
-    readonly CONNECTION: string;
-    readonly AP_RES: string;
+export type SOCK_FLAG<s extends String> = s;
+declare interface ISOCK {
+    readonly CONNECT: SOCK_FLAG<'connect'>;
+    readonly AUTH_TOKEN: SOCK_FLAG<'AUTH_TOKEN'>;
+    readonly KICK: SOCK_FLAG<'disconnect'>;
+    readonly SOCK_ID: SOCK_FLAG<'SOCK_ID'>;
+    readonly GZIPPED_EVENT: SOCK_FLAG<'GZIP'>;
+    readonly AP_REQ: SOCK_FLAG<'assetPackREQ'>;
+    readonly CONNECTION: SOCK_FLAG<'connection'>;
+    readonly AP_RES: SOCK_FLAG<'assetPackRES'>
 }
 
 export const SOCK:ISOCK = {
-    AUTH_TOKEN: "AUTH_TOKEN",
     CONNECT: "connect",
+    AUTH_TOKEN: "AUTH_TOKEN",
     KICK: "disconnect",
     SOCK_ID: "SOCK_ID",
-    GZIP_TEST: "GZIP",
+    GZIPPED_EVENT: "GZIP",
     AP_REQ: "assetPackREQ",
     CONNECTION: 'connection',
     AP_RES: 'assetPackRES'

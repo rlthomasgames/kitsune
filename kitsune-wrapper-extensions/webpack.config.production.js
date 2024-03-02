@@ -19,6 +19,12 @@ const moduleEntries = {
     },
     threeFrameworkExtension: {
         import: ['./extensions/ThreeFrameworkExtension.ts', 'three']
+    },
+    assetDataVendor: {
+        import: ['./extensions/AssetDataVendor.ts']
+    },
+    kSockService: {
+        import: ['./extensions/KSockSevice.ts']
     }
 };
 module.exports = {

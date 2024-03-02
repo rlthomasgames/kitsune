@@ -1,5 +1,5 @@
 import { injectable } from 'inversify';
-import IWrapperConfig from "../interfaces/IWrapperConfig";
+import IWrapperConfig from "../../../../kitsune-wrapper-library/src/base/interfaces/IWrapperConfig";
 import * as _ from "lodash";
 import IAsyncRequest from "kitsune-wrapper-library/dist/base/interfaces/IAsyncRequest";
 

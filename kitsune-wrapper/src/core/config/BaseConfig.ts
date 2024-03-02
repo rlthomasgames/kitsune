@@ -1,6 +1,6 @@
 // @ts-ignore
 
-import IWrapperConfig from "../interfaces/IWrapperConfig";
+import IWrapperConfig from "../../../../kitsune-wrapper-library/src/base/interfaces/IWrapperConfig";
 
 export type BaseConfig = IWrapperConfig;
 

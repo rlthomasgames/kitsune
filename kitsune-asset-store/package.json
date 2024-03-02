@@ -10,7 +10,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
-    "start": "sudo mkdir ./dist/; tsc; cd ./dist/ && node AssetVendorService.js"
+    "start": "tsc; cd ./dist/ && node AssetVendorService.js"
   },
   "author": "Rhys Thomas",
   "license": "MIT",

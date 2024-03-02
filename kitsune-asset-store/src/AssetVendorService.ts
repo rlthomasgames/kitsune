@@ -2,38 +2,49 @@ import colors = require('colors');
 import FlushAssetStoreService from "./FlushAssetStoreService";
 import BuildPacketsFromUploadsService from "./BuildPacketsFromUploadsService";
 import {UploadRoutes} from "./routes/UploadRoutes";
-const port = 8081;
-const express = require('express');
-import fileUpload, {UploadedFile} from 'express-fileupload';
+
+import express from 'express';
+import fileUpload from 'express-fileupload';
 import {Fields, IncomingForm} from 'formidable';
 import {NextFunction, Request, Response} from "express-serve-static-core";
 import {base64ToBytes} from "./encoding/Base64";
-import {strFromU8, strToU8} from "fflate";
+import {strFromU8} from "fflate";
 import * as fs from "fs";
 import {IncomingMessage} from "node:http";
-const cors = require('cors');
-const kChar = '🦊';
 const app = express();
 const routes: Array<UploadRoutes> = [];
 import crypto from "crypto";
+const port = 8081;
+
+
+interface AnyPromise<T> extends Promise<T>{
+
+}
+
+const startExpress = ()=> {
+    app.listen(port, () => {
+        //app
+        console.log('listening port', port);
+        routes.forEach((route) => {
+            console.log(`Routes configured for ${route.getName()}`);
+        });
+    });
+    return true;
+}
 
 class AssetVendorService {
     //1 : clear any assets stored for time being, so work on uploader and gzipper can be carried out.
-    task0:FlushAssetStoreService;
-    task1:BuildPacketsFromUploadsService;
     constructor() {
         colors.enable();
         console.log('CLEARING STORE'.green.bgMagenta.bold);
-        this.task0 = new FlushAssetStoreService();
-        console.log('UNIFY UPLOADS'.green.bgMagenta.bold);
-        this.task1 = new BuildPacketsFromUploadsService();
-        app.listen(port, ()=> {
-            app
-            console.log('listening port', port);
-            routes.forEach((route) => {
-                console.log(`Routes configured for ${route.getName()}`);
-            });
-        });
+        const chained:Array<Function|AnyPromise<boolean>> = [
+            ()=> asyncAwait(new FlushAssetStoreService() as Promise<boolean>) as boolean,
+            ()=>{new BuildPacketsFromUploadsService(); return true},
+            startExpress
+        ]
+        while (chained[0] !== undefined) {
+            (chained[0] as ()=>boolean).call(null) ? chained.splice(0, 1) : console.log('startup failed');
+        }
     }
 
     storeFileFromUint8(files:Uint8Array,cb:()=>void,incomingMessage?:IncomingMessage) {
@@ -48,7 +59,8 @@ class AssetVendorService {
         const hashHex = hexUtil(uShortID, 6, false);
         const tempName = tempDirectory + `/incoming${hashHex}.tmp`;
         fs.writeFileSync(tempName, uploadedFile);
-        process.stdout.write(`${kChar} < wrote file :  ${tempName} \n\n`);
+        // @ts-ignore
+        process.stdout.write(`${KitsuneHelper.kChar} < wrote file :  ${tempName} \n\n`);
 
         const stringZip = strFromU8(uploadedFile);
         const arr = stringZip.split('Kitsune Wrapper Asset ')[1].split('|')
@@ -57,20 +69,22 @@ class AssetVendorService {
         const directory = "../uploaded/" + assetPackUUID + "";
 
         const filename = arr[2].split(' ')[2];
-        process.stdout.write(`${kChar} Almost Finished ... \n`)
+        // @ts-ignore
+        process.stdout.write(`${KitsuneHelper.kChar} Almost Finished ... \n`)
         if (!fs.existsSync(directory)) {
             fs.mkdirSync(directory, {recursive: true});
         }
         const fullPath = `${directory}/${filename}.zip`;
         fs.renameSync(tempName, fullPath);
         const successOut = (finial:()=>void) => {
-            process.stdout.write(`${kChar} ~ ~ ~ ~ asset pack \n` +
+            // @ts-ignore
+            process.stdout.write(`${KitsuneHelper.kChar} ~ ~ ~ ~ asset pack \n` +
                 assetPackUUID.zebra + '\n' +
                 `|......includes....<- `.bgGreen +
                 `${filename}\n`.rainbow +
                 `|...length zipped..<- `.bgGreen +
                 `${uploadedFile.length}\n`.rainbow +
-                `|....temp file.....<- `.bgGreen +
+                `|....temp file.....<- \n`.bgGreen +
                 `${tempName.replace(tempDirectory, '')}`.rainbow +`\n\n`.bgYellow.black.italic,
             )
             finial();
@@ -91,28 +105,11 @@ export function startAssetVendorService() { return new AssetVendorService()};
 
 //this is our entry into AssetServices
 const assetVendorService = startAssetVendorService();
-
+// @ts-ignore
 app.use(cors({origin:'https://localhost:8080'}));
 
 // default options
 app.use(fileUpload());
-
-const asyncAwait = (p:Promise<any>)=>{
-    return <Awaited<any>>p;
-}
-
-const stringToColour = (str: string) => {
-    let hash = 0;
-    str.split('').forEach(char => {
-        hash = char.charCodeAt(0) + ((hash << 5) - hash)
-    })
-    let colour = '#'
-    for (let i = 0; i < 3; i++) {
-        const value = (hash >> (i * 8)) & 0xff
-        colour += value.toString(16).padStart(2, '0')
-    }
-    return colour
-}
 
 const hexUtil = (str: string, reduceSize:number, pad:boolean) => {
     console.log('hexing string: '+str);
@@ -128,10 +125,6 @@ const hexUtil = (str: string, reduceSize:number, pad:boolean) => {
     return (pad ? hex.padStart(3, '00x') : hex as String);
 }
 
-type DataFiles = {
-    files:string
-};
-
 routes.push(new UploadRoutes(app, 'UploadRoutes'));
 
 app.route('/upload').post((
@@ -139,39 +132,85 @@ app.route('/upload').post((
     res: Response,
     next: NextFunction
 )=> {
+
     let form = new IncomingForm();
+    form.once("end", ()=>{
+        process.stdout.write(`END =) \n`);
+    })
+    process.stdout.write('incoming form has events ... '+form.eventNames()+'');
+    form.on("fileBegin", (formName, file)=>{
+        process.stdout.write("\r\x1b[k");
+        // @ts-ignore
+        process.stdout.write(`${KitsuneHelper.kChar} > file begin :  `.bgGreen.black.italic);
+        process.stdout.write(`\n`);
+    });
+    form.on("file", (formName, file)=>{
+        process.stdout.write("\r\x1b[k");
+        // @ts-ignore
+        process.stdout.write(`${KitsuneHelper.kChar} > file :  `.bgGreen.black.italic);
+        process.stdout.write(`\n`);
+    })
     form.on("progress", (bytesReceived, bytesExpected)=>{
         process.stdout.write("\r\x1b[k");
-        process.stdout.write(`${kChar} > incoming data :  `.bgGreen.black.italic);
-        process.stdout.write(`${(Math.floor(100/bytesExpected*bytesReceived)).toString()} %`.rainbow,);
+        // @ts-ignore
+        process.stdout.write(`${KitsuneHelper.kChar} > progress :  `.bgGreen.black.italic);
+        process.stdout.write(`${(Math.floor(100/(bytesExpected*bytesReceived))).toString()} %`.rainbow,);
         if(Math.floor(100/bytesExpected*bytesReceived) === 100){
             process.stdout.write(`\n -> complete\n`);
         }
     })
     form.on("error", (err:Error)=>{
+        process.stdout.write("\r\x1b[k");
+        // @ts-ignore
+        process.stdout.write(`${KitsuneHelper.kChar} > incoming data :  `.bgGreen.black.italic);
+
         console.log('|||||||||||||| Error  |||||||||||||'.zebra.underline);
         console.log(`Error: ${err.name} : ${err}  \n`.bgRed.underline);
         err.stack != undefined ? console.log(err.stack!.bgYellow) : console.log(`... missing stack trace ... \n`.bgRed.underline);
+        process.stdout.write(`\n`);
+        process.stdout.write(`\n`);
         res.sendStatus(500);
         next();
     })
     form.parse(req as IncomingMessage, (err, fields:Fields)=> {
         if (err) {
-            process.stdout.write(`${kChar} we got error`, err)
+            // @ts-ignore
+            process.stdout.write(`${KitsuneHelper.kChar} we got error`, err)
         } else {
             console.log();
-            process.stdout.write(`\n`.reset + `${kChar} < some request info: \n`.bgYellow.green)
+            // @ts-ignore
+            process.stdout.write(`\n`.reset + `${KitsuneHelper.kChar} < some request info: \n`.bgYellow.green)
             if (fields.files) {
                 const files = fields!.files!;
                 const uploadedFile = base64ToBytes(files);
                 const storedName = assetVendorService.storeFileFromUint8(uploadedFile, ()=>{
-                    process.stdout.write(`${kChar} > FINISHED ${storedName}\n\n`);
-                    process.stdout.write(`\n${kChar} moved file to asset pack successfully\n\n`.bgCyan.black.italic)
-                    res.sendStatus(200);
+                    // @ts-ignore
+                    process.stdout.write(`${KitsuneHelper.kChar} > FINISHED ${storedName}\n\n`);
+                    // @ts-ignore
+                    process.stdout.write(`\n${KitsuneHelper.kChar} moved file to asset pack successfully\n\n`.bgCyan.black.italic)
+                    //res.sendStatus(200);
+                    next();
                 }, req as IncomingMessage);
             }
         }
+        next(err);
         });
     });
 
+app.route('/pack').post((
+    req: Request,
+    res: Response,
+    next: NextFunction
+)=>{
+    console.log('pack', req);
+    res.sendStatus(200)
+    next();
+});
+
 export {AssetVendorService as default, AssetVendorService};
+
+//export {T as AssetVendorService.T, T};
+
+export function asyncAwait(p: AnyPromise<any>):any{
+    return p.then(value => value) as Awaited<any>;
+}

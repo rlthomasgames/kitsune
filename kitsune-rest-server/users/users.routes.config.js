@@ -3,10 +3,19 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UsersRoutes = void 0;
+exports.UsersRoutes = exports.Ext = void 0;
 const common_routes_config_1 = require("../common/common.routes.config");
 const users_controller_1 = __importDefault(require("./controllers/users.controller"));
 const users_middleware_1 = __importDefault(require("./middleware/users.middleware"));
+class Ext extends common_routes_config_1.CommonRoutesConfig {
+    constructor(app, name) {
+        super(app, name);
+    }
+    configureRoutes() {
+        return undefined;
+    }
+}
+exports.Ext = Ext;
 class UsersRoutes extends common_routes_config_1.CommonRoutesConfig {
     constructor(app) {
         super(app, 'UsersRoutes');

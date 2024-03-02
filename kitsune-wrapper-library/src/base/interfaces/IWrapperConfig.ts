@@ -1,5 +1,5 @@
-import IWrapperLayout from "./IWrapperLayout";
-import {ExtensionValuedObject} from "../commands/InitWrapper";
+import IWrapperLayout from "../../../../kitsune-wrapper/src/core/interfaces/IWrapperLayout";
+import {ExtensionValuedObject} from "../../../../kitsune-wrapper/src/core/commands/InitWrapper";
 
 export default interface IWrapperConfig {
     assetPacks: string;
