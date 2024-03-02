@@ -1,6 +1,6 @@
 {
   "name": "kitsune-wrapper-library",
-  "version": "0.0.25",
+  "version": "0.0.33",
   "description": "Initial setup for a shared library",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -33,7 +33,10 @@
     "url": "..."
   },
   "homepage": "https://polygonprophecy.com",
-  "devDependencies": {},
+  "devDependencies": {
+    "@types/node": "^20.11.24",
+    "socket.io-client": "^4.7.4"
+  },
   "dependencies": {
     "typescript": "^4.2.3"
   }

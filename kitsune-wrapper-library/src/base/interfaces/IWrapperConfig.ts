@@ -1,5 +1,4 @@
-import IWrapperLayout from "../../../../kitsune-wrapper/src/core/interfaces/IWrapperLayout";
-import {ExtensionValuedObject} from "../../../../kitsune-wrapper/src/core/commands/InitWrapper";
+import IWrapperLayout from "./IWrapperLayout";
 
 export default interface IWrapperConfig {
     assetPacks: string;
@@ -11,4 +10,10 @@ export default interface IWrapperConfig {
     gameConfig?: string;
     platformAddress?: string;
     layout?: IWrapperLayout;
+}
+
+export type ExtensionValuedObject = {
+    moduleName: string;
+    modulePath: string;
+    gzipped?: boolean | undefined;
 }
