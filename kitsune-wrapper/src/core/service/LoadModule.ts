@@ -6,9 +6,9 @@ import IAsyncRequest from "kitsune-wrapper-library/dist/base/interfaces/IAsyncRe
 import * as fflate from 'fflate';
 import KitsuneHelper from "kitsune-wrapper-library/dist/base/helper/KitsuneHelper";
 import {TYPES} from "kitsune-wrapper-library";
-import {KSockService} from "./KSockService";
 import CoreState from "../constants/CoreState";
 import IWrapperConfig from "../../../../kitsune-wrapper-library/src/base/interfaces/IWrapperConfig";
+import {KSockService} from "kitsune-wrapper-library/dist/kitsune-wrapper/src/core/service/KSockService";
 
 type Class = { new(...args: any[]): any; };
 
