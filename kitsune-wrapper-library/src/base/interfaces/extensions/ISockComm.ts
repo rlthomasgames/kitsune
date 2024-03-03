@@ -7,6 +7,7 @@ export default interface ISockComm extends IInjectableExtensionModule{
     _assetVendor:any;
 
     clientMap: Map<string, Socket | string | boolean | number>;
+
     socket: Socket;
     id: string;
     totals: Array<number>;

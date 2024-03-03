@@ -7,7 +7,7 @@ export class AbstractSockComm extends AbstractModule implements ISockComm {
     _wrapperConfig:any;
     _assetVendor:any;
 
-    clientMap: Map<string, Socket | string | boolean | number>;
+    clientMap: Map<string, any | string | boolean | number>;
     socket: Socket;
     id: string;
     totals: Array<number>;
