@@ -1,8 +1,6 @@
 import {AbstractModule} from "./AbstractModule";
 import ISockComm from "../interfaces/extensions/ISockComm";
-
-
-export default class AbstractSockComm extends AbstractModule implements ISockComm {
+export class AbstractSockComm extends AbstractModule implements ISockComm {
     _wrapperConfig:any;
     _assetVendor:any;
 
