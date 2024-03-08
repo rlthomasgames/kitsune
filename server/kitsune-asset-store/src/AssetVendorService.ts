@@ -11,18 +11,12 @@ import {base64ToBytes} from "./encoding/Base64";
 import {strFromU8} from "fflate";
 import * as fs from "fs";
 import {IncomingMessage} from "node:http";
-<<<<<<< HEAD:server/kitsune-asset-store/src/AssetVendorService.ts
 import cors from 'cors';
-=======
->>>>>>> refs/remotes/origin/main:kitsune-asset-store/src/AssetVendorService.ts
 const app = express();
 const routes: Array<UploadRoutes> = [];
 import crypto from "crypto";
 const port = 8081;
-<<<<<<< HEAD:server/kitsune-asset-store/src/AssetVendorService.ts
 import KitsuneHelper from "kitsune-wrapper-library/dist/base/helper/KitsuneHelper";
-=======
->>>>>>> refs/remotes/origin/main:kitsune-asset-store/src/AssetVendorService.ts
 
 
 interface AnyPromise<T> extends Promise<T>{
@@ -44,11 +38,7 @@ class AssetVendorService {
     //1 : clear any assets stored for time being, so work on uploader and gzipper can be carried out.
     constructor() {
         colors.enable();
-<<<<<<< HEAD:server/kitsune-asset-store/src/AssetVendorService.ts
-        console.log('CLEARING STORE');
-=======
         console.log('CLEARING STORE'.green.bgMagenta.bold);
->>>>>>> refs/remotes/origin/main:kitsune-asset-store/src/AssetVendorService.ts
         const chained:Array<Function|AnyPromise<boolean>> = [
             ()=> asyncAwait(new FlushAssetStoreService() as Promise<boolean>) as boolean,
             ()=>{new BuildPacketsFromUploadsService(); return true},
@@ -94,17 +84,10 @@ class AssetVendorService {
                 assetPackUUID.zebra + '\n' +
                 `|......includes....<- ` +
                 `${filename}\n`.rainbow +
-<<<<<<< HEAD:server/kitsune-asset-store/src/AssetVendorService.ts
-                `|...length zipped..<- ` +
-                `${uploadedFile.length}\n` +
-                `|....temp file.....<- \n` +
-                `${tempName.replace(tempDirectory, '')}` +`\n\n`,
-=======
                 `|...length zipped..<- `.bgGreen +
                 `${uploadedFile.length}\n`.rainbow +
                 `|....temp file.....<- \n`.bgGreen +
                 `${tempName.replace(tempDirectory, '')}`.rainbow +`\n\n`.bgYellow.black.italic,
->>>>>>> refs/remotes/origin/main:kitsune-asset-store/src/AssetVendorService.ts
             )
             finial();
         }
@@ -160,31 +143,19 @@ app.route('/upload').post((
     form.on("fileBegin", (formName, file)=>{
         process.stdout.write("\r\x1b[k");
         // @ts-ignore
-<<<<<<< HEAD:server/kitsune-asset-store/src/AssetVendorService.ts
-        process.stdout.write(`${KitsuneHelper.kChar} > file begin :  `);
-=======
         process.stdout.write(`${KitsuneHelper.kChar} > file begin :  `.bgGreen.black.italic);
->>>>>>> refs/remotes/origin/main:kitsune-asset-store/src/AssetVendorService.ts
         process.stdout.write(`\n`);
     });
     form.on("file", (formName, file)=>{
         process.stdout.write("\r\x1b[k");
         // @ts-ignore
-<<<<<<< HEAD:server/kitsune-asset-store/src/AssetVendorService.ts
-        process.stdout.write(`${KitsuneHelper.kChar} > file :  `);
-=======
         process.stdout.write(`${KitsuneHelper.kChar} > file :  `.bgGreen.black.italic);
->>>>>>> refs/remotes/origin/main:kitsune-asset-store/src/AssetVendorService.ts
         process.stdout.write(`\n`);
     })
     form.on("progress", (bytesReceived, bytesExpected)=>{
         process.stdout.write("\r\x1b[k");
         // @ts-ignore
-<<<<<<< HEAD:server/kitsune-asset-store/src/AssetVendorService.ts
-        process.stdout.write(`${KitsuneHelper.kChar} > progress :  `);
-=======
         process.stdout.write(`${KitsuneHelper.kChar} > progress :  `.bgGreen.black.italic);
->>>>>>> refs/remotes/origin/main:kitsune-asset-store/src/AssetVendorService.ts
         process.stdout.write(`${(Math.floor(100/(bytesExpected*bytesReceived))).toString()} %`.rainbow,);
         if(Math.floor(100/bytesExpected*bytesReceived) === 100){
             process.stdout.write(`\n -> complete\n`);
@@ -193,19 +164,10 @@ app.route('/upload').post((
     form.on("error", (err:Error)=>{
         process.stdout.write("\r\x1b[k");
         // @ts-ignore
-<<<<<<< HEAD:server/kitsune-asset-store/src/AssetVendorService.ts
-        process.stdout.write(`${KitsuneHelper.kChar} > incoming data :  `);
-
-        console.log('|||||||||||||| Error  |||||||||||||');
-        console.log(`Error: ${err.name} : ${err}  \n`);
-        err.stack != undefined ? console.log(err.stack!.bgYellow) : console.log(`... missing stack trace ... \n`);
-=======
         process.stdout.write(`${KitsuneHelper.kChar} > incoming data :  `.bgGreen.black.italic);
-
         console.log('|||||||||||||| Error  |||||||||||||'.zebra.underline);
         console.log(`Error: ${err.name} : ${err}  \n`.bgRed.underline);
         err.stack != undefined ? console.log(err.stack!.bgYellow) : console.log(`... missing stack trace ... \n`.bgRed.underline);
->>>>>>> refs/remotes/origin/main:kitsune-asset-store/src/AssetVendorService.ts
         process.stdout.write(`\n`);
         process.stdout.write(`\n`);
         res.sendStatus(500);
@@ -218,11 +180,7 @@ app.route('/upload').post((
         } else {
             console.log();
             // @ts-ignore
-<<<<<<< HEAD:server/kitsune-asset-store/src/AssetVendorService.ts
-            process.stdout.write(`\n`.reset + `${KitsuneHelper.kChar} < some request info: \n`)
-=======
             process.stdout.write(`\n`.reset + `${KitsuneHelper.kChar} < some request info: \n`.bgYellow.green)
->>>>>>> refs/remotes/origin/main:kitsune-asset-store/src/AssetVendorService.ts
             if (fields.files) {
                 const files = fields!.files!;
                 const uploadedFile = base64ToBytes(files);
@@ -230,11 +188,7 @@ app.route('/upload').post((
                     // @ts-ignore
                     process.stdout.write(`${KitsuneHelper.kChar} > FINISHED ${storedName}\n\n`);
                     // @ts-ignore
-<<<<<<< HEAD:server/kitsune-asset-store/src/AssetVendorService.ts
-                    process.stdout.write(`\n${KitsuneHelper.kChar} moved file to asset pack successfully\n\n`)
-=======
                     process.stdout.write(`\n${KitsuneHelper.kChar} moved file to asset pack successfully\n\n`.bgCyan.black.italic)
->>>>>>> refs/remotes/origin/main:kitsune-asset-store/src/AssetVendorService.ts
                     //res.sendStatus(200);
                     next();
                 }, req as IncomingMessage);

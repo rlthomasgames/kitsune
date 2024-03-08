@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc",
     "start": "tsc && node ./app.js",
-    "linklib": "npm run --prefix ../../shared/kitsune-wrapper-library build && npm link ../../shared/kitsune-wrapper-library",
+    "linklib": "npm run build --prefix ../../shared/kitsune-wrapper-library && npm link ../../shared/kitsune-wrapper-library",
     "debug": "export DEBUG=* && npm start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -28,7 +28,9 @@
     "email-validator": "^2.0.4",
     "express": "^4.17.1",
     "express-winston": "^4.2.0",
+    "i": "^0.3.7",
     "mongodb": "^6.3.0",
+    "npm": "^10.5.0",
     "shortid": "^2.2.16",
     "winston": "^3.3.3"
   },

@@ -19,16 +19,6 @@ const moduleEntries = {
     },
     threeFrameworkExtension: {
         import: ['./extensions/ThreeFrameworkExtension.ts', 'three']
-    },
-    assetDataVendor: {
-        import: ['./extensions/AssetDataVendor.ts']
-    },
-    kSockService: {
-<<<<<<< HEAD:client/kitsune-wrapper-extensions/webpack.config.production.js
-        import: ['./extensions/KSockService.ts']
-=======
-        import: ['./extensions/KSockSevice.ts']
->>>>>>> refs/remotes/origin/main:kitsune-wrapper-extensions/webpack.config.production.js
     }
 };
 module.exports = {

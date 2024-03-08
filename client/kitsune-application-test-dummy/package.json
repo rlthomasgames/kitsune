@@ -4,7 +4,7 @@
   "description": "A testing application used for early wrapper development",
   "main": "index.ts",
   "scripts": {
-    "linklib": "npm run --prefix ../../shared/kitsune-wrapper-library build && npm link ../../shared/kitsune-wrapper-library",
+    "linklib": "npm run build --prefix ../../shared/kitsune-wrapper-library && npm link ../../shared/kitsune-wrapper-library",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --mode=production --stats-error-details && cp -R config/. ../kitsune-wrapper/dist/config"
   },
@@ -34,7 +34,7 @@
     "http-server": "^14.1.1",
     "hwrld": "^2.1.1",
     "inversify": "^6.0.1",
-    "kitsune-wrapper-library": "^0.0.17",
+    "kitsune-wrapper-library": "^0.0.46",
     "lodash": "^4.17.21",
     "pixi.js": "^6.3.2",
     "reflect-metadata": "^0.1.13",
@@ -45,5 +45,9 @@
     "webpack": "^5.72.0",
     "webpack-bundle-analyzer": "^4.10.1",
     "webpack-cli": "^4.9.2"
+  },
+  "dependencies": {
+    "i": "^0.3.7",
+    "npm": "^10.5.0"
   }
 }

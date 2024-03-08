@@ -1,10 +1,5 @@
 import {inject, injectable, optional, postConstruct} from "inversify";
-<<<<<<< HEAD:client/kitsune-wrapper/src/core/commands/InitWrapperComplete.ts
 import { TYPES } from "kitsune-wrapper-library";
-=======
-import {TYPES} from "kitsune-wrapper-library";
-import {FetchConfig} from "../service/FetchConfig";
->>>>>>> refs/remotes/origin/main:kitsune-wrapper/src/core/commands/InitWrapperComplete.ts
 import IInjectableExtensionModule from "kitsune-wrapper-library/dist/base/interfaces/IInjectableExtensionModule";
 import ICommand from "kitsune-wrapper-library/dist/base/interfaces/ICommand";
 import {LoadModule} from "../service/LoadModule";

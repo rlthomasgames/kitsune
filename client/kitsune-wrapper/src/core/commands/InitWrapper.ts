@@ -1,17 +1,16 @@
 import { inject, injectable } from "inversify";
-import {SOCK, TYPES} from "kitsune-wrapper-library";
+import { TYPES} from "kitsune-wrapper-library";
 import { LoadModule } from "../service/LoadModule";
 import container from "../ioc/ioc_mapping";
-<<<<<<< HEAD:client/kitsune-wrapper/src/core/commands/InitWrapper.ts
 import CoreState from "../constants/CoreState";
 import IInjectableExtensionModule from "kitsune-wrapper-library/dist/base/interfaces/IInjectableExtensionModule";
 import ICommand from "kitsune-wrapper-library/dist/base/interfaces/ICommand";
-import {io, Socket} from "socket.io-client";
 import * as fflate from "fflate";
 import {FetchConfig} from "kitsune-wrapper-library/dist/base/interfaces/extensions/FetchConfig";
-import {AuthMsg} from "kitsune-wrapper-library/dist/base/constants/SockConn";
-=======
->>>>>>> refs/remotes/origin/main:kitsune-wrapper/src/core/commands/InitWrapper.ts
+import {IDataStore} from "kitsune-wrapper-library/dist/base/interfaces/extensions/IDataStore";
+import {SOCK} from "kitsune-wrapper-library/dist/base/constants/SockConn";
+import {Socket} from "socket.io-client";
+import ISockComm from "kitsune-wrapper-library/dist/base/interfaces/extensions/ISockComm";
 
 @injectable()
 export class InitWrapper implements ICommand {
@@ -22,10 +21,15 @@ export class InitWrapper implements ICommand {
     _moduleLoader:LoadModule = container.get(TYPES.LoadModule);
 
     @inject(TYPES.Socket)
-    _socket:KSockService;
+    _socket:ISockComm;
 
-    @inject(TYPES.AssetDataVendor)
-    _assetDataVendor:OldFetchAssets;
+    @inject(TYPES.AssetData)
+    _assetDataVendor:IDataStore;
+
+    private socket: Socket;
+
+    private totalModules:number;
+    private totalLoaded:number = 0;
 
     // TODO : !!!!!!!IMPORTANT!!!!!!!! - clean web sockets and gzip out into separate command and / or module !!!
 
@@ -35,15 +39,6 @@ export class InitWrapper implements ICommand {
             console.log(`got configs? ${this._wrapperConfig} and  ${this._moduleLoader}`)
         })
     //: console.log('cant load no modules specified')
-
-<<<<<<< HEAD:client/kitsune-wrapper/src/core/commands/InitWrapper.ts
-        this.socket.on(SOCK.AP_RES, (responseData:ArrayBuffer)=>{
-            const textDecoder = new TextDecoder();
-            const decodedString = textDecoder.decode(responseData, {stream:false});
-            console.log('check we get here', responseData, decodedString);
-            console.log('received asset pack response...', 'a', /*deflated,*/ 'b', decodedString);
-        });
-        this.socket.connect().open();
     }
 
     async sendGZipEmit( payload: Object): Promise<boolean> {
@@ -96,8 +91,6 @@ export class InitWrapper implements ICommand {
         this.sendGZipEmit(originalPayload).then((value)=>{
             console.log('on full filled =', value);
         });
-=======
->>>>>>> refs/remotes/origin/main:kitsune-wrapper/src/core/commands/InitWrapper.ts
     }
 }
 
