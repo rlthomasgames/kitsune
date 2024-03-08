@@ -1,9 +1,29 @@
+<<<<<<< HEAD:client/kitsune-wrapper-extensions/src/extensions/AssetDataVendor.ts
 import {injectable} from "inversify";
 import {AbstractModule} from "kitsune-wrapper-library";
 import KitsuneHelper from "kitsune-wrapper-library/dist/base/helper/KitsuneHelper";
 import IInjectableExtensionModule from "kitsune-wrapper-library/dist/base/interfaces/IInjectableExtensionModule";
 import {IDataDescriptor, IDataStore} from "kitsune-wrapper-library/dist/base/interfaces/extensions/IDataStore";
 import IAsyncRequest from "kitsune-wrapper-library/dist/base/interfaces/IAsyncRequest";
+=======
+import {inject, injectable} from "inversify";
+import IAsyncRequest from "kitsune-wrapper-library/dist/base/interfaces/IAsyncRequest";
+import {TYPES} from "kitsune-wrapper-library";
+import KitsuneHelper from "kitsune-wrapper-library/dist/base/helper/KitsuneHelper";
+
+
+/*
+    ===================================================================
+    ======= ASSET PACK FILE STRUCT LITTLE STRICT AT THE MOMENT ========
+    ===================================================================
+    ===================================================================
+    ===================================================================
+    Asset Packs Represent a Group of Files broken into Smaller Partials
+
+    Asset Pak (Grouping for a collection of files) =>
+
+ */
+>>>>>>> refs/remotes/origin/main:kitsune-wrapper-extensions/src/extensions/AssetDataVendor.ts
 
 export type KAPacketMaterial = {
     assetPackUUID:string,
@@ -29,6 +49,7 @@ export type KADataLibrary = {
     allFiles:{[id:string]:individualFileLookUpValues}
 }
 
+<<<<<<< HEAD:client/kitsune-wrapper-extensions/src/extensions/AssetDataVendor.ts
 @injectable()
 class AssetDataVendor extends AbstractModule implements IInjectableExtensionModule, IAsyncRequest, IDataStore {
     name: string = 'ThreeFrameworkExtension';
@@ -79,11 +100,21 @@ class AssetDataVendor extends AbstractModule implements IInjectableExtensionModu
 
     private static _instance:IDataStore;
 
+=======
+let animCycle : number = 0;
+
+@injectable()
+class AssetDataVendor implements IAsyncRequest {
+    @inject(TYPES.FetchConfig)
+    _wrapperConfig: any;
+
+>>>>>>> refs/remotes/origin/main:kitsune-wrapper-extensions/src/extensions/AssetDataVendor.ts
     allAssets: KADataLibrary = {
         allPacks:{},
         allFiles:{},
     };
 
+<<<<<<< HEAD:client/kitsune-wrapper-extensions/src/extensions/AssetDataVendor.ts
     public static getInstance():IDataStore {
         return this._instance;
     }
@@ -97,6 +128,8 @@ class AssetDataVendor extends AbstractModule implements IInjectableExtensionModu
         } : this.container = this.container;
     }
 
+=======
+>>>>>>> refs/remotes/origin/main:kitsune-wrapper-extensions/src/extensions/AssetDataVendor.ts
     public request(valuedObject?:unknown, gzipped?:boolean) {
         console.log('request was' + valuedObject);
         const gotAssets: Promise<Array<{
@@ -202,7 +235,14 @@ class AssetDataVendor extends AbstractModule implements IInjectableExtensionModu
         this.animatedFoxTowerProgressBar(lengthCollected)
     }
 }
+<<<<<<< HEAD:client/kitsune-wrapper-extensions/src/extensions/AssetDataVendor.ts
 */
 export {AssetDataVendor as default, AssetDataVendor};
 
 KitsuneHelper.getKitsuneFactories().set('AssetDataVendor', AssetDataVendor);
+=======
+
+export {AssetDataVendor as default, AssetDataVendor};
+
+KitsuneHelper.getKitsuneFactories().set('assetDataVendor', AssetDataVendor);
+>>>>>>> refs/remotes/origin/main:kitsune-wrapper-extensions/src/extensions/AssetDataVendor.ts

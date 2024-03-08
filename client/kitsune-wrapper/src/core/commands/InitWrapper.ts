@@ -2,6 +2,7 @@ import { inject, injectable } from "inversify";
 import {SOCK, TYPES} from "kitsune-wrapper-library";
 import { LoadModule } from "../service/LoadModule";
 import container from "../ioc/ioc_mapping";
+<<<<<<< HEAD:client/kitsune-wrapper/src/core/commands/InitWrapper.ts
 import CoreState from "../constants/CoreState";
 import IInjectableExtensionModule from "kitsune-wrapper-library/dist/base/interfaces/IInjectableExtensionModule";
 import ICommand from "kitsune-wrapper-library/dist/base/interfaces/ICommand";
@@ -9,65 +10,33 @@ import {io, Socket} from "socket.io-client";
 import * as fflate from "fflate";
 import {FetchConfig} from "kitsune-wrapper-library/dist/base/interfaces/extensions/FetchConfig";
 import {AuthMsg} from "kitsune-wrapper-library/dist/base/constants/SockConn";
+=======
+>>>>>>> refs/remotes/origin/main:kitsune-wrapper/src/core/commands/InitWrapper.ts
 
 @injectable()
 export class InitWrapper implements ICommand {
     @inject(TYPES.FetchConfig)
-    _wrapperConfig: FetchConfig;
+    _wrapperConfig:FetchConfig = container.get(TYPES.FetchConfig);
 
     @inject(TYPES.LoadModule)
-    _moduleLoader: LoadModule;
+    _moduleLoader:LoadModule = container.get(TYPES.LoadModule);
 
-    private clientMap: Map<string, Socket | string | boolean | number>;
-    private socket: Socket;
+    @inject(TYPES.Socket)
+    _socket:KSockService;
 
-    private totalModules:number;
-    private totalLoaded:number = 0;
+    @inject(TYPES.AssetDataVendor)
+    _assetDataVendor:OldFetchAssets;
 
     // TODO : !!!!!!!IMPORTANT!!!!!!!! - clean web sockets and gzip out into separate command and / or module !!!
 
     run() {
-        sessionStorage.clear();
-        this.clientMap = new Map<string, Socket | string | boolean | number>();
-        const newSessionKey = crypto.randomUUID();
-        sessionStorage.setItem('kitsune_session', newSessionKey);
-
-        const cookieApplication = `kitsune=kitsuneWrapper;`
-        const cookieToSession = `session=${newSessionKey};`;
-        const cookieUser = `user=genericUser;`
-        const cookieExpires = `expires=${new Date(Date.now() + 3600000)}`;
-
-        document.cookie = `${cookieApplication} ${cookieUser} ${cookieToSession} ${cookieExpires}`;
-
-        this.socket = io('ws://localhost:3000',
-            {
-                autoConnect: false,
-                host: 'http://localhost:3000',
-                port: 3000,
-                transports: ["websocket", "polling"],
-                upgrade: true,
-                auth: {
-                    token: newSessionKey
-                },
-            });
-
-        this.socket.on(SOCK.CONNECT, ()=> {
-            console.log('connect established :', this.socket);
-            this.clientMap.set(SOCK.CONNECT, true);
-            if(this.socket.id) {
-                this.clientMap.set(SOCK.SOCK_ID, this.socket.id);
-            }
-        });
-
-        this.socket.on(SOCK.AUTH_TOKEN, (authMsg : AuthMsg) => {
-            console.log('received  auth token', authMsg);
-            sessionStorage.setItem(SOCK.AUTH_TOKEN, authMsg.auth_token);
-            this.clientMap.set(SOCK.AUTH_TOKEN, true);
-            this._wrapperConfig.request().then(() => {
-                this.loadModules();
-            });
+        this._wrapperConfig.request().then((value)=>{
+            this._moduleLoader.loadModules(this._wrapperConfig.getConfig())
+            console.log(`got configs? ${this._wrapperConfig} and  ${this._moduleLoader}`)
         })
+    //: console.log('cant load no modules specified')
 
+<<<<<<< HEAD:client/kitsune-wrapper/src/core/commands/InitWrapper.ts
         this.socket.on(SOCK.AP_RES, (responseData:ArrayBuffer)=>{
             const textDecoder = new TextDecoder();
             const decodedString = textDecoder.decode(responseData, {stream:false});
@@ -127,6 +96,8 @@ export class InitWrapper implements ICommand {
         this.sendGZipEmit(originalPayload).then((value)=>{
             console.log('on full filled =', value);
         });
+=======
+>>>>>>> refs/remotes/origin/main:kitsune-wrapper/src/core/commands/InitWrapper.ts
     }
 }
 

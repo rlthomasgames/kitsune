@@ -1,4 +1,9 @@
+<<<<<<< HEAD:shared/kitsune-wrapper-library/src/base/interfaces/extensions/FetchConfig.ts
 import {inject, injectable} from "inversify";
+=======
+import { injectable } from 'inversify';
+import IWrapperConfig from "../../../../kitsune-wrapper-library/src/base/interfaces/IWrapperConfig";
+>>>>>>> refs/remotes/origin/main:kitsune-wrapper/src/core/service/FetchConfig.ts
 import * as _ from "lodash";
 import IAsyncRequest from "kitsune-wrapper-library/dist/base/interfaces/IAsyncRequest";
 import IWrapperConfig from "../IWrapperConfig";

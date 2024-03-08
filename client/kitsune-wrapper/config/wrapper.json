@@ -6,7 +6,11 @@
     "name": "whatever"
   },
   "modules": [
-    { "moduleName":"HelloWorldExtension", "modulePath":"./extensions/helloWorldExtension.bundle.js" },
-    { "moduleName":"PixiFrameworkExtension", "modulePath":"./extensions/pixiFrameworkExtension.bundle.js" }
-  ]
+    { "moduleName":"HelloWorldExtension", "modulePath":"./extensions/helloWorldExtension.bundle.js", "gzipped": true},
+    { "moduleName":"PixiFrameworkExtension", "modulePath":"./extensions/pixiFrameworkExtension.bundle.js", "gzipped":  true},
+    { "moduleName":"ThreeFrameworkExtension", "modulePath":"./extensions/threeFrameworkExtension.bundle.js", "gzipped":  true }
+  ],
+  "application": {"moduleName":"application", "modulePath":"./applications/test_dummy/index.js", "gzipped":  false},
+  "uniqueID": null,
+  "assetPacks":["8def4b17-4c76-476d-b876-f656a289d1d4"]
 }

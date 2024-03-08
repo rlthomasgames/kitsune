@@ -1,5 +1,10 @@
 import {inject, injectable, optional, postConstruct} from "inversify";
+<<<<<<< HEAD:client/kitsune-wrapper/src/core/commands/InitWrapperComplete.ts
 import { TYPES } from "kitsune-wrapper-library";
+=======
+import {TYPES} from "kitsune-wrapper-library";
+import {FetchConfig} from "../service/FetchConfig";
+>>>>>>> refs/remotes/origin/main:kitsune-wrapper/src/core/commands/InitWrapperComplete.ts
 import IInjectableExtensionModule from "kitsune-wrapper-library/dist/base/interfaces/IInjectableExtensionModule";
 import ICommand from "kitsune-wrapper-library/dist/base/interfaces/ICommand";
 import {LoadModule} from "../service/LoadModule";
@@ -22,16 +27,12 @@ export class InitWrapperComplete implements ICommand {
     _moduleLoader: LoadModule;
 
     @postConstruct()
-    postConstruct() {
-        this.run();
-    }
-
     run() {
+        console.log('should request asset paks and load application')
+
         const application = this._wrapperConfig.getConfig().application as ExtensionValuedObject;
         if(application != undefined) {
             this.loadApplication(application);
-        } else {
-            this._helloWorld?.startModule();
         }
     }
 

@@ -1,4 +1,5 @@
 import {inject, injectable} from "inversify";
+<<<<<<< HEAD:client/kitsune-wrapper-extensions/src/extensions/KSockService.ts
 import {AuthMsg, SOCK} from "kitsune-wrapper-library/dist/base/constants/SockConn";
 import * as fflate from "fflate";
 import KitsuneHelper from "kitsune-wrapper-library/dist/base/helper/KitsuneHelper";
@@ -35,6 +36,32 @@ class KSockService extends AbstractSockComm implements IInjectableExtensionModul
         //this._wrapperConfig = _wrapperConfig;
 
         this.clientMap = new Map<string, any | string | boolean | number>();
+=======
+import ICommand from "kitsune-wrapper-library/dist/base/interfaces/ICommand";
+import {AuthMsg, SOCK} from "kitsune-wrapper-library/dist/base/constants/SockConn";
+import * as fflate from "fflate";
+import {TYPES} from "kitsune-wrapper-library";
+import KitsuneHelper from "kitsune-wrapper-library/dist/base/helper/KitsuneHelper";
+import { AssetDataVendor } from './AssetDataVendor';
+
+@injectable()
+class KSockService implements ICommand {
+    @inject(TYPES.FetchConfig)
+    _wrapperConfig:any = container.get(TYPES.FetchConfig);
+
+    //for rieeving and sending files over SCOKER
+    @inject(TYPES.AssetDataVendor)
+    _assetVendor:AssetDataVendor;
+
+    public clientMap: Map<string, Socket | string | boolean | number>;
+    public socket: Socket;
+    public id: string;
+    public totals: Array<number> = [];
+
+    run(): KSockService {
+
+        this.clientMap = new Map<string, Socket | string | boolean | number>();
+>>>>>>> refs/remotes/origin/main:kitsune-wrapper-extensions/src/extensions/KSockService.ts
 
         sessionStorage.clear();
         const newSessionKey = crypto.randomUUID();
@@ -92,8 +119,12 @@ class KSockService extends AbstractSockComm implements IInjectableExtensionModul
         })
 
         this.socket.connect().open();
+<<<<<<< HEAD:client/kitsune-wrapper-extensions/src/extensions/KSockService.ts
         return this as unknown as AbstractSockComm;
 
+=======
+        return this;
+>>>>>>> refs/remotes/origin/main:kitsune-wrapper-extensions/src/extensions/KSockService.ts
     }
 
     async sendGZipEmit( payload: Object): Promise<void | boolean> {
@@ -105,7 +136,11 @@ class KSockService extends AbstractSockComm implements IInjectableExtensionModul
                 //
                 if (err) {
                     resolve(false);
+<<<<<<< HEAD:client/kitsune-wrapper-extensions/src/extensions/KSockService.ts
                     console.warn(err, (err as Error).stack);
+=======
+                    console.warn(err?.stack, err);
+>>>>>>> refs/remotes/origin/main:kitsune-wrapper-extensions/src/extensions/KSockService.ts
                     console.error(err);
                     throw new Error(`${SOCK.GZIPPED_EVENT} failed : ${err}`);
                 } else if( data) {
@@ -131,10 +166,13 @@ class KSockService extends AbstractSockComm implements IInjectableExtensionModul
             }, 500);
         }
     }
+<<<<<<< HEAD:client/kitsune-wrapper-extensions/src/extensions/KSockService.ts
 
     startModule() {
         console.log('START KITSUNE SOCKET SERVICE');
     }
+=======
+>>>>>>> refs/remotes/origin/main:kitsune-wrapper-extensions/src/extensions/KSockService.ts
 }
 
 

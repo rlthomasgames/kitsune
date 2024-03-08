@@ -1,3 +1,9 @@
+<<<<<<< HEAD:shared/kitsune-wrapper-library/src/base/interfaces/ICanFetchConfig.ts
+=======
+export type InjectedConfig = {
+    getConfig(...args: any[]):IConciseConfig;
+}
+>>>>>>> refs/remotes/origin/main:kitsune-wrapper-library/src/base/interfaces/ICanFetchConfig.ts
 export interface IConciseConfig {
     assetPacks: string;
 }

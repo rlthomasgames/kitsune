@@ -4,13 +4,13 @@ import ICommand from "kitsune-wrapper-library/dist/base/interfaces/ICommand";
 import KitsuneHelper from "kitsune-wrapper-library/dist/base/helper/KitsuneHelper";
 import {FlateError, Zip, ZipInputFile, zip, AsyncZippableFile, AsyncZippable} from "fflate";
 import {bytesToBase64} from "./encoding/Base64";
-import {Transform} from "stream-browserify";
-
-const kChar = '🦊';
+import {IWriter, Transform} from "stream-browserify";
 
 type PathAndData = {path:string, data:ArrayBuffer, file:File, index:number};
 
 export class Wrapper {
+    storedFileInput : HTMLInputElement;
+    storedFileUploads : {[x:string]: Array<string>|null} = {};
     constructor() {
         new KitsuneHelper();
         const startUpCommand = container.get<ICommand>(CoreState.INIT);
@@ -46,7 +46,8 @@ export class Wrapper {
             },
             submitAssets: async () => {
                 console.log('submitting')
-                fileInput.files ? this.uploadAllFiles(fileInput.files) : console.log('no files selected');
+                this.storedFileInput = fileInput;
+                this.storedFileInput.files ? this.uploadAllFiles(this.storedFileInput.files) : console.log('no files selected');
             }
         }
 
@@ -58,37 +59,29 @@ export class Wrapper {
     onZipInputData(err:FlateError, data:Uint8Array, final:boolean) {
         console.log('ondata from whole zip', err, data, final);
     }
-
     async uploadFile(file:string) {
-        //const formData = new FormData()
-        //formData.set("files", file, "file.txt");
-        console.log('strigified', file);
-        const objectPackage = {files:kChar};
+        // @ts-ignore
+        const objectPackage = {files: KitsuneHelper.kChar};
         let injectableString = JSON.stringify(objectPackage);
-        console.log('kChar Injectable Object as JSON String: \n', injectableString);
-        injectableString = injectableString.replace(kChar, file);
-        //const jsonStream = parser();
-        const inoutStream: Transform = new Transform({
-            transform(chunk:any, encoding:any, callback:Function) {
+        // @ts-ignore
+        injectableString = injectableString.replace(KitsuneHelper.kChar, file);
+        const inoutStream: IWriter = new Transform({
+            transform(chunk: any, encoding: any, callback: Function) {
                 this.push(chunk);
                 callback();
             },
         });
-        (inoutStream as unknown as any).write(injectableString, undefined, (error: any) => {
-            error ? console.log('write stream error', error) : ()=>{
-                console.log('write stream completed');
-            }
-        })
-        return this.asyncAwait(fetch(`http://localhost:8081/upload`, {
+        inoutStream.write(injectableString, undefined, () => {
+            // @ts-ignore
+            console.log(`${KitsuneHelper.kChar}`, ` ....writing chunk ${injectableString.length}`)
+        });
+        console.log('wawawawa');
+        return fetch(`http://localhost:8081/upload`, {
             method:"POST",
             body:(inoutStream as unknown as any).read(),
             headers: {
-            'Content-Type': 'application/json'
-        }, mode:"cors" /* ... */ })) as Response;
-    }
-
-    asyncAwait(p:Promise<any>) {
-        return <Awaited<any>>p.then((val)=>val);
+                'Content-Type': 'application/json'
+            }, mode:"cors" /* ... */ });
     }
 
     fileNameFromPath(path: string)  {
@@ -101,7 +94,6 @@ export class Wrapper {
         const totalFiles = inputFiles.length;
         const all_files = new Zip();
         all_files.ondata = this.onZipInputData;
-        console.log(all_files);
         const collectedZippedData:Array<Uint8Array> = [];
         this.loadFilesAsArrayofBuffers(inputFiles!, (buffers)=>{
             const assetPackUID = crypto.randomUUID();
@@ -112,11 +104,10 @@ export class Wrapper {
                     size: bufferAndPath.file.size,
                     crc: 0,
                     filename: this.fileNameFromPath(bufferAndPath.path),
-                    compression: 0,
+                    compression: 7,
                     mtime: Date.now(),
                     ondata: (err, data, final) => {
-                        console.log('ondata from zip[input', err, data, final)
-                        return data;
+                        return data ? data : null;
                     }
                 };
                 all_files.add(zipInput);
@@ -126,50 +117,60 @@ export class Wrapper {
                     comment:`Kitsune Wrapper Asset |${assetPackUID}| : ${bufferAndPath.path} `,
                     mtime: Date.now(),
                     mem:12,
-                    level:4,
+                    level:7,
                 }, (err, data)=>{
                     if(err){
                         console.log('error??', err);
                     }
                     if(data){
-                        console.log('this is the zipped bytearray for file ', bufferAndPath.file.name, data);
+                        //console.log('this is the zipped bytearray for file ', bufferAndPath.file.name, data);
                         collectedZippedData.push(data);
                         if(collectedZippedData.length === totalFiles){
-                            let expectedResponses = 0;
-                            let finalResp = 0;
+                            const currentStore:Array<string> = [];
                             collectedZippedData.forEach((zippedFile)=>{
-                                console.log('now converting each zipped ')
+                                //console.log('now converting each zipped ')
                                 const base64String = bytesToBase64(zippedFile);
-                                const uploadResponse = <Awaited<Response>>this.asyncAwait(this.uploadFile(base64String)) as unknown as Promise<Response>;
-                                uploadResponse.finally(()=>{
-                                    finalResp++;
-                                    console.log('got finally?', uploadResponse);
-                                    if(finalResp == totalFiles) {
-                                        console.log(`\n\n\n${kChar} < UPLOAD VERIFIED ${finalResp} / ${totalFiles}\n`);
-                                    }
-                                })
-                                console.log(`${kChar} : upload response`, uploadResponse);
-                                expectedResponses++;
-                                console.log(`${kChar} < uploaded ${expectedResponses} / ${totalFiles}`);
-                                if (uploadResponse) {
-                                    console.log(`${kChar} < abnormal response status`, uploadResponse, uploadResponse);
-                                }
-                                if(expectedResponses === totalFiles) {
-
-                                    console.log(`${kChar} < all files packed successfully by server!`);
-
-                                }
+                                currentStore.push(base64String);
                             })
+                            if(currentStore.length === totalFiles) {
+                                this.storeStrings(assetPackUID, currentStore);
+                                this.uploadAllData(assetPackUID);
+                                all_files.end();
+
+                            }
+
                         }
                     }
                 })
                 if(index == buffers.length-1){
-                    all_files.end();
-                    console.log('ready to send zip', all_files);
-                    console.log('collected data might need concatting into one', collectedZippedData);
+
+                    //console.log('ready to send zip', all_files);
+                    //console.log('collected data might need concatting into one', collectedZippedData);
                 }
             })
         });
+    }
+
+    uploadAllData(uid:string){
+        const allDatas = this.storedFileUploads[uid]!;
+        const totalFiles = allDatas.length;
+        let finalResp = 0;
+        allDatas.forEach((data)=> {
+            const uploadResponse = <Awaited<Response>>KitsuneHelper.asyncAwait(this.uploadFile(data)) as unknown as Promise<Response>;
+            uploadResponse.finally(()=>{
+                finalResp++;
+                console.log('got finally?', uploadResponse);
+                if(finalResp == totalFiles) {
+                    // @ts-ignore
+                    console.log(`\n\n\n${KitsuneHelper.kChar} < UPLOAD VERIFIED ${finalResp} / ${totalFiles}\n`);
+                    this.storedFileInput.value = '';
+                }
+            })
+        })
+    }
+
+    storeStrings(id:string, zippedStrings:Array<string>|null){
+        this.storedFileUploads[id] = zippedStrings;
     }
 
     loadFilesAsArrayofBuffers(files:FileList, cb:(buffers:Array<PathAndData>)=>void){
@@ -183,7 +184,6 @@ export class Wrapper {
             console.log(item)
             index++;
         }
-        console.log('file items is', fileItems);
         const fileBuffers:Array<PathAndData> = [];
         while (fileItems[0] !== undefined) {
             const file: File = fileItems[0] ;
@@ -192,18 +192,18 @@ export class Wrapper {
             let fileByteArray: Uint8Array;
             let fileBuffer: ArrayBuffer;
             fileReader.onload = (e) => {
-                console.log(`${kChar} | Loading file ${filePath} - `, `${Math.floor(e.loaded*(100/e.total))}%`);
+                // @ts-ignore
+                console.log(`${KitsuneHelper.kChar} | Loading file ${filePath} - `, `${Math.floor(e.loaded*(100/e.total))}%`);
                 if(e.target)
                     fileBuffer = e.target!.result as ArrayBuffer;
                 fileByteArray = new Uint8Array(e.target!.result as ArrayBuffer);
-                file.arrayBuffer = () =>Promise.resolve(fileBuffer);
+                file.arrayBuffer = KitsuneHelper.asyncAwait(Promise.resolve(fileBuffer));
                 const blobbed = new Blob([fileByteArray])
                 file.stream=blobbed.stream;
-                console.log("INPUT BLOB SIZE: ", blobbed.size, 'buffer', fileBuffer.byteLength);
                 fileBuffers.push({path:filePath, data:fileBuffer, file:file, index:fileBuffers.length-1} as PathAndData);
 
                 if(e.total == e.loaded){
-                    console.log('NOW can be added to zip or sent - next step')
+                    //maybe
                 }
 
                 if((fileBuffers as Array<PathAndData>).length == totalFiles){

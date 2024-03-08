@@ -1,5 +1,4 @@
 import IWrapperLayout from "./IWrapperLayout";
-import {ExtensionValuedObject} from "../commands/InitWrapper";
 
 export default interface IWrapperConfig {
     assetPacks: string;
@@ -11,4 +10,10 @@ export default interface IWrapperConfig {
     gameConfig?: string;
     platformAddress?: string;
     layout?: IWrapperLayout;
+}
+
+export type ExtensionValuedObject = {
+    moduleName: string;
+    modulePath: string;
+    gzipped?: boolean | undefined;
 }
