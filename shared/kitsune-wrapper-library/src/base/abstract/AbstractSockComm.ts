@@ -1,0 +1,22 @@
+import {AbstractModule} from "./AbstractModule";
+import ISockComm from "../interfaces/extensions/ISockComm";
+
+
+export default class AbstractSockComm extends AbstractModule implements ISockComm {
+    _wrapperConfig:any;
+    _assetVendor:any;
+
+    clientMap: Map<string, any | string | boolean | number>;
+    socket: any;
+    id: string;
+    totals: Array<number>;
+
+    run(_wrapperConfig:any): ISockComm {
+        console.warn(
+            'Abstract Socket Comm run() was triggered  \n' +
+            'Override this function in your own Socket \n' +
+            'Extension, or use the KSockService extension\n')
+
+        return this;
+    };
+}

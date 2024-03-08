@@ -1,0 +1,46 @@
+{
+  "name": "kserver",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "./dist"
+  ],
+  "watch": {
+    "start": {
+      "patterns": [
+        "src"
+      ],
+      "extensions": "ts,html,js",
+      "quiet": false,
+      "legacyWatch": false,
+      "delay": 2500,
+      "runOnChangeOnly": false
+    }
+  },
+  "scripts": {
+    "buildServerChannels": "npm --watch run build --prefix ../kitsune-ws-server && npm --watch run build --prefix ../kitsune-rest-server && npm --watch run build --prefix ../kitsune-asset-store",
+    "buildChannelsLocalLib": "npm --watch run linklib --prefix ../kitsune-ws-server && npm --watch run linklib --prefix ../kitsune-rest-server && npm --watch run linklib --prefix ../kitsune-asset-store",
+    "build": "tsc",
+    "startServers": "nodemon ./dist/index.js",
+    "start": "killall node && npm run startServers",
+    "launch": "tsc index.ts && npm --watch run start 2>&1| tee npm.txt",
+    "debug": "export DEBUG=* && npm --watch run start 2>&1| tee npm.txt",
+    "flush-store": "cd ./trash/ && rm ./packets/**/* -r -f && cd ../"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/kill-port": "^2.0.3",
+    "@types/node": "^20.11.24",
+    "kill-port": "^2.0.1",
+    "kitsune-wrapper-library": "^0.0.41",
+    "nodemon": "^3.1.0"
+  },
+  "dependencies": {
+    "@types/tail": "^2.2.3",
+    "colors": "^1.4.0",
+    "tail": "^2.2.6"
+  }
+}

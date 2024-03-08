@@ -1,0 +1,5 @@
+
+> kitsune-rest-server@0.0.1 start
+> tsc && node ./app.js
+
+[object Promise] - secret key
