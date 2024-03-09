@@ -4,5 +4,3 @@ package-lock.json
 report.html
 node_modules
 /dist
-/packets/*
-/uploaded/*
