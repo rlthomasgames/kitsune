@@ -11,3 +11,7 @@ phases:
       - npm run install-library && npm run build-library
       - npm run install-client && npm run client-link-lib
       - npm run build-client
+      - npm run install-server && npm run server-link-lib
+      - npm run build-server
+      - sleep 2
+      - npm run launch
