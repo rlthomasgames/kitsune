@@ -7,6 +7,7 @@ phases:
       - echo "Kitsune Wrapper + Supporting Back End Alpha"
       - npm -v
       - npm i
+      - mkdir ./client/kitsune-wrapper/lib && mkdir ./client/kitsune-wrapper-extensions/lib && mkdir ./client/kitsune-application-test-dummy/lib
       - npm run install-library && npm run build-library
       - npm run install-client && npm run client-link-lib
       - npm run build-client
