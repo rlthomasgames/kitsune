@@ -7,6 +7,7 @@ import ICanFetchConfig from "kitsune-wrapper-library/dist/base/interfaces/ICanFe
 import ISockComm from "kitsune-wrapper-library/dist/base/interfaces/extensions/ISockComm";
 import * as fflate from "fflate";
 import KitsuneHelper from "kitsune-wrapper-library/dist/base/helper/KitsuneHelper";
+import {IDataStore} from "kitsune-wrapper-library/dist/base/interfaces/extensions/IDataStore";
 
 @injectable()
 class KSockService extends AbstractSockComm implements IInjectableExtensionModule, ISockComm {
@@ -22,7 +23,7 @@ class KSockService extends AbstractSockComm implements IInjectableExtensionModul
      */
     //for receiving and sending asset files over SOCK IO
     @inject(TYPES.AssetData)
-    _assetData: IInjectableExtensionModule;
+    _assetData: IDataStore;
 
     public clientMap: Map<string, any | string | boolean | number>;
     public socket: any;
@@ -84,8 +85,8 @@ class KSockService extends AbstractSockComm implements IInjectableExtensionModul
                 this.totals.push(responseData.total)
             }
             responseData.total = this.totals[this.totals.length -1];
-            this._assetVendor.storeAssetResponseFromWS(responseData)
-            console.log(`got parsed Asset Response : `, responseData.data.byteLength, responseData.index, responseData.total, responseData.assetPackUUID)
+            this._assetData.storeAssetResponseFromWS(responseData)
+            console.log(`got parsed Asset Response : `, responseData, responseData.index, responseData.total, responseData.assetPackUUID)
         })
 
         this.socket.connect().open();

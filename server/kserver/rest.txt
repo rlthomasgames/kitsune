@@ -28,7 +28,7 @@ MongoServerSelectionError: connect ECONNREFUSED 127.0.0.1:27017
         minWireVersion: 0,
         maxWireVersion: 0,
         roundTripTime: -1,
-        lastUpdateTime: 9026260,
+        lastUpdateTime: 4249594,
         lastWriteDate: 0,
         error: MongoNetworkError: connect ECONNREFUSED 127.0.0.1:27017
             at connectionFailureError (/home/rhys/Development/kGitCheck/server/kitsune-rest-server/node_modules/mongodb/lib/cmap/connect.js:357:20)

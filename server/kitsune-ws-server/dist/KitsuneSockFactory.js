@@ -22,8 +22,12 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.KitsuneSock = exports.KitsuneSockFactory = exports.defaultEventHandler = void 0;
+const colors = require("colors");
 const socket_io_1 = require("socket.io");
 const jwt = __importStar(require("jsonwebtoken"));
 const http = __importStar(require("http"));
@@ -32,6 +36,8 @@ const fflate = __importStar(require("fflate"));
 const fflate_1 = require("fflate");
 const index_1 = require("./index");
 const fs = __importStar(require("fs"));
+const KitsuneHelper_1 = __importDefault(require("kitsune-wrapper-library/dist/base/helper/KitsuneHelper"));
+colors.enable();
 let socketUsed;
 const defaultEventHandler = (event, next) => {
     console.log(`server received ${event}`);
@@ -41,17 +47,22 @@ const defaultEventHandler = (event, next) => {
     switch (event[0]) {
         case kitsune_wrapper_library_1.SOCK.GZIPPED_EVENT:
             const data = event[1];
-            console.log(index_1.KVerboseLog.log(`${kitsune_wrapper_library_1.SOCK.GZIPPED_EVENT} recieved data : gzipped : ${data} `));
+            console.log(index_1.KVerboseLog.log(`${kitsune_wrapper_library_1.SOCK.GZIPPED_EVENT} recieved data gzipped :  `)); //${data}
             const unzipped = fflate.decompressSync(data);
             const blob = new Blob([unzipped], { type: 'text/plain' });
             blob.arrayBuffer().then((arrayBuf) => {
                 const asString = (0, fflate_1.strFromU8)(new Uint8Array(arrayBuf));
+                /*
                 console.log(`UNZIPPED:`);
-                console.log(`${index_1.KVerboseLog.log("as Uint8Array :") + "\n"}${index_1.KVerboseLog.log(unzipped + "") + "\n"}
-                    ${index_1.KVerboseLog.log("as String :") + "\n"}${index_1.KVerboseLog.log(`${asString}`) + "\n"}
-                    ${index_1.KVerboseLog.log("as JSON object :")}`);
+                console.log(
+                    `${KVerboseLog.log("as Uint8Array :") + "\n"}${KVerboseLog.log(unzipped + "") + "\n"}
+                    ${KVerboseLog.log("as String :") + "\n"}${KVerboseLog.log(`${asString}`) + "\n"}
+                    ${KVerboseLog.log("as JSON object :")}`
+                );
+
+                 */
                 const object = JSON.parse(`${asString}`);
-                console.log('current object', object);
+                //console.log('current object', object);
                 const assetReq = object[kitsune_wrapper_library_1.SOCK.AP_REQ] != undefined;
                 let completeBuffer = '';
                 if (assetReq) {
@@ -59,18 +70,32 @@ const defaultEventHandler = (event, next) => {
                     if (arrayPaks) {
                         console.log('trying to load : ', arrayPaks);
                         arrayPaks.forEach((pak, index) => {
-                            console.log('trying to open : ', pak, index);
-                            fs.open(pak, (value, fd) => {
-                                console.log('?error? : ', value, fd);
-                                fs.read(fd, (err, bytesRead, buffer) => {
-                                    completeBuffer = completeBuffer.concat(buffer.toString());
-                                    console.log('data to send pak', index, pak, completeBuffer);
-                                    if (index >= arrayPaks.length - 1) {
-                                        console.log(`sending asset pack - ${arrayPaks.length} paks combined into ${completeBuffer.length} length string / stream`);
-                                        const newUint8 = (0, fflate_1.strToU8)(completeBuffer), arrayBufferN = sendWhenPromised(new Blob([newUint8]).arrayBuffer());
-                                    }
+                            const relativePath = `../kitsune-asset-store/packets/${pak}`;
+                            console.log('trying to open : ', relativePath, index);
+                            if (fs.existsSync(relativePath)) {
+                                console.log('path exists...', relativePath);
+                                fs.readdir(relativePath, (err, files) => {
+                                    files.forEach((value, index, packetsArr) => {
+                                        const packetPath = relativePath + '/' + value;
+                                        const fd = fs.openSync(packetPath, 'r');
+                                        if (fd) {
+                                            const fileNo = value.split('p')[0].split('|')[0];
+                                            const buffer = fs.readFileSync(packetPath);
+                                            const sendPromise = sendWhenPromised({
+                                                data: buffer,
+                                                index: index + 1,
+                                                assetPackUUID: pak,
+                                                total: packetsArr.length,
+                                                fileIndex: parseInt(fileNo)
+                                            });
+                                            //console.log(`sent packet ${index+1} of ${packetsArr.length} for asset pak ${pak} buffer: ${buffer}`)
+                                        }
+                                    });
                                 });
-                            });
+                            }
+                            else {
+                                console.log(colors.bgYellow.red("UNABLE TO FIND ASSET PACK... " + relativePath + ""));
+                            }
                         });
                     }
                     else {
@@ -81,15 +106,20 @@ const defaultEventHandler = (event, next) => {
             next();
             return;
         default:
-            console.log('check what events come in??', event, eventMap);
+            //console.log('check what events come in??', event, eventMap);
             next();
             return;
     }
 };
 exports.defaultEventHandler = defaultEventHandler;
-const sendWhenPromised = async (payload) => {
+const sendWhenPromised = (payload) => {
     if (socketUsed) {
-        socketUsed.socket.emit(kitsune_wrapper_library_1.SOCK.AP_RES, await payload);
+        if (payload instanceof Promise) {
+            socketUsed.socket.emit(kitsune_wrapper_library_1.SOCK.AP_RES, KitsuneHelper_1.default.asyncAwait(payload));
+        }
+        else {
+            socketUsed.socket.emit(kitsune_wrapper_library_1.SOCK.AP_RES, payload);
+        }
     }
     return { socket: socketUsed, payload: payload };
 };

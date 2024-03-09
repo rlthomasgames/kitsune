@@ -2,6 +2,7 @@ import * as fs from "fs";
 import * as Path from "path";
 import {Zip, strToU8} from "fflate";
 import KitsuneHelper from "kitsune-wrapper-library/dist/base/helper/KitsuneHelper";
+import {exec} from "node:child_process";
 export type DebugInfoObject0 = {
     parts:number,
     remainders:number,
@@ -70,7 +71,15 @@ export default class BuildPacketsFromUploadsService {
 
 
         const ind = 819200; //8K with sqRt 2
+        const splitFileName = file.split('/');
+        const filename = splitFileName[splitFileName.length-1];
+        console.log('splitting file', filename, 'at path containing ', fs.readdirSync('./'));
+        !fs.existsSync(`../packets/${assetPackUUID}/`) ? fs.mkdirSync(`../packets/${assetPackUUID}/`) : null;
+        exec(`split -b 819200 ../uploaded/${assetPackUUID}/${filename} --additional-suffix=.part --suffix-length=3 -d "../packets/${assetPackUUID}/p`+fileNum+`|"`);
+
+        /*
         const stringFile = fs.readFileSync(filePath, {encoding: 'binary'}).split('')
+        const asUint8 = strToU8(stringFile.join());
         //const asUint8Arr = new Uint8Array(asyncAwait(new Blob([strToU8(stringFile)]).arrayBuffer()) as ArrayBuffer)
         const arrOfUintArr: any[] = [];
         //const parts = !(Number.isNaN(Math.floor(fileSize / ind))) ? (Math.ceil(stringFile.length / ind)) : 1;
@@ -101,23 +110,24 @@ export default class BuildPacketsFromUploadsService {
             `frozen in time`,
             frozenInTime(parts),
             frozenInTime(fileSize),
-            frozenInTime(stringFile.length / parts),
-            frozenInTime(stringFile.length),
+            frozenInTime(asUint8.length / parts),
+            frozenInTime(asUint8.length),
             frozenInTime(ind)
         )
-        const portion = Math.floor(stringFile.length/parts);
+        const portion = Math.floor(asUint8.length/parts);
         for(var i = 0; i < concreteParts; i++){
-            const sizeLeft = stringFile.length-(i*portion);
+            const sizeLeft = asUint8.length-(i*portion);
             if(i == concreteParts) {
-                arrOfUintArr.push(stringFile.slice(i*portion, stringFile.length-1));
+                arrOfUintArr.push(asUint8.slice(i*portion, asUint8.length-1));
             } else {
                 if (sizeLeft > portion) {
-                    arrOfUintArr.push(stringFile.slice(i * portion, (i * portion) + portion));
+                    arrOfUintArr.push(asUint8.slice(i * portion, (i * portion) + portion));
                 } else {
-                    arrOfUintArr.push(stringFile.slice(i * portion, stringFile.length - 1));
+                    arrOfUintArr.push(asUint8.slice(i * portion, asUint8.length - 1));
                 }
             }
         }
+
 
         console.log(`concrete ${concreteParts} / ${arrOfUintArr.length}`)
         if (arrOfUintArr.length === concreteParts) {
@@ -135,6 +145,8 @@ export default class BuildPacketsFromUploadsService {
                 })
             //fr.readAsArrayBuffer(new Blob([fs.readFileSync(filePath) as BlobPart]));
         }
+
+         */
             /*
             while(arrOfUintArr.length < ind){
                 this.storePacketsFromUint8(asUint8Arr.slice(0, ind), uploaded_asset_folder, fileNum, packetNum, ()=>{
@@ -142,7 +154,7 @@ export default class BuildPacketsFromUploadsService {
             }
 
              */
-        fileNum++;
+        //fileNum++;
     }
 
 

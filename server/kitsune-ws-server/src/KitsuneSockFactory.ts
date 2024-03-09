@@ -1,11 +1,16 @@
+import colors = require('colors');
 import {Event, Server, Socket} from "socket.io"
 import * as jwt from "jsonwebtoken";
 import * as http from "http";
 import {SOCK} from "kitsune-wrapper-library";
 import * as fflate from "fflate";
-import {strFromU8, strToU8} from "fflate";
+import {strFromU8} from "fflate";
 import {KVerboseLog} from "./index";
 import * as fs from "fs";
+import KitsuneHelper from "kitsune-wrapper-library/dist/base/helper/KitsuneHelper";
+import {APResponseData} from "kitsune-wrapper-library/dist/base/constants/SockConn";
+
+colors.enable();
 
 let socketUsed: KitsuneSock;
 
@@ -19,19 +24,22 @@ export const defaultEventHandler = (event: Event, next: Function) => {
     switch (event[0] as string) {
         case SOCK.GZIPPED_EVENT:
             const data = (event[1] as unknown) as Uint8Array;
-            console.log(KVerboseLog.log(`${SOCK.GZIPPED_EVENT} recieved data : gzipped : ${data} `));
+            console.log(KVerboseLog.log(`${SOCK.GZIPPED_EVENT} recieved data gzipped :  `));//${data}
             const unzipped = fflate.decompressSync(data);
             const blob = new Blob([unzipped], {type: 'text/plain'});
             blob.arrayBuffer().then((arrayBuf) => {
                 const asString = strFromU8(new Uint8Array(arrayBuf));
+                /*
                 console.log(`UNZIPPED:`);
                 console.log(
                     `${KVerboseLog.log("as Uint8Array :") + "\n"}${KVerboseLog.log(unzipped + "") + "\n"}
                     ${KVerboseLog.log("as String :") + "\n"}${KVerboseLog.log(`${asString}`) + "\n"}
                     ${KVerboseLog.log("as JSON object :")}`
                 );
+
+                 */
                 const object = JSON.parse(`${asString}`);
-                console.log('current object', object);
+                //console.log('current object', object);
                 const assetReq: boolean = object[SOCK.AP_REQ] != undefined;
                 let completeBuffer: string = '';
                 if(assetReq) {
@@ -39,19 +47,31 @@ export const defaultEventHandler = (event: Event, next: Function) => {
                     if(arrayPaks) {
                         console.log('trying to load : ', arrayPaks);
                         arrayPaks.forEach((pak: string, index) => {
-                            console.log('trying to open : ', pak, index);
-                            fs.open(pak, (value, fd) => {
-                                console.log('?error? : ', value, fd);
-                                fs.read(fd, (err, bytesRead, buffer) => {
-                                    completeBuffer = completeBuffer.concat(buffer.toString())
-                                    console.log('data to send pak', index, pak, completeBuffer);
-                                    if (index >= arrayPaks.length - 1) {
-                                        console.log(`sending asset pack - ${arrayPaks.length} paks combined into ${completeBuffer.length} length string / stream`)
-                                        const newUint8 = strToU8(completeBuffer),
-                                            arrayBufferN = sendWhenPromised(new Blob([newUint8]).arrayBuffer());
-                                    }
+                            const relativePath = `../kitsune-asset-store/packets/${pak}`
+                            console.log('trying to open : ', relativePath, index);
+                            if(fs.existsSync(relativePath)) {
+                                console.log('path exists...', relativePath);
+                                fs.readdir(relativePath, (err, files)=>{
+                                    files.forEach((value, index, packetsArr) => {
+                                        const packetPath = relativePath+'/'+value;
+                                        const fd = fs.openSync(packetPath, 'r');
+                                        if(fd){
+                                            const fileNo = value.split('p')[0].split('|')[0];
+                                            const buffer = fs.readFileSync(packetPath)
+                                            const sendPromise = sendWhenPromised({
+                                                data: buffer,
+                                                index: index+1,
+                                                assetPackUUID: pak,
+                                                total: packetsArr.length,
+                                                fileIndex: parseInt(fileNo)
+                                            });
+                                            //console.log(`sent packet ${index+1} of ${packetsArr.length} for asset pak ${pak} buffer: ${buffer}`)
+                                        }
+                                    })
                                 })
-                            })
+                            } else {
+                                console.log(colors.bgYellow.red("UNABLE TO FIND ASSET PACK... "+relativePath+""));
+                            }
                         })
                     } else {
                         console.log('received erroneous asset pak request: IGNORING1 '+JSON.stringify(eventMap)+'')
@@ -61,7 +81,7 @@ export const defaultEventHandler = (event: Event, next: Function) => {
             next();
             return;
         default:
-            console.log('check what events come in??', event, eventMap);
+            //console.log('check what events come in??', event, eventMap);
             next();
             return;
     }
@@ -70,11 +90,15 @@ export const defaultEventHandler = (event: Event, next: Function) => {
 interface T {
 }
 
-const sendWhenPromised = async (payload:Promise<T|unknown>) => {
+const sendWhenPromised = (payload:Promise<T|APResponseData>|T|APResponseData) => {
     if(socketUsed) {
-    socketUsed.socket.emit(SOCK.AP_RES, await payload);
+        if(payload instanceof Promise) {
+            socketUsed.socket.emit(SOCK.AP_RES, KitsuneHelper.asyncAwait(payload) as APResponseData);
+        } else {
+            socketUsed.socket.emit(SOCK.AP_RES, payload as APResponseData);
+        }
     }
-    return {socket:socketUsed, payload:payload}
+    return {socket: socketUsed, payload: payload}
 }
 
 export class KitsuneSockFactory {

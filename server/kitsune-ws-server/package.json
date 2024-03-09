@@ -6,7 +6,7 @@
   "types": "dist/index.d.ts",
   "files": [
     "./dist"
-    ],
+  ],
   "scripts": {
     "linklib": "npm --watch run build --prefix ../../shared/kitsune-wrapper-library && npm link ../../shared/kitsune-wrapper-library",
     "build": "tsc",
@@ -27,8 +27,10 @@
     "utf-8-validate": "^5.0.10"
   },
   "devDependencies": {
+    "@types/colors": "^1.2.1",
     "@types/jsonwebtoken": "^9.0.4",
     "@types/sha256": "^0.2.2",
+    "colors": "^1.4.0",
     "kitsune-wrapper-library": "^0.0.17"
   }
 }

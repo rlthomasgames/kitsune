@@ -24,7 +24,7 @@
     "buildChannelsLocalLib": "npm --watch run linklib --prefix ../kitsune-ws-server && npm --watch run linklib --prefix ../kitsune-rest-server && npm --watch run linklib --prefix ../kitsune-asset-store",
     "build": "tsc",
     "startServers": "nodemon ./dist/index.js",
-    "start": "killall node && npm run startServers",
+    "start": "killall node | (sleep 5 && npm run startServers)",
     "linklib": "npm run build --prefix ../../shared/kitsune-wrapper-library && npm link ../../shared/kitsune-wrapper-library",
     "launch": "tsc index.ts && npm --watch run start 2>&1| tee npm.txt",
     "debug": "export DEBUG=* && npm --watch run start 2>&1| tee npm.txt",

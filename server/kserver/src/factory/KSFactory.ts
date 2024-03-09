@@ -48,9 +48,9 @@ export class KServer{
             wrapper.output.on('line', (kSockData: string)=> this.channelEventHandler(`${kSockData.split('"')[0]}`, 'WRAPPER'));
 
             const asset = new KServerChannel('asset.txt', '../kitsune-asset-store', false, false);
-            //asset.output.on('line', (kSockData: string)=> this.channelEventHandler(`${kSockData}`, 'ASSETS'));
+            asset.output.on('line', (kSockData: string)=> this.channelEventHandler(`${kSockData}`, 'ASSETS'));
 
-            const mongo = new KServerChannel('asset.txt', 'sudo mongod --dbpath ~/mongodb/ --bind_ip 127.0.0.1 --port 27017', true, false);
+            //const mongo = new KServerChannel('asset.txt', 'sudo mongod --dbpath ~/mongodb/ --bind_ip 127.0.0.1 --port 27017', true, false);
             //mongo.output.on('line', (kSockData: string)=> this.channelEventHandler(`${kSockData}`, 'MONGO'));
         }, 10000)
     }

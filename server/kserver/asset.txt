@@ -6,17 +6,14 @@
 constructed builder
 listening port 8081
 Routes configured for UploadRoutes
-ERRORS: Error: ENOENT: no such file or directory, scandir '../packets'
-[Error: ENOENT: no such file or directory, scandir '../packets'] {
-  errno: -2,
-  code: 'ENOENT',
-  syscall: 'scandir',
-  path: '../packets'
-}
-ERRORS: Error: ENOENT: no such file or directory, scandir './../uploaded'[1m[31m[39m[22m
-[Error: ENOENT: no such file or directory, scandir './../uploaded'] {
-  errno: -2,
-  code: 'ENOENT',
-  syscall: 'scandir',
-  path: './../uploaded'
-}
+FILES: 
+building... ../uploaded/d3f43c68-f793-4717-9682-f33168b10d3c/ready.glb.zip
+🦊 ../uploaded/d3f43c68-f793-4717-9682-f33168b10d3c/ready.glb.zip got stats :
+ [object Object] = {"dev":2050,"mode":33188,"nlink":1,"uid":1000,"gid":1000,"rdev":0,"blksize":4096,"ino":29231270,"size":37930548,"blocks":74088,"atimeMs":1710012973357.2927,"mtimeMs":1709925869109.904,"ctimeMs":1709925869685.9104,"birthtimeMs":1709925869109.904,"atime":"2024-03-09T19:36:13.357Z","mtime":"2024-03-08T19:24:29.110Z","ctime":"2024-03-08T19:24:29.686Z","birthtime":"2024-03-08T19:24:29.110Z"} 
+37930548truesplitting file ready.glb.zip at path containing  [
+  'AssetVendorService.js',
+  'BuildPacketsFromUploadsService.js',
+  'FlushAssetStoreService.js',
+  'encoding',
+  'routes'
+]
