@@ -2,7 +2,7 @@ import {AbstractModule} from "./AbstractModule";
 import ISockComm from "../interfaces/extensions/ISockComm";
 export class AbstractSockComm extends AbstractModule implements ISockComm {
     _wrapperConfig:any;
-    _assetVendor:any;
+    _assetData:any;
 
     clientMap: Map<string, any | string | boolean | number>;
     socket: any;

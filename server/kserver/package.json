@@ -12,7 +12,7 @@
       "patterns": [
         "src"
       ],
-      "extensions": "ts,html,js",
+      "extensions": "ts,html,js,json",
       "quiet": false,
       "legacyWatch": false,
       "delay": 2500,

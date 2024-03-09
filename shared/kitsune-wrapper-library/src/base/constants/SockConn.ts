@@ -28,3 +28,11 @@ export const SOCK:ISOCK = {
     CONNECTION: 'connection',
     AP_RES: 'assetPackRES'
 }
+
+export interface APResponseData {
+    data: ArrayBuffer
+    index: number
+    assetPackUUID: string
+    total: number
+    fileIndex: number
+}

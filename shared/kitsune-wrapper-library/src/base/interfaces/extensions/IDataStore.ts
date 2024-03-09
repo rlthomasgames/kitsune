@@ -13,4 +13,5 @@ export interface IDataStore {
             [w:string]:ArrayBuffer//asset data
         }
     }
+    storeAssetResponseFromWS(data:unknown):void;
 }

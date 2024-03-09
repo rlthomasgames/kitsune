@@ -2,7 +2,7 @@ import IInjectableExtensionModule from "../IInjectableExtensionModule";
 import IWrapperConfig from "../IWrapperConfig";
 export default interface ISockComm extends IInjectableExtensionModule{
     _wrapperConfig:any;
-    _assetVendor:any;
+    _assetData:any;
 
     clientMap: Map<string, any | string | boolean | number>;
 
