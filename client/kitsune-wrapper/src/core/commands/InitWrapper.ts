@@ -11,6 +11,8 @@ import {IDataStore} from "kitsune-wrapper-library/dist/base/interfaces/extension
 import {SOCK} from "kitsune-wrapper-library/dist/base/constants/SockConn";
 import {Socket} from "socket.io-client";
 import ISockComm from "kitsune-wrapper-library/dist/base/interfaces/extensions/ISockComm";
+import KitsuneHelper from "kitsune-wrapper-library/dist/base/helper/KitsuneHelper";
+import IWrapperConfig from "../interfaces/IWrapperConfig";
 
 @injectable()
 export class InitWrapper implements ICommand {
@@ -34,9 +36,23 @@ export class InitWrapper implements ICommand {
     // TODO : !!!!!!!IMPORTANT!!!!!!!! - clean web sockets and gzip out into separate command and / or module !!!
 
     run() {
+        console.log(KitsuneHelper.kitsuneASCII)
+        //console.table(this, Object.keys(this));
         this._wrapperConfig.request().then((value)=>{
             this._moduleLoader.loadModules(this._wrapperConfig.getConfig())
-            console.log(`got configs? ${this._wrapperConfig} and  ${this._moduleLoader}`)
+            const entries:IWrapperConfig = {
+                application: undefined,
+                assetPacks: "",
+                restAPI: "",
+                language: "",
+                layout: undefined,
+                modules: undefined,
+                wsHost: "",
+                securityToken: "",
+                version: 0
+            }
+            console.table(this._wrapperConfig.getConfig(), Object.keys(entries))
+                //${this._moduleLoader}`)
         })
     //: console.log('cant load no modules specified')
     }

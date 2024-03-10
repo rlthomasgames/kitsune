@@ -12,5 +12,5 @@
   ],
   "application": {"moduleName":"application", "modulePath":"./applications/test_dummy/index.js", "gzipped":  false},
   "uniqueID": null,
-  "assetPacks":["6be20226-01ed-4f5f-8d0b-67ae30fb6a59"]
+  "assetPacks":["bda65ec6-cfb6-4438-9f7e-407c15ff694c"]
 }

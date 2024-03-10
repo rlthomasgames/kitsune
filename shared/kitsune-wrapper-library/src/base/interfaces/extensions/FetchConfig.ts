@@ -50,7 +50,7 @@ const baseConfig: IWrapperConfig = {
     securityToken: "none",
     language: "en-UK",
     gameConfig: "localhost:9090/config/lobby.json",
-    platformAddress: "localhost:7070/socket",
+    platformAddress: "localhost:3000/socket",
     layout: {
         name: "layout0"
     }

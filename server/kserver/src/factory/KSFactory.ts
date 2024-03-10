@@ -28,8 +28,6 @@ export class KSFactory {
         })
         return promise;
     }
-
-
 }
 
 export class KServer{
@@ -39,10 +37,10 @@ export class KServer{
 
         setTimeout(()=>{
             const sock = new KServerChannel('sock.txt', '../kitsune-ws-server', false, false);
-            sock.output.on('line', (kSockData: string)=> this.channelEventHandler(`${kSockData}`, 'WS'));
+            //sock.output.on('line', (kSockData: string)=> this.channelEventHandler(`${kSockData}`, 'WS'));
 
             const rest = new KServerChannel('rest.txt', '../kitsune-rest-server', false, false);
-            rest.output.on('line', (kSockData: string)=> this.channelEventHandler(`${kSockData}`, 'REST'));
+            //rest.output.on('line', (kSockData: string)=> this.channelEventHandler(`${kSockData}`, 'REST'));
 
             const wrapper = new KServerChannel('wrapper.txt', '../../client/kitsune-wrapper', false, false);
             wrapper.output.on('line', (kSockData: string)=> this.channelEventHandler(`${kSockData.split('"')[0]}`, 'WRAPPER'));
@@ -50,10 +48,12 @@ export class KServer{
             const asset = new KServerChannel('asset.txt', '../kitsune-asset-store', false, false);
             asset.output.on('line', (kSockData: string)=> this.channelEventHandler(`${kSockData}`, 'ASSETS'));
 
-            //const mongo = new KServerChannel('asset.txt', 'sudo mongod --dbpath ~/mongodb/ --bind_ip 127.0.0.1 --port 27017', true, false);
+            const mongo = new KServerChannel('asset.txt', 'sudo mongod --dbpath ~/mongodb/ --bind_ip 127.0.0.1 --port 27017', true, false);
             //mongo.output.on('line', (kSockData: string)=> this.channelEventHandler(`${kSockData}`, 'MONGO'));
-        }, 10000)
+        }, 5000)
     }
+
+
 
     channelEventHandler(data: string, channel:string) {
         // const IN_USE = kSockData.toUpperCase().includes('listen EADDRINUSE'.toUpperCase())

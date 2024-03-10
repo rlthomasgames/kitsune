@@ -6,7 +6,16 @@ import KitsuneHelper from "kitsune-wrapper-library/dist/base/helper/KitsuneHelpe
 const { exec } = require('child_process');
 
 const createNewQuadView = (c:number,r:number) =>{
-    console.log(KitsuneHelper.kitsuneASCII);
+    const reColour = KitsuneHelper.kitsuneASCII.red.inverse.bgYellow
+    const snazzyColouring = colors.black(reColour);
+    let pointer = 0;
+    const charSplit = snazzyColouring.split('\n')
+    charSplit.forEach((line)=>{
+        console.log(line.dim.inverse.italic);
+        process.stdout.write('\u001b[2K\u001b[0E\r\r'.reset.stripColors);
+    })
+    //colors.black(reColour).slice(pointer, pointer+57)
+    //console.log(colors.black(reColour));
     const textWidth = Math.floor(c / 2 );
     const textHeight = Math.floor(r / 2 );
     const qv = [];
@@ -16,14 +25,17 @@ const createNewQuadView = (c:number,r:number) =>{
     const screen = [];
     while (cc < allChars){
         screen.push('█');
+        cc++
     }
-
+    //console.log("hello");
     const out = screen;
-    process.stdout.write(screen.join());
+    //console.log(screen.join());
+    //process.stdout.write(screen.join());
+
     return qv;
 }
 export class KVerboseLog {
-    public static VERBOSE_LOG = false;
+    public static VERBOSE_LOG = true;
     public static log = (value: any) => {
         if (this.VERBOSE_LOG) {
             return value;

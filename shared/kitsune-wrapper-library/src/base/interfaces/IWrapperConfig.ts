@@ -1,6 +1,6 @@
 import IWrapperLayout from "./IWrapperLayout";
 
-export default interface IWrapperConfig {
+interface IWrapperConfig {
     assetPacks: string;
     version?: number;
     language?: string;
@@ -11,6 +11,9 @@ export default interface IWrapperConfig {
     platformAddress?: string;
     layout?: IWrapperLayout;
 }
+
+export {IWrapperConfig as default, IWrapperConfig};
+
 
 export type ExtensionValuedObject = {
     moduleName: string;

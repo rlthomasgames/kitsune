@@ -75,7 +75,7 @@ export class Wrapper {
             // @ts-ignore
             console.log(`${KitsuneHelper.kChar}`, ` ....writing chunk ${injectableString.length}`)
         });
-        console.log('wawawawa');
+        console.log(`sending ${file}`);
         return fetch(`http://localhost:8081/upload`, {
             method:"POST",
             body:(inoutStream as unknown as any).read(),
@@ -104,7 +104,7 @@ export class Wrapper {
                     size: bufferAndPath.file.size,
                     crc: 0,
                     filename: this.fileNameFromPath(bufferAndPath.path),
-                    compression: 7,
+                    compression: 0,
                     mtime: Date.now(),
                     ondata: (err, data, final) => {
                         return data ? data : null;
@@ -117,7 +117,8 @@ export class Wrapper {
                     comment:`Kitsune Wrapper Asset |${assetPackUID}| : ${bufferAndPath.path} `,
                     mtime: Date.now(),
                     mem:12,
-                    level:7,
+                    level:0,
+                    consume:true,
                 }, (err, data)=>{
                     if(err){
                         console.log('error??', err);
@@ -136,9 +137,7 @@ export class Wrapper {
                                 this.storeStrings(assetPackUID, currentStore);
                                 this.uploadAllData(assetPackUID);
                                 all_files.end();
-
                             }
-
                         }
                     }
                 })
@@ -191,14 +190,20 @@ export class Wrapper {
             const fileReader = new FileReader();
             let fileByteArray: Uint8Array;
             let fileBuffer: ArrayBuffer;
-            fileReader.onload = (e) => {
+            fileReader.onload = (e:ProgressEvent<FileReader>) => {
                 // @ts-ignore
                 console.log(`${KitsuneHelper.kChar} | Loading file ${filePath} - `, `${Math.floor(e.loaded*(100/e.total))}%`);
                 if(e.target)
-                    fileBuffer = e.target!.result as ArrayBuffer;
-                fileByteArray = new Uint8Array(e.target!.result as ArrayBuffer);
+                    fileBuffer = (e.target! as unknown as any).result as ArrayBuffer;
+                fileByteArray = new Uint8Array((e.target! as unknown as any).result as ArrayBuffer);
+                const keys = Object.keys(e)
+                const vals:Array<string> = [];
+                keys.forEach((p)=>{
+                    vals.push((JSON.stringify(e).split(';').join('').split(':').join(',')))
+                })
+                KitsuneHelper.getInstance().debugObject(e.target, vals.concat(Object.keys(e.target!)))
                 file.arrayBuffer = KitsuneHelper.asyncAwait(Promise.resolve(fileBuffer));
-                const blobbed = new Blob([fileByteArray])
+                const blobbed = new Blob([fileByteArray], {type:'binary'})
                 file.stream=blobbed.stream;
                 fileBuffers.push({path:filePath, data:fileBuffer, file:file, index:fileBuffers.length-1} as PathAndData);
 

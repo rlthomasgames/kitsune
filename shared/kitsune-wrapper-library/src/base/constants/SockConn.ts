@@ -35,4 +35,5 @@ export interface APResponseData {
     assetPackUUID: string
     total: number
     fileIndex: number
+    filePacketIndex:number
 }

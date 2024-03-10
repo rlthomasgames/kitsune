@@ -2,10 +2,11 @@ import {injectable} from "inversify";
 import {AbstractModule} from "kitsune-wrapper-library";
 import KitsuneHelper from "kitsune-wrapper-library/dist/base/helper/KitsuneHelper";
 import IInjectableExtensionModule from "kitsune-wrapper-library/dist/base/interfaces/IInjectableExtensionModule";
-import {IDataDescriptor, IDataStore} from "kitsune-wrapper-library/dist/base/interfaces/extensions/IDataStore";
+import {IDataStore} from "kitsune-wrapper-library/dist/base/interfaces/extensions/IDataStore";
 import IAsyncRequest from "kitsune-wrapper-library/dist/base/interfaces/IAsyncRequest";
 import {APResponseData} from "kitsune-wrapper-library/dist/base/constants/SockConn";
 import {unzipSync} from "fflate";
+//import {unzipSync} from "fflate";
 
 
 /*
@@ -19,29 +20,11 @@ import {unzipSync} from "fflate";
     Asset Pak (Grouping for a collection of files) =>
 
  */
-
-export type KAPacketMaterial = {
+export type StoredPacketData = {
+    file:number,
+    packet:number,
+    data:ArrayBuffer,
     assetPackUUID:string,
-    APFileNo:number,
-    filename:string,
-    data?:ArrayBuffer
-};
-
-export type KAFileDataWrap = {
-    pack:string,
-    files:Array<Array<KAPacketMaterial>>
-    total:number|undefined,
-    appendedData:number
-}
-
-export type individualFileLookUpValues = {
-    assetPackUUID:string,
-    fileName:string,
-    id:string
-}
-export type KADataLibrary = {
-    allPacks:{[assetPackUUID:string]:KAFileDataWrap},
-    allFiles:{[id:string]:individualFileLookUpValues}
 }
 
 @injectable()
@@ -51,18 +34,9 @@ class AssetDataVendor extends AbstractModule implements IInjectableExtensionModu
         dataVendor: {}
     };
 
-    lib:KADataLibrary = {
-        allPacks:{},
-        allFiles:{}
-    }
+    dataStore:{[x:string]:{[y:string]:Uint8Array}} = {};
 
-    dataStore = {};
-
-    _wrapperConfig: any;
-
-    dataWells: { [a: string]: { [p: string]: ArrayBuffer } } = {};
-    descriptors: Array<IDataDescriptor>;
-    animCycle: number = 0;
+    dataWells: { [a: string]: { [p: string]: StoredPacketData } } = {};
 
     startModule() {
         console.log('running asset vendor')
@@ -78,7 +52,8 @@ class AssetDataVendor extends AbstractModule implements IInjectableExtensionModu
         if(this.dataWells[data.assetPackUUID] === undefined){
             this.dataWells[data.assetPackUUID] = {};
         }
-        this.dataWells[data.assetPackUUID]['p'+data.index] = data.data;
+        this.dataWells[data.assetPackUUID]['p'+data.index] = {data:data.data, file:data.fileIndex, assetPackUUID:data.assetPackUUID, packet:data.filePacketIndex };
+        const sortableData:Array<StoredPacketData>  = []
         const keys = Object.keys(this.dataWells[data.assetPackUUID])
         if(data.index === data.total && keys.length === data.total) {
             keys.sort((a, b)=>{
@@ -87,9 +62,80 @@ class AssetDataVendor extends AbstractModule implements IInjectableExtensionModu
                 if(numA > numB) return -1
                 return 1
             });
+            keys.forEach((key)=>{
+                sortableData.push(this.dataWells[data.assetPackUUID][key]);
+            })
+            //KitsuneHelper.getInstance().debugObject(sortableData, Object.keys(sortableData));
+            let fileArray: Array<StoredPacketData> = [];
+            let lastFile = 0;
+            sortableData.sort((a, b)=>{
+                let returnVal = 0;
+                let packetVal : number = 0;
+                packetVal = (a.packet > b.packet) ? 1 : packetVal;
+                packetVal = (a.packet < b.packet) ? -1 : packetVal;
+                returnVal = (a.file > b.file) ? 1 : returnVal;
+                returnVal = (a.file < b.file) ? -1 : returnVal;
+                returnVal = (returnVal === 0 ) ? packetVal : returnVal;
+                return returnVal;
+            })
+            console.log('sorted array =====', sortableData, fileArray);
+            if(sortableData.length === data.total){
+                let fileCount = 0;
+                const collectedFileArrays = [];
+                let lastArrReady:Array<StoredPacketData>|null = null;
+                for(let i = 0 ; i < sortableData.length; i++){
+                    let dirty = false;
+                    lastArrReady = null;
+                    let missingArr:Array<StoredPacketData>|null = null;
+                    if(sortableData[i].file===lastFile){
+                        //continued file
+                        fileArray.push(sortableData[i]);
+                    } else {
+                        //new file
+                        lastArrReady = fileArray;
+                        fileArray = [];
+                        fileArray.push(sortableData[i]);
+                        lastFile = sortableData[i].file;
+                        dirty = true;
+                        console.log('last array is ready', lastArrReady);
+
+                        /*
+                        console.log('checkin array before unzip attempt', fileArray, JSON.parse(JSON.stringify(fileArray)));
+                        this.unzipFile(fileArray);
+                         */
+                    }
+                    if(i === sortableData.length-1){
+                        if(dirty) { missingArr = lastArrReady}
+                        lastArrReady = fileArray;
+                    }
+                    if(lastArrReady !== null){
+                        fileCount++;
+                        //if(i === sortableData.length) {
+                            console.log(`all files ready to build... files:${fileCount}`)
+                            if(missingArr !== null){
+                                const missingfinalArr:Array<ArrayBuffer> = [];
+                                missingArr.forEach((storedData)=>{
+                                    missingfinalArr.push(storedData.data);
+                                })
+                                this.unzipFile(missingfinalArr, data.assetPackUUID);
+                            }
+                        //}
+                        const finalArr:Array<ArrayBuffer> = [];
+                        lastArrReady.forEach((storedData)=>{
+                            finalArr.push(storedData.data);
+                        })
+                        this.unzipFile(finalArr, data.assetPackUUID);
+                        collectedFileArrays.push(lastArrReady);
+                    }
+                    let collection:Array<string> = [];
+                    collectedFileArrays.forEach((v)=>{collection.push(JSON.stringify(v))})
+                    KitsuneHelper.getInstance().debugObject(collectedFileArrays, collection)
+                }
+            }
+            /*
             let dataParts:Array<ArrayBuffer> = [];
             keys.forEach((p)=>{
-                dataParts.push(this.dataWells[data.assetPackUUID][p])
+                dataParts.push(this.dataWells[data.assetPackUUID][p].data)
             });
             const zippedBlob = new Blob(dataParts, {type:'application/zip'});
             let fileReader = new FileReader();
@@ -101,16 +147,10 @@ class AssetDataVendor extends AbstractModule implements IInjectableExtensionModu
                 console.log('decompressed = ', unzipped)
             };
             fileReader.readAsArrayBuffer(zippedBlob);
+
+             */
         }
     }
-    /**
-     * Creates a new Uint8Array based on two different ArrayBuffers
-     *
-     * @private
-     * @param {ArrayBuffer} buffer1 The first buffer.
-     * @param {ArrayBuffer} buffer2 The second buffer.
-     * @return {ArrayBuffer} The new ArrayBuffer created out of the two.
-     */
     appendBuffer(buffer1:ArrayBuffer, buffer2:ArrayBuffer) {
         var tmp = new Uint8Array(buffer1.byteLength + buffer2.byteLength);
         tmp.set(new Uint8Array(buffer1), 0);
@@ -118,6 +158,49 @@ class AssetDataVendor extends AbstractModule implements IInjectableExtensionModu
         return tmp;
     };
 
+    finalStore(data:{ [x:string]:Uint8Array}, assetPackUUID:string){
+        if(this.dataStore[assetPackUUID] === undefined) {
+            this.dataStore[assetPackUUID] = {};
+        }
+        const filename = Object.keys(data)[0];
+        this.dataStore[assetPackUUID][filename] = data[filename];
+        console.log('final storage called...', data, assetPackUUID, this.dataStore);
+    };
+
+    unzipFile(arrData:Array<ArrayBuffer>, assetPACKID:string) {
+        console.log(arrData, assetPACKID);
+        const zippedBlob = new Blob(arrData, {type:'application/zip'});
+        let fileReader = new FileReader();
+        let percentLoaded = 0;
+        fileReader.onload = (event) => {
+            percentLoaded = Math.floor((100/event.total)*event.loaded);
+            console.log(`${Math.floor((100/event.total)*event.loaded)} % LOADED`)
+            let fileArrayBuffer: ArrayBuffer = KitsuneHelper.asyncAwait(new Blob(arrData).arrayBuffer().then((value)=>{
+                if(typeof value !== undefined) {
+                    console.log('final array buffer >>>>', value);
+                    let newUint = new Uint8Array(value)
+                    const unzipped = unzipSync(newUint);
+                    console.log('decompressed = ', unzipped)
+                    if(percentLoaded === 100) {
+                        this.finalStore(unzipped, assetPACKID);
+                    }
+                }
+                return value;
+            })) as ArrayBuffer;
+            if(percentLoaded === 100) {
+                console.log('check completed', fileArrayBuffer);
+                percentLoaded = 0;
+            }
+            /*
+            arrData.forEach((value, index)=> {
+                fileArrayBuffer = index===0 ? value : fileArrayBuffer;
+                (index > 0) ? fileArrayBuffer = assetDataStore.appendBuffer(fileArrayBuffer, value):fileArrayBuffer;
+            })
+
+             */
+        };
+        fileReader.readAsArrayBuffer(zippedBlob);
+    }
 }
 export {AssetDataVendor as default, AssetDataVendor};
 

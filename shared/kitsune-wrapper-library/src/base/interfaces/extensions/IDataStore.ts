@@ -7,11 +7,12 @@ export interface IDataDescriptor {
     dataWell?:string,
 }
 export interface IDataStore {
-    descriptors:Array<IDataDescriptor>//reference to storage location
     dataWells:{//all wells
         [z:string]:{//asset type
-            [w:string]:ArrayBuffer//asset data
+            [w:string]:{data:ArrayBuffer, file:number}//asset data
         }
     }
+    dataStore: {[x:string]:{[y:string]:Uint8Array}};
+    appendBuffer(buffer1:ArrayBuffer, buffer2:ArrayBuffer):Uint8Array;
     storeAssetResponseFromWS(data:unknown):void;
 }

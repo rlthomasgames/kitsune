@@ -9,7 +9,7 @@ export default class FlushAssetStoreService {
 
             fs.readdir(directory, (err, files) => {
                 if (err) {
-                    console.log('ERRORS: '+err+'');
+                    console.log('ERROR: ??Cant find "packets" folder?? '+err+'');
                     console.error(err);
                     callBack(false);
                     //throw err;
@@ -19,8 +19,9 @@ export default class FlushAssetStoreService {
                         for (const file of files) {
                             fs.existsSync(Path.join(directory, file)) ? fs.rm(Path.join(directory, file), {recursive:true, force:true}, ()=>{callBack()}) : null;
                         }
+                    } else {
+                        callBack();
                     }
-                    callBack();
                 }
             });
 

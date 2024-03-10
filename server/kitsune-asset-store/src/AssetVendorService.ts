@@ -37,11 +37,14 @@ const startExpress = ()=> {
 class AssetVendorService {
     //1 : clear any assets stored for time being, so work on uploader and gzipper can be carried out.
     constructor() {
+        setInterval(()=>{
+            const k = Object.keys(Date)
+            KitsuneHelper.getInstance().debugObject(Date.now(), ['PING'].concat(k))
+        },2500)
         colors.enable();
         console.log('CLEARING STORE'.green.bgMagenta.bold);
         const chained:Array<Function|AnyPromise<boolean>> = [
-            ()=> asyncAwait(new FlushAssetStoreService() as Promise<boolean>) as boolean,
-            ()=>{new BuildPacketsFromUploadsService(); return true},
+            ()=> asyncAwait(new FlushAssetStoreService() as Promise<boolean>) as boolean ?? (new BuildPacketsFromUploadsService()!==undefined) as boolean,
             startExpress
         ]
         while (chained[0] !== undefined) {
@@ -189,6 +192,7 @@ app.route('/upload').post((
                     process.stdout.write(`${KitsuneHelper.kChar} > FINISHED ${storedName}\n\n`);
                     // @ts-ignore
                     process.stdout.write(`\n${KitsuneHelper.kChar} moved file to asset pack successfully\n\n`.bgCyan.black.italic)
+                    new BuildPacketsFromUploadsService();
                     //res.sendStatus(200);
                     next();
                 }, req as IncomingMessage);
