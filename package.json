@@ -8,7 +8,8 @@
     "install-server": "npm i --prefix ./server/kitsune-ws-server && npm i --prefix ./server/kitsune-asset-store npm i --prefix ./server/kitsune-rest-server && npm i --prefix ./server/kserver",
     "server-link-lib": "npm run linklib --prefix ./server/kitsune-asset-store && npm run linklib --prefix ./server/kitsune-ws-server && npm run linklib --prefix ./server/kitsune-rest-server && npm run linklib --prefix ./server/kserver",
     "build-server": "npm run build --prefix ./server/kitsune-rest-server && npm run build --prefix ./server/kitsune-ws-server && npm run build --prefix ./server/kitsune-asset-store && npm run build --prefix ./server/kserver",
-    "launch": "npm run start --prefix ./server/kserver"
+    "launch": "npm run start --prefix ./server/kserver",
+    "stop": "kill --signal SIGINT kserver"
   },
   "devDependencies": {
     "concurrently": "^8.2.2",
