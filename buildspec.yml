@@ -14,4 +14,7 @@ phases:
       - npm run install-server && npm run server-link-lib
       - npm run build-server
       - sleep 2
-      - npm run launch
+      - npm run launch >> watch -n 1 | sleep 60
+      - npm stop
+      - echo `${ls -a -l -R}`
+      - echo "BUILD COMPLETE" && echo '$(ls)'

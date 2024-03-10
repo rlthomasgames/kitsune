@@ -2,6 +2,7 @@ import {defaultEventHandler, KSFactory} from "./factory/KSFactory"
 import colors from "colors";
 colors.enable();
 import process from "process";
+process.title = "kserver";
 import KitsuneHelper from "kitsune-wrapper-library/dist/base/helper/KitsuneHelper";
 const { exec } = require('child_process');
 

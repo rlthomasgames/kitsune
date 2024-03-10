@@ -1,4 +1,6 @@
 .idea
 package-lock.json
 local_notes.txt
-/kitsune-ws-server/node_modules/
+server/kitsune-ws-server/node_modules/
+server/kitsune-asset-store/packets/
+server/kitsune-asset-store/uploaded/

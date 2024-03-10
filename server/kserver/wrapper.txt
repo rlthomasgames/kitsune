@@ -21,7 +21,7 @@ assets by path *.js 3.02 MiB
 asset assets/logo.png 76.7 KiB [compared for emit] [from: ../assets/logo.png] [copied]
 asset favicon.ico 76.7 KiB [compared for emit] [from: ../../../kitsune.ico] [copied]
 asset index.html 10.9 KiB [compared for emit]
-asset config/wrapper.json 697 bytes [emitted] [from: ../config/wrapper.json] [copied]
+asset config/wrapper.json 697 bytes [compared for emit] [from: ../config/wrapper.json] [copied]
 orphan modules 247 KiB [orphan] 104 modules
 runtime modules 3.36 KiB 7 modules
 built modules 1.84 MiB [built]
@@ -37,7 +37,7 @@ built modules 1.84 MiB [built]
   external "util" 42 bytes [built] [code generated]
   external "assert" 42 bytes [built] [code generated]
   external "buffer" 42 bytes [built] [code generated]
-webpack 5.90.3 compiled successfully in 3977 ms
+webpack 5.90.3 compiled successfully in 3951 ms
 
 > kitsune-wrapper@1.0.3 extensions
 > cd ../kitsune-wrapper-extensions/ && npm run build
@@ -67,7 +67,7 @@ cacheable modules 5.44 MiB
       + 2 modules
     ./index.ts 1 bytes [built] [code generated]
     ./util.inspect (ignored) 15 bytes [built] [code generated]
-webpack 5.90.3 compiled successfully in 9337 ms
+webpack 5.90.3 compiled successfully in 9404 ms
 
 > kitsune-wrapper@1.0.3 start
 > npm run extensions && npm run dev && open http://localhost:8080/
@@ -101,41 +101,28 @@ cacheable modules 5.44 MiB
       + 2 modules
     ./index.ts 1 bytes [built] [code generated]
     ./util.inspect (ignored) 15 bytes [built] [code generated]
-webpack 5.90.3 compiled successfully in 9398 ms
+webpack 5.90.3 compiled successfully in 9357 ms
 
 > kitsune-wrapper@1.0.3 dev
 > webpack serve --open --mode=development
 
-(node:75019) [DEP_WEBPACK_DEV_SERVER_HTTPS] DeprecationWarning: 'https' option is deprecated. Please use the 'server' option.
+(node:79778) [DEP_WEBPACK_DEV_SERVER_HTTPS] DeprecationWarning: 'https' option is deprecated. Please use the 'server' option.
 (Use `node --trace-deprecation ...` to show where the warning was created)
 <i> [webpack-dev-server] SSL certificate: /home/rhys/Development/kGitCheck/client/kitsune-wrapper/node_modules/.cache/webpack-dev-server/server.pem
-<i> [webpack-dev-server] Project is running at:
-<i> [webpack-dev-server] Loopback: https://localhost:8080/, https://[::1]:8080/
-<i> [webpack-dev-server] Content not from webpack is served from './dist' directory
-Webpack Bundle Analyzer saved report to /home/rhys/Development/kGitCheck/client/kitsune-wrapper/dist/report.html
-assets by path modules/*.js 2.39 MiB
-  asset modules/lodash.bundle.js 1.94 MiB [emitted] [minimized] [big] (name: lodash) 1 related asset
-  asset modules/shared.bundle.js 443 KiB [emitted] [minimized] (name: shared) 1 related asset
-  asset modules/kwl.bundle.js 14.9 KiB [emitted] [minimized] (name: kwl) 1 related asset
-assets by path *.js 3.14 MiB
-  asset wrapper.js 3.14 MiB [emitted] [big] (name: wrapper)
-  asset main.js 1.36 KiB [emitted] [minimized] (name: index) 1 related asset
-asset assets/logo.png 76.7 KiB [emitted] [from: ../assets/logo.png] [copied]
-asset favicon.ico 76.7 KiB [emitted] [from: ../../../kitsune.ico] [copied]
-asset index.html 11.2 KiB [emitted]
-asset config/wrapper.json 697 bytes [emitted] [from: ../config/wrapper.json] [copied]
-runtime modules 28.5 KiB 14 modules
-modules by path ../node_modules/ 1.45 MiB 196 modules
-modules by path ../../../ 675 KiB
-  modules by path ../../../shared/kitsune-wrapper-library/node_modules/inversify/es/ 125 KiB 53 modules
-  modules by path ../../../shared/kitsune-wrapper-library/dist/ 19.1 KiB 11 modules
-  ../../../node_modules/lodash/lodash.js 531 KiB [built] [code generated]
-modules by path ./ 51.7 KiB
-  modules by path ./core/service/*.ts 23.6 KiB 3 modules
-  modules by path ./core/commands/*.ts 10.7 KiB
-    ./core/commands/InitWrapper.ts 6.06 KiB [built] [code generated]
-    + 2 modules
-  + 5 modules
-util (ignored) 15 bytes [built] [code generated]
-util (ignored) 15 bytes [built] [code generated]
-webpack 5.90.3 compiled successfully in 5068 ms
+/home/rhys/Development/kGitCheck/client/kitsune-wrapper/node_modules/webpack-dev-server/lib/Server.js:2557
+        throw error;
+        ^
+
+Error: listen EADDRINUSE: address already in use ::1:8080
+    at Server.setupListenHandle [as _listen2] (node:net:1811:16)
+    at listenInCluster (node:net:1859:12)
+    at GetAddrInfoReqWrap.doListen [as callback] (node:net:2008:7)
+    at GetAddrInfoReqWrap.onlookup [as oncomplete] (node:dns:109:8) {
+  code: 'EADDRINUSE',
+  errno: -98,
+  syscall: 'listen',
+  address: '::1',
+  port: 8080
+}
+
+Node.js v18.19.0
