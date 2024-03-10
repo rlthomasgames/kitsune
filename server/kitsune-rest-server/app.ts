@@ -7,7 +7,7 @@ import debug from 'debug';
 import cors from 'cors';
 import express from "express";
 import expressWinston from "express-winston";
-
+process.title = 'krest-server';
 const app: express.Application = express();
 const server: http.Server = http.createServer(app);
 const port: number = 3090;

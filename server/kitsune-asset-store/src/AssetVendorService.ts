@@ -12,6 +12,7 @@ import {strFromU8} from "fflate";
 import * as fs from "fs";
 import {IncomingMessage} from "node:http";
 import cors from 'cors';
+process.title = 'kasset-store';
 const app = express();
 const routes: Array<UploadRoutes> = [];
 import crypto from "crypto";
@@ -37,11 +38,14 @@ const startExpress = ()=> {
 class AssetVendorService {
     //1 : clear any assets stored for time being, so work on uploader and gzipper can be carried out.
     constructor() {
+        /*
         setInterval(()=>{
             const k = Object.keys(Date)
             KitsuneHelper.getInstance().debugObject(Date.now(), ['PING'].concat(k))
         },2500)
         colors.enable();
+
+         */
         console.log('CLEARING STORE'.green.bgMagenta.bold);
         const chained:Array<Function|AnyPromise<boolean>> = [
             ()=> asyncAwait(new FlushAssetStoreService() as Promise<boolean>) as boolean ?? (new BuildPacketsFromUploadsService()!==undefined) as boolean,

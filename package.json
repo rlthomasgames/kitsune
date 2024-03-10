@@ -8,8 +8,8 @@
     "install-server": "npm i --prefix ./server/kitsune-ws-server && npm i --prefix ./server/kitsune-asset-store npm i --prefix ./server/kitsune-rest-server && npm i --prefix ./server/kserver",
     "server-link-lib": "npm run linklib --prefix ./server/kitsune-asset-store && npm run linklib --prefix ./server/kitsune-ws-server && npm run linklib --prefix ./server/kitsune-rest-server && npm run linklib --prefix ./server/kserver",
     "build-server": "npm run build --prefix ./server/kitsune-rest-server && npm run build --prefix ./server/kitsune-ws-server && npm run build --prefix ./server/kitsune-asset-store && npm run build --prefix ./server/kserver",
-    "launch": "npm run start --prefix ./server/kserver",
-    "stop": "kill --signal SIGINT kserver"
+    "launch": "npm --watch run start --prefix ./server/kserver",
+    "stop": "pkill --signal SIGINT kasset-store && pkill --signal SIGINT kws-server && pkill --signal SIGINT krest-server && pkill --signal SIGINT kserver && pkill --signal SIGINT kwrapper"
   },
   "devDependencies": {
     "concurrently": "^8.2.2",
@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "all": "^0.0.0",
-    "kitsune-wrapper-library": "^0.0.41"
+    "kitsune-wrapper-library": "^0.0.41",
+    "pkill": "^2.0.0"
   }
 }

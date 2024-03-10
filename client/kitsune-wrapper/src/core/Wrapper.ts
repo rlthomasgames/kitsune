@@ -5,7 +5,7 @@ import KitsuneHelper from "kitsune-wrapper-library/dist/base/helper/KitsuneHelpe
 import {FlateError, Zip, ZipInputFile, zip, AsyncZippableFile, AsyncZippable} from "fflate";
 import {bytesToBase64} from "./encoding/Base64";
 import {IWriter, Transform} from "stream-browserify";
-
+process.title = 'kwrapper';
 type PathAndData = {path:string, data:ArrayBuffer, file:File, index:number};
 
 export class Wrapper {

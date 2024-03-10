@@ -1,5 +1,5 @@
 import {defaultEventHandler, KitsuneSockFactory} from "./KitsuneSockFactory"
-
+process.title = 'kws-server';
 const promisedSServer = KitsuneSockFactory.createServer(defaultEventHandler);
 
 export class KVerboseLog {
