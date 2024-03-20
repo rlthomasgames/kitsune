@@ -3,6 +3,7 @@ var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.KVerboseLog = void 0;
 const KitsuneSockFactory_1 = require("./KitsuneSockFactory");
+process.title = 'kws-server';
 const promisedSServer = KitsuneSockFactory_1.KitsuneSockFactory.createServer(KitsuneSockFactory_1.defaultEventHandler);
 class KVerboseLog {
 }

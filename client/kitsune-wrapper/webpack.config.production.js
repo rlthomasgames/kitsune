@@ -9,6 +9,10 @@ const NodePolyfillPlugin = require("node-polyfill-webpack-plugin");
 /*  MUST ADD ENTRY HERE FOR EACH NEW MODULE   */
 /*============================================*/
 const moduleEntries = {
+    LowResOffScreenAnim: {
+        import: './LowResOffScreenAnim',
+        dependOn: ['shared'],
+    },
     index: {
         import: './index.ts',
         dependOn: ['wrapper']
@@ -33,7 +37,11 @@ module.exports = {
     devtool: 'inline-source-map',
     watch: false,
     devServer: {
+        open: true,
         static: './dist',
+        host: 'localhost',
+        https: true,
+        port: 8080
     },
     externalsPresets: { node: true }, // in order to ignore built-in extensions like path, fs, etc.
     externals: [
@@ -96,6 +104,8 @@ module.exports = {
                 case 'wrapper':
                     return 'wrapper.js';
                     break;
+                case 'LowResOffScreenAnim':
+                    return './LowResOffScreenAnim.js';
                 case 'kwl':
                 case 'shared':
                 case 'lodash':

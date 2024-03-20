@@ -6,88 +6,44 @@ var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.KVerboseLog = void 0;
 const KSFactory_1 = require("./factory/KSFactory");
-const colors_1 = __importDefault(require("colors"));
-colors_1.default.enable();
-const process_1 = __importDefault(require("process"));
-const { exec } = require('child_process');
+//import colors from "colors";
+//colors.enable();
+process.title = "kserver";
+const KitsuneHelper_1 = __importDefault(require("kitsune-wrapper-library/dist/base/helper/KitsuneHelper"));
 const createNewQuadView = (c, r) => {
-    console.log("\n" +
-        "\n                                                 ███████████████████████████████████                                 \n" +
-        "                                         ████████████████████████████████████████████████                            \n" +
-        "                                    ██████████████▓▓▒░░      ░░░░          ░░░  ░░▒█████████▓                        \n" +
-        " █████████████████████████████████████████▒▓▒▒░░░              ░▒▒░░░░░░░░▒░░     ░░░▒▒▒████████                     \n" +
-        " ██████████████████████████████████████▒░                        ░▒▒▒▒▒▒▒▒░         ░░░░░▒▒░████████████████████████ \n" +
-        " ██▒░░▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▒░           ░▓█████████████▓▒▒▒░░░     ░░░▒▒▒▒▒▒▒░░░░     ░░░░░░░░░░ ░▒█████████████████████ \n" +
-        " ████         ░░▒▒▓▓▓▓███▓▒░     ░▒▓██████▓▓██████████████▓▒▒▒▒▒▒░░░░      ░▒▒▒▒▓▓████████▓░▒██▓▓▓▒░▒▓▓█▓▓▓▓▓▓▒   ██ \n" +
-        "  ████                  ░░░░░░░  ▒▓▒  ░    ░▒░    ░  ░▒▓█▓▓░  ░░▒▒▒░  ░░▒░░▒▒░░ ░▒▓▓▒▒▒▓▓██████████▒░░▒▒▒░       ▓██ \n" +
-        "   ████              ░▒▓█▓▓▒▒▒░░░▒░░▓▓█▓▒░░ ░░░░▒▓▓▒░░ ▒█████▓▓▓▒░▒▓███████▓▓▓▓▓░░▓█▓▓▓▓▒░░▒░▒▒▒░░▒▒░▓█▓▒       ████ \n" +
-        "    ████           ░▒▓▓▓▒░░   ░▒▒▒░░░  ░▒██████▓▒░  ░▒▓████▓▒░░ ▓████▓▒▒▒▒▒▒▒▓███▓▓██▓▒▒▒▓▓▓▒░░░▒▒▓▒░░▒▓▓▓░     ███  \n" +
-        "     ███▓        ░▒▓▒▒░░      ░▒▒▒▒░ ░░░░   ░▒▒▓▓▒▒▒▒███▓░░  ░░░██▒▒▒▒▒░░   ░▓████▒░▒▓▓▒░░░░░  ░▒▓▒▒░   ▒▓█▒░  ███   \n" +
-        "      ██████  ░░▒▓▒▒░░         ░▒▓▓███▓▒▒░  ░░▒▒▓██▒░░░░      ░▒██████████████████▒░ ▒█▓▒▒▒▒▓▓██▓▓▒▒░░░░░░▓█▓█████   \n" +
-        "      ██████▒▒▓▓▓▒░░░      ░░░░░▒▓▓█████████▓▓▒▒░░░░░░░         ▒▓████████▓██▓░░░░░   ░░░▒▒▓▓▓▓▓▒▒▒░░░░░░░░▒█████    \n" +
-        "        ████▓▒▒░░        ░░░░░░░░░░░░░░░░░░░░░░░  ░░░░░     ░░▒▓█████████████▓▓▒▒░░      ░░░░░           ░  ▒░███    \n" +
-        "      █████░▒░░          ░                                ░▒▓█████████████▓██████▓▒░                  ░  ░   ▒░███   \n" +
-        "    █████▒▓▒░░░░░░░░░   ░░░░                           ░▓███████▓▒▒░░       ░▓███▓▒░                     ░░▒▒▒▓░████ \n" +
-        "  █████░▓▒▒▒▒▒▒▒▒▒▒▒▒▒░   ░▒▒▒░                ░░  ░▒▓███████▒ ░▒░  ░▒▒░░      ▒▓▓▒▒                  ░░░░░░░▒▒▓░███ \n" +
-        "  ███▒▒░          ░░░░░░░░   ░▒▒░              ░░░▓██████▓ ▒▓▓▒▒▓▓▒▒▓▓▓▓▓▓▒░   ░▓▓▓▒░                          ░░███ \n" +
-        "  ███████████████▓▓▒▒░░   ░░░░ ░▒▒░           ░░░░▓██▓▒░  ▒▓▓▓▒▒▒▒▓▓▓▒▒▒▒▒▒░    ░▓▓▒▒            ░░░░░▒▒▓██████████▓ \n" +
-        "   ███████████████████████▓█▒    ░▒▒░          ░░░▒█▓▒░   ▒▓░▒▒▒░░▒▒░░░░░▒▓░    ▒██▓▒         ░▒▓░█████████████████  \n" +
-        "            █████████████████████▓▒▒▒▒░░░       ░▒▓█████▓▒░█▓░░░░░░░░░  ░▓▓░   ▒███▒░      ░▒▓░█████████████         \n" +
-        "                         █████████████▒▓▒▒▒▒░     ░░▒█████▓░██░ ░░░░░░░░░█▓   ▒██▓▒░    ▒▓▓▒███████                  \n" +
-        "                                █████████████▒▓▒░░   ░░▒▓███ ███▒░      ░▓█▓░ ▓██▓░ ░▒▓▒███████▓                     \n" +
-        "                                     ████████████▓█▓▒▒░  ░▒██▓ ▓█████████▓▒▒▒▓██▒ ▒▓▒████████                        \n" +
-        "                                            ███████████▓█▓▒░░▓█▓░          ▒██▓░▓▒███████                            \n" +
-        "                                                ██████████████████████████████████████                               \n" +
-        "                                                      █████████████████████████████        KSERVER ALPHA VERSION     \n" +
-        "                                                                                                                     \n");
+    const reColour = KitsuneHelper_1.default.kitsuneASCII;
+    //const snazzyColouring = colors.black(reColour);
+    const snazzyColouring = reColour;
+    let pointer = 0;
+    const charSplit = snazzyColouring.split('\n');
+    charSplit.forEach((line) => {
+        console.log(line);
+        process.stdout.write('\u001b[2K\u001b[0E\r\r');
+    });
+    //colors.black(reColour).slice(pointer, pointer+57)
+    //console.log(colors.black(reColour));
     const textWidth = Math.floor(c / 2);
     const textHeight = Math.floor(r / 2);
     const qv = [];
     const combined = [];
-    const gradient = ['█', '▓', '▒', '░', '▒', '▓', '█', '▉', '█', '▇', '▆', '▅', '▄', '▃', '▂', '▁', '▁', '▁', '▁', '▁', '▁', '▁', '▂', '▃', '▄', '▅', '▆', '█'];
-    for (let i = 0; i < 2; i++) {
-        qv.push([]);
-        for (let k = 0; k < 2; k++) {
-            qv[i].push([]);
-            const numChars = textWidth * textHeight;
-            const newText = [];
-            let bw = 0;
-            while (newText.length < numChars) {
-                if (bw % textWidth == 0) {
-                    newText.push(gradient[bw % gradient.length].rainbow.bold);
-                    combined.push(gradient[bw % gradient.length].rainbow.bold);
-                }
-                else {
-                    newText.push(gradient[bw % gradient.length].america.bold);
-                    combined.push(gradient[bw % gradient.length].america.bold);
-                }
-                bw++;
-            }
-            while (newText.length > 0) {
-                bw++;
-                const portion = newText.splice(0, textWidth);
-                const invert = bw % 4;
-                if (invert == 0) {
-                    qv[i][k].push(portion.join(''));
-                }
-                else {
-                    qv[i][k].push(portion.join('').inverse);
-                }
-            }
-        }
+    const allChars = c * r;
+    let cc = 0;
+    const screen = [];
+    while (cc < allChars) {
+        screen.push('█');
+        cc++;
     }
-    const out = [qv[0][0].join(''), qv[0][1].join(''), qv[1][0].join(''), qv[1][1].join('')].join('');
-    console.log('' + `${out}`);
-    for (let r = 0; r < (textHeight + textWidth) * 10; r++) {
-        //process.stdout.write(`\r\r`);
-    }
+    //console.log("hello");
+    const out = screen;
+    //console.log(screen.join());
+    //process.stdout.write(screen.join());
     return qv;
 };
 class KVerboseLog {
 }
 exports.KVerboseLog = KVerboseLog;
 _a = KVerboseLog;
-KVerboseLog.VERBOSE_LOG = false;
+KVerboseLog.VERBOSE_LOG = true;
 KVerboseLog.log = (value) => {
     if (_a.VERBOSE_LOG) {
         return value;
@@ -95,8 +51,8 @@ KVerboseLog.log = (value) => {
     return "";
 };
 KVerboseLog.VERBOSE_LOG = true;
-const cols = process_1.default.stdout.columns;
-const rows = process_1.default.stdout.rows;
+const cols = process.stdout.columns;
+const rows = process.stdout.rows;
 const QUAD_VIEW = createNewQuadView(cols, rows);
 //console.log(colors.rainbow('\n \n \rTerminal size: ' + process.stdout.columns + 'x' + process.stdout.rows+'').bgMagenta.inverse.bold);
 const promisedSServer = KSFactory_1.KSFactory.createServer(KSFactory_1.defaultEventHandler, 27017, 3090, 3000, 8081);

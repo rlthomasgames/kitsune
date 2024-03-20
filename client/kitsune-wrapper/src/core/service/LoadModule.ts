@@ -1,4 +1,4 @@
-import {inject, injectable, optional} from "inversify";
+import {inject, injectable} from "inversify";
 import IInjectableExtensionModule from "kitsune-wrapper-library/dist/base/interfaces/IInjectableExtensionModule";
 import container from "../ioc/ioc_mapping";
 import {ExtensionValuedObject} from "../commands/InitWrapper";
@@ -8,8 +8,9 @@ import KitsuneHelper from "kitsune-wrapper-library/dist/base/helper/KitsuneHelpe
 import CoreState from "../constants/CoreState";
 import IWrapperConfig from "../interfaces/IWrapperConfig";
 import ISockComm from "kitsune-wrapper-library/dist/base/interfaces/extensions/ISockComm";
-import ICommand from "kitsune-wrapper-library/dist/base/interfaces/ICommand";
+//import ICommand from "kitsune-wrapper-library/dist/base/interfaces/ICommand";
 import {TYPES} from "kitsune-wrapper-library";
+
 
 type Class = { new(...args: any[]): any; };
 
@@ -23,9 +24,8 @@ export type EssentialLoadingParams = {
 @injectable()
 export class LoadModule implements IAsyncRequest {
 
-    @optional()
     @inject(TYPES.Socket)
-    private _socket: IInjectableExtensionModule & ISockComm & ICommand;
+    _socket:ISockComm;
 
     private totalModules: number;
     private totalLoaded: number = 0;
@@ -38,10 +38,11 @@ export class LoadModule implements IAsyncRequest {
         }, () => {
             this.cacheKeys = [];
         }));
-        //Wrapper.asyncAwait(this._wrapperConfig.request());
+        //KitsuneHelper.asyncAwait(this._wrapperConfig.request());
     }
 
     loadModules(wrapperConfig: IWrapperConfig) {
+        this._socket.run(wrapperConfig);
         const modules = wrapperConfig.modules
         if (!modules) {
             return;
@@ -63,6 +64,7 @@ export class LoadModule implements IAsyncRequest {
     }
 
     request(moduleVO: ExtensionValuedObject, gzipped: boolean): Promise<unknown> | undefined {
+        !!this.cacheKeys ?? KitsuneHelper.getInstance().debugObject(this, Object(this).values)
         const cachedIndex = this.cacheKeys.indexOf(moduleVO.moduleName);
         console.log('loading module...', moduleVO.moduleName, moduleVO, cachedIndex);
         const essentialLoadingParams: EssentialLoadingParams = {
@@ -79,8 +81,8 @@ export class LoadModule implements IAsyncRequest {
     }
 
     completeInit() {
-        this._socket.run();
-        console.log('sockets ready', this._socket, this._socket.id)
+        //this._socket.run();
+        //console.log('sockets ready', this._socket, this._socket.id)
         container.get(CoreState.INIT_COMPLETE);
     }
 

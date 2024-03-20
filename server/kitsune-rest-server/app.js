@@ -34,6 +34,7 @@ const debug_1 = __importDefault(require("debug"));
 const cors_1 = __importDefault(require("cors"));
 const express_1 = __importDefault(require("express"));
 const express_winston_1 = __importDefault(require("express-winston"));
+process.title = 'krest-server';
 const app = (0, express_1.default)();
 const server = http.createServer(app);
 const port = 3090;

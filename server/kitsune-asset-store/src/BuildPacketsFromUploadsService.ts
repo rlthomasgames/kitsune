@@ -3,12 +3,17 @@ import * as Path from "path";
 import {Zip, strToU8} from "fflate";
 import KitsuneHelper from "kitsune-wrapper-library/dist/base/helper/KitsuneHelper";
 import {exec} from "node:child_process";
+import colors from "colors";
 export type DebugInfoObject0 = {
     parts:number,
     remainders:number,
     concreteParts:number,
     fileSize:number
 }
+colors.disable();
+setTimeout(()=>{
+    colors.enable()
+}, 3500);
 
 export default class BuildPacketsFromUploadsService {
     constructor() {

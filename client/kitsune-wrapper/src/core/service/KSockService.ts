@@ -30,6 +30,10 @@ class KSockService extends AbstractSockComm implements IInjectableExtensionModul
     public id: string;
     public totals: Array<number> = [];
 
+    constructor() {
+        super();
+    }
+
     run(): KSockService {
 
         this.clientMap = new Map<string, any | string | boolean | number>();

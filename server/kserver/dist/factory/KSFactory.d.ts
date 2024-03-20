@@ -1,8 +1,4 @@
 import { Tail } from "tail";
-declare global {
-    interface String {
-    }
-}
 export type ServerEventHandler = (event: Event, next: Function) => void;
 export declare class KSFactory {
     static createServer(eventHandler: ServerEventHandler, MONGO_DB?: number, REST_SERVER?: number, WS_PORT?: number, ASSET_STORE?: number): Promise<KServer>;
@@ -11,7 +7,6 @@ export declare class KServer {
     blockingProcesses: Array<string>;
     constructor(...args: any[]);
     channelEventHandler(data: string, channel: string): void;
-    killProcessOnPort(port: number): Promise<boolean>;
 }
 export declare const defaultEventHandler: (event: Event, next: Function) => void;
 export declare const shuffle: (array: any) => any;

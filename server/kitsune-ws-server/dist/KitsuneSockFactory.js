@@ -79,14 +79,18 @@ const defaultEventHandler = (event, next) => {
                                         const packetPath = relativePath + '/' + value;
                                         const fd = fs.openSync(packetPath, 'r');
                                         if (fd) {
-                                            const fileNo = value.split('p')[0].split('|')[0];
+                                            const fileNo = value.split('p')[1].split('|')[0];
+                                            const filePacketNo = value.split('|')[1].split('.')[0];
+                                            //KitsuneHelper.getInstance().debugObject(value, [fileNo])
+                                            //KitsuneHelper.getInstance().debugObject(value.split('p'), value.split('|'))
                                             const buffer = fs.readFileSync(packetPath);
                                             const sendPromise = sendWhenPromised({
                                                 data: buffer,
                                                 index: index + 1,
                                                 assetPackUUID: pak,
                                                 total: packetsArr.length,
-                                                fileIndex: parseInt(fileNo)
+                                                fileIndex: parseInt(fileNo),
+                                                filePacketIndex: parseInt(filePacketNo)
                                             });
                                             //console.log(`sent packet ${index+1} of ${packetsArr.length} for asset pak ${pak} buffer: ${buffer}`)
                                         }

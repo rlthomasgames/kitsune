@@ -1,8 +1,7 @@
-import colors = require('colors');
+process.title = 'kasset-store';
 import FlushAssetStoreService from "./FlushAssetStoreService";
 import BuildPacketsFromUploadsService from "./BuildPacketsFromUploadsService";
 import {UploadRoutes} from "./routes/UploadRoutes";
-
 import express from 'express';
 import fileUpload from 'express-fileupload';
 import {Fields, IncomingForm} from 'formidable';
@@ -12,12 +11,13 @@ import {strFromU8} from "fflate";
 import * as fs from "fs";
 import {IncomingMessage} from "node:http";
 import cors from 'cors';
-process.title = 'kasset-store';
 const app = express();
 const routes: Array<UploadRoutes> = [];
 import crypto from "crypto";
 const port = 8081;
 import KitsuneHelper from "kitsune-wrapper-library/dist/base/helper/KitsuneHelper";
+import colors from "colors";
+colors.enable();
 
 
 interface AnyPromise<T> extends Promise<T>{
@@ -38,21 +38,13 @@ const startExpress = ()=> {
 class AssetVendorService {
     //1 : clear any assets stored for time being, so work on uploader and gzipper can be carried out.
     constructor() {
-        /*
-        setInterval(()=>{
-            const k = Object.keys(Date)
-            KitsuneHelper.getInstance().debugObject(Date.now(), ['PING'].concat(k))
-        },2500)
-        colors.enable();
-
-         */
         console.log('CLEARING STORE'.green.bgMagenta.bold);
-        const chained:Array<Function|AnyPromise<boolean>> = [
-            ()=> asyncAwait(new FlushAssetStoreService() as Promise<boolean>) as boolean ?? (new BuildPacketsFromUploadsService()!==undefined) as boolean,
-            startExpress
-        ]
+        const build = ()=>{new BuildPacketsFromUploadsService()};
+        const chained:Array<Function | ClassDecorator> =[ () => {new FlushAssetStoreService()},()=>{setTimeout(build, 6000); setTimeout(startExpress, 12500);}]
         while (chained[0] !== undefined) {
-            (chained[0] as ()=>boolean).call(null) ? chained.splice(0, 1) : console.log('startup failed');
+            (chained[0] as ()=>boolean).call(null)
+            chained.splice(0, 1)
+            KitsuneHelper.getInstance().debugObject(this as unknown, Object.values(this))
         }
     }
 
@@ -114,7 +106,7 @@ export function startAssetVendorService() { return new AssetVendorService()};
 
 //this is our entry into AssetServices
 const assetVendorService = startAssetVendorService();
-// @ts-ignore
+
 app.use(cors({origin:'https://localhost:8080'}));
 
 // default options

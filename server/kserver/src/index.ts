@@ -1,19 +1,18 @@
 import {defaultEventHandler, KSFactory} from "./factory/KSFactory"
-import colors from "colors";
-colors.enable();
-import process from "process";
+//import colors from "colors";
+//colors.enable();
 process.title = "kserver";
 import KitsuneHelper from "kitsune-wrapper-library/dist/base/helper/KitsuneHelper";
-const { exec } = require('child_process');
 
 const createNewQuadView = (c:number,r:number) =>{
-    const reColour = KitsuneHelper.kitsuneASCII.red.inverse.bgYellow
-    const snazzyColouring = colors.black(reColour);
+    const reColour = KitsuneHelper.kitsuneASCII
+    //const snazzyColouring = colors.black(reColour);
+    const snazzyColouring = reColour;
     let pointer = 0;
     const charSplit = snazzyColouring.split('\n')
     charSplit.forEach((line)=>{
-        console.log(line.dim.inverse.italic);
-        process.stdout.write('\u001b[2K\u001b[0E\r\r'.reset.stripColors);
+        console.log(line);
+        process.stdout.write('\u001b[2K\u001b[0E\r\r');
     })
     //colors.black(reColour).slice(pointer, pointer+57)
     //console.log(colors.black(reColour));

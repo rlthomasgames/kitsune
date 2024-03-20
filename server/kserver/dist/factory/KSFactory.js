@@ -6,8 +6,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.KServerChannel = exports.ColourizeMsg = exports.shuffle = exports.defaultEventHandler = exports.KServer = exports.KSFactory = void 0;
 const tail_1 = require("tail");
 const KitsuneHelper_1 = __importDefault(require("kitsune-wrapper-library/dist/base/helper/KitsuneHelper"));
-const colors_1 = __importDefault(require("colors"));
-colors_1.default.enable();
 const { exec } = require('child_process');
 var process = require('process');
 class KSFactory {
@@ -36,35 +34,15 @@ class KServer {
             wrapper.output.on('line', (kSockData) => this.channelEventHandler(`${kSockData.split('"')[0]}`, 'WRAPPER'));
             const asset = new KServerChannel('asset.txt', '../kitsune-asset-store', false, false);
             asset.output.on('line', (kSockData) => this.channelEventHandler(`${kSockData}`, 'ASSETS'));
-            //const mongo = new KServerChannel('asset.txt', 'sudo mongod --dbpath ~/mongodb/ --bind_ip 127.0.0.1 --port 27017', true, false);
-            //mongo.output.on('line', (kSockData: string)=> this.channelEventHandler(`${kSockData}`, 'MONGO'));
-        }, 10000);
+            const mongo = new KServerChannel('asset.txt', 'sudo mongod --dbpath ~/mongodb/ --bind_ip 127.0.0.1 --port 27017', true, false);
+            mongo.output.on('line', (kSockData) => this.channelEventHandler(`${kSockData}`, 'MONGO'));
+        }, 5000);
     }
     channelEventHandler(data, channel) {
         // const IN_USE = kSockData.toUpperCase().includes('listen EADDRINUSE'.toUpperCase())
         const INUSE = data.includes('EADDRINUSE');
         //process.stdout.write(`${data.stripColors} \n`);
         (0, exports.ColourizeMsg)(`${data}`, channel);
-    }
-    killProcessOnPort(port) {
-        let promiseResolve;
-        const promiseOfCheck = new Promise((resolve, reject) => {
-            const pidOutput = new tail_1.Tail('pid.txt', {});
-            const gotProcess = (...args) => {
-                console.log('pid caught :: ', args);
-                const killer = `sudo kill ${args[0]}`;
-                exec(killer);
-                resolve(true);
-            };
-            pidOutput.on('line', gotProcess);
-            setTimeout(() => {
-                console.log('timeout on kill');
-                resolve(true);
-            }, 4000);
-            const cmd = `netstat -anp 2> /dev/null | grep :${port} | egrep -o "[0-9]+/node" | cut -d'/' -f1 > pid.txt;`;
-            exec(cmd);
-        });
-        return promiseOfCheck;
     }
 }
 exports.KServer = KServer;
@@ -98,9 +76,11 @@ exports.shuffle = shuffle;
 let msgs = 0;
 let lastCol = 'none';
 const ColourizeMsg = (msg, channel) => {
-    const decor0 = [`█`.inverse, `▉`.inverse, `▊`.inverse, `▋`.inverse, `▌`.inverse, `▍`.inverse, `▎`.inverse, `▏`.inverse, `▎`.inverse, `▍`.inverse, `▌`.inverse, `▋`.inverse, `▊`.inverse, `▉`.inverse, `█`.inverse];
-    //const decor1 = [`▀`.bgYellow.red.inverse,`▀`.bgYellow.red]
-    let decor2 = [colors_1.default.bgRed.red, colors_1.default.bgRed.yellow, colors_1.default.bgYellow.red, colors_1.default.bgYellow.yellow, colors_1.default.bgYellow.red, colors_1.default.bgRed.yellow, colors_1.default.bgRed.red];
+    //const decor0 = [`█`.inverse,`▉`.inverse,`▊`.inverse,`▋`.inverse,`▌`.inverse,`▍`.inverse,`▎`.inverse,`▏`.inverse,`▎`.inverse,`▍`.inverse,`▌`.inverse,`▋`.inverse,`▊`.inverse,`▉`.inverse,`█`.inverse]
+    const decor0 = [`█`, `▉`, `▊`, `▋`, `▌`, `▍`, `▎`, `▏`, `▎`, `▍`, `▌`, `▋`, `▊`, `▉`, `█`];
+    //const decor1 = [`▀`.bgYellow.red,`▀`.bgYellow.red]
+    //let decor2 = [colors.bgRed.red,colors.bgRed.yellow,colors.bgYellow.red,colors.bgYellow.yellow,colors.bgYellow.red,colors.bgRed.yellow,colors.bgRed.red];
+    let decor2 = [""];
     //let decor2 = [colors.bgRed.red,colors.bgRed.yellow,colors.bgYellow.red,colors.bgYellow.yellow,colors.bgYellow.red,colors.bgRed.yellow,colors.bgRed.red, colors.bgMagenta.cyan,colors.bgBlue.magenta,colors.bgGreen.green,colors.bgGreen.cyan,colors.bgCyan.cyan,colors.bgCyan.blue,colors.bgCyan.yellow];
     //const decor2 = [colors.bgMagenta.bold];
     const gradient4 = ['█', '▓', '▒', '░', ' ', '░', '▒', '▓'];
@@ -118,54 +98,57 @@ const ColourizeMsg = (msg, channel) => {
     //const grades = ['▚'];
     const fillDecor = decor2;
     let m = `${msg}`;
-    m = `${m.replace("TypeError:", "TypeError:".bgRed.black.bold)}`;
-    m = `${m.replace("Error:", "Error:".bgRed.black.bold)}`;
-    m = `${m.replace("Error", "Error".bgRed.black.bold)}`;
-    m = `${m.replace("ERROR", "ERROR".bgRed.black.bold)}`;
-    m = `${m.replace("undefined", "undefined".bgRed.black.bold)}`;
-    m = `${m.replace("null", "null".bgRed.black.bold)}`;
-    m = `${m.replace("cannot", "cannot".bgRed.black.bold)}`;
-    m = `${m.replace("webpack-dev-server", "webpack-dev-server".green)}`;
-    m = `${m.replace("express", "express".green)}`;
-    m = `${m.replace("socket.io", "socket.io".green)}`;
-    m = `${m.replace("JSON", "JSON".green)}`;
-    m = `${m.replace("fflate", "fflate".green)}`;
-    m = `${m.replace("nodemon", "nodemon".green)}`;
-    m = `${m.replace("--watch", "--watch".green)}`;
-    m = `${m.replace("Webpack", "Webpack".green)}`;
-    m = `${m.replace("webpack", "webpack".green)}`;
-    m = `${m.replace("built", "built".green)}`;
-    m = `${m.replace("build", "build".green)}`;
-    m = `${m.replace("run", "run".green)}`;
-    m = `${m.replace("kill", "kill".red)}`;
-    m = `${m.replace("killall", "killall".red)}`;
-    m = `${m.replace("pkill", "pkill".red)}`;
-    m = `${m.replace("npm", "npm".yellow)}`;
-    m = `${m.replace("node", "node".yellow)}`;
-    m = `${m.replace("tsc", "tsc".yellow)}`;
-    m = `${m.replace("cd", "cd".yellow)}`;
-    m = `${m.replace("../", "../".blue)}`;
-    m = `${m.replace("./", "./".blue)}`;
-    m = `${m.replace("/", "/".blue)}`;
-    m = `${m.replace(".", ".".blue)}`;
-    m = `${m.replace("code", "code".blue)}`;
-    m = `${m.replace("generated", "generated".blue)}`;
-    m = `${m.replace("dist/", "dist/".blue)}`;
-    m = `${m.replace("kitsune/", "kitsune/".blue)}`;
-    m = `${m.replace("kitsune-wrapper/", "kitsune-wrapper/".bgMagenta.blue)}`;
-    m = `${m.replace("kitsune-wrapper-extensions", "kitsune-wrapper-extensions".bgMagenta.blue)}`;
-    m = `${m.replace("kitsune-wrapper-library", "kitsune-wrapper-library".bgMagenta.blue)}`;
-    m = `${m.replace("kitsune-application-test-dummy", "kitsune-application-test-dummy".bgMagenta.blue)}`;
-    m = `${m.replace("kitsune-asset-store", "kitsune-asset-store".bgMagenta.blue)}`;
-    m = `${m.replace("kitsune-rest-server", "kitsune-rest-server".bgMagenta.blue)}`;
-    m = `${m.replace("kitsune-ws-server", "kitsune-ws-server".bgMagenta.blue)}`;
-    m = `${m.replace("mongodb", "mongodb".bgMagenta.blue)}`;
-    m = `${m.replace("mongod", "mongod".bgMagenta.blue)}`;
-    m = `${m.replace("report.html", "report.html".blue)}`;
-    m = `${m.replace("extensions/", "extensions/".blue)}`;
-    m = `${m.replace(".bundle.js", ".bundle.js".blue)}`;
-    m = `${m.replace("EADDRINUSE", "EADDRINUSE".red)}`;
-    m = `${m.replace("listen", "listen".yellow)}`;
+    /*
+     m = `${m.replace("TypeError:", "TypeError:".bgRed.black.bold)}`;
+     m = `${m.replace("Error:", "Error:".bgRed.black.bold)}`;
+     m = `${m.replace("Error", "Error".bgRed.black.bold)}`;
+     m = `${m.replace("ERROR", "ERROR".bgRed.black.bold)}`;
+     m = `${m.replace("undefined", "undefined".bgRed.black.bold)}`;
+     m = `${m.replace("null", "null".bgRed.black.bold)}`;
+     m = `${m.replace("cannot", "cannot".bgRed.black.bold)}`;
+     m = `${m.replace("webpack-dev-server", "webpack-dev-server".green)}`;
+     m = `${m.replace("express", "express".green)}`;
+     m = `${m.replace("socket.io", "socket.io".green)}`;
+     m = `${m.replace("JSON", "JSON".green)}`;
+     m = `${m.replace("fflate", "fflate".green)}`;
+     m = `${m.replace("nodemon", "nodemon".green)}`;
+     m = `${m.replace("--watch", "--watch".green)}`;
+     m = `${m.replace("Webpack", "Webpack".green)}`;
+     m = `${m.replace("webpack", "webpack".green)}`;
+     m = `${m.replace("built", "built".green)}`;
+     m = `${m.replace("build", "build".green)}`;
+     m = `${m.replace("run", "run".green)}`;
+     m = `${m.replace("kill", "kill".red)}`;
+     m = `${m.replace("killall", "killall".red)}`;
+     m = `${m.replace("pkill", "pkill".red)}`;
+     m = `${m.replace("npm", "npm".yellow)}`;
+     m = `${m.replace("node", "node".yellow)}`;
+     m = `${m.replace("tsc", "tsc".yellow)}`;
+     m = `${m.replace("cd", "cd".yellow)}`;
+     m = `${m.replace("../", "../".blue)}`;
+     m = `${m.replace("./", "./".blue)}`;
+     m = `${m.replace("/", "/".blue)}`;
+     m = `${m.replace(".", ".".blue)}`;
+     m = `${m.replace("code", "code".blue)}`;
+     m = `${m.replace("generated", "generated".blue)}`;
+     m = `${m.replace("dist/", "dist/".blue)}`;
+     m = `${m.replace("kitsune/", "kitsune/".blue)}`;
+     m = `${m.replace("kitsune-wrapper/", "kitsune-wrapper/".bgMagenta.blue)}`;
+     m = `${m.replace("kitsune-wrapper-extensions", "kitsune-wrapper-extensions".bgMagenta.blue)}`;
+     m = `${m.replace("kitsune-wrapper-library", "kitsune-wrapper-library".bgMagenta.blue)}`;
+     m = `${m.replace("kitsune-application-test-dummy", "kitsune-application-test-dummy".bgMagenta.blue)}`;
+     m = `${m.replace("kitsune-asset-store", "kitsune-asset-store".bgMagenta.blue)}`;
+     m = `${m.replace("kitsune-rest-server", "kitsune-rest-server".bgMagenta.blue)}`;
+     m = `${m.replace("kitsune-ws-server", "kitsune-ws-server".bgMagenta.blue)}`;
+     m = `${m.replace("mongodb", "mongodb".bgMagenta.blue)}`;
+     m = `${m.replace("mongod", "mongod".bgMagenta.blue)}`;
+     m = `${m.replace("report.html", "report.html".blue)}`;
+     m = `${m.replace("extensions/", "extensions/".blue)}`;
+     m = `${m.replace(".bundle.js", ".bundle.js".blue)}`;
+     m = `${m.replace("EADDRINUSE", "EADDRINUSE".red)}`;
+     m = `${m.replace("listen", "listen".yellow)}`;
+
+     */
     //process.stdout.write(`${""+KitsuneHelper.kChar+""} : ${m}`+"\u001b[2K\u001b[0E\r");
     let fi = '';
     let fiArr = [];
@@ -174,7 +157,8 @@ const ColourizeMsg = (msg, channel) => {
     let count = 0;
     const tg = msgs % grades.length;
     while (count < fillLength) {
-        fiArr.push(fillDecor[msgs % fillDecor.length](grades[count % grades.length]));
+        fiArr.push(fillDecor[msgs % fillDecor.length]);
+        //fiArr.push(fillDecor[msgs % fillDecor.length](grades[count % grades.length]));
         count++;
     }
     /*
@@ -188,38 +172,10 @@ const ColourizeMsg = (msg, channel) => {
     while (cFill.length < channelFill) {
         cFill = cFill + " ";
     }
-    let KChannel = "" + KitsuneHelper_1.default.kChar + cFill + channel + "" + decor0[msgs % decor0.length] + "".white.bgWhite + "";
-    let channelCol = "" + f + "".black.bgWhite + "";
+    let KChannel = "" + KitsuneHelper_1.default.kChar + cFill + channel + "" + decor0[msgs % decor0.length] + "";
+    let channelCol = "" + f + "";
     let filler = fi;
-    if (channel === 'WS') {
-        KChannel = KChannel.bgCyan.cyan;
-        channelCol = channelCol.bgCyan.cyan;
-        filler = filler.bgCyan.cyan;
-    }
-    else if (channel === 'WRAPPER') {
-        KChannel = KChannel.bgGreen.green;
-        channelCol = channelCol.bgGreen.green;
-        filler = filler.bgGreen.green;
-    }
-    else if (channel === 'REST') {
-        KChannel = KChannel.bgMagenta.magenta;
-        channelCol = channelCol.bgMagenta.magenta;
-        filler = filler.bgMagenta.magenta;
-    }
-    else if (channel === 'ASSET') {
-        KChannel = KChannel.bgYellow.yellow;
-        channelCol = channelCol.bgYellow.yellow;
-        filler = filler.bgYellow.yellow;
-    }
-    else if (channel === 'MONGO') {
-        KChannel = KChannel.bgWhite.black;
-        channelCol = channelCol.bgWhite.black;
-        filler = filler.bgWhite.black;
-    }
-    else
-        KChannel = KChannel.bgBlack;
-    channelCol = channelCol.bgWhite.bgBlack;
-    let out = "" + `${m}${cFill}${channelCol}`;
+    let out = "" + `${m}${cFill}${filler}${channelCol}`;
     ///KChannel=KChannel;
     process.stdout.write(`${KChannel}${out}\n\u001b[2K\u001b[0E\r`);
     msgs++;

@@ -1,16 +1,5 @@
 import {Tail} from "tail";
 import KitsuneHelper from "kitsune-wrapper-library/dist/base/helper/KitsuneHelper";
-import colors, {Color} from "colors";
-import {Interface} from "node:readline";
-
-
-declare global {
-    interface String {
-
-    }
-}
-
-colors.enable();
 
 const {exec} = require('child_process');
 var process = require('process');
@@ -37,10 +26,10 @@ export class KServer{
 
         setTimeout(()=>{
             const sock = new KServerChannel('sock.txt', '../kitsune-ws-server', false, false);
-            //sock.output.on('line', (kSockData: string)=> this.channelEventHandler(`${kSockData}`, 'WS'));
+            sock.output.on('line', (kSockData: string)=> this.channelEventHandler(`${kSockData}`, 'WS'));
 
             const rest = new KServerChannel('rest.txt', '../kitsune-rest-server', false, false);
-            //rest.output.on('line', (kSockData: string)=> this.channelEventHandler(`${kSockData}`, 'REST'));
+            rest.output.on('line', (kSockData: string)=> this.channelEventHandler(`${kSockData}`, 'REST'));
 
             const wrapper = new KServerChannel('wrapper.txt', '../../client/kitsune-wrapper', false, false);
             wrapper.output.on('line', (kSockData: string)=> this.channelEventHandler(`${kSockData.split('"')[0]}`, 'WRAPPER'));
@@ -49,7 +38,7 @@ export class KServer{
             asset.output.on('line', (kSockData: string)=> this.channelEventHandler(`${kSockData}`, 'ASSETS'));
 
             const mongo = new KServerChannel('asset.txt', 'sudo mongod --dbpath ~/mongodb/ --bind_ip 127.0.0.1 --port 27017', true, false);
-            //mongo.output.on('line', (kSockData: string)=> this.channelEventHandler(`${kSockData}`, 'MONGO'));
+            mongo.output.on('line', (kSockData: string)=> this.channelEventHandler(`${kSockData}`, 'MONGO'));
         }, 5000)
     }
 
@@ -60,27 +49,6 @@ export class KServer{
         const INUSE = data.includes('EADDRINUSE');
         //process.stdout.write(`${data.stripColors} \n`);
         ColourizeMsg(`${data}`, channel)
-    }
-
-    killProcessOnPort(port:number){
-        let promiseResolve;
-        const promiseOfCheck = new Promise<boolean>((resolve, reject)=> {
-            const pidOutput = new Tail('pid.txt', {});
-            const gotProcess = (...args)=>{
-                console.log('pid caught :: ', args);
-                const killer = `sudo kill ${args[0]}`
-                exec(killer);
-                resolve(true);
-            }
-            pidOutput.on('line', gotProcess)
-            setTimeout(() => {
-                console.log('timeout on kill');
-                resolve(true);
-            }, 4000);
-            const cmd = `netstat -anp 2> /dev/null | grep :${port} | egrep -o "[0-9]+/node" | cut -d'/' -f1 > pid.txt;`
-            exec(cmd);
-        });
-        return promiseOfCheck;
     }
 }
 
@@ -118,9 +86,11 @@ export const shuffle = (array)=>{
 let msgs:number = 0;
 let lastCol = 'none';
 export const ColourizeMsg = (msg:string, channel:string) => {
-    const decor0 = [`█`.inverse,`▉`.inverse,`▊`.inverse,`▋`.inverse,`▌`.inverse,`▍`.inverse,`▎`.inverse,`▏`.inverse,`▎`.inverse,`▍`.inverse,`▌`.inverse,`▋`.inverse,`▊`.inverse,`▉`.inverse,`█`.inverse]
-    //const decor1 = [`▀`.bgYellow.red.inverse,`▀`.bgYellow.red]
-    let decor2 = [colors.bgRed.red,colors.bgRed.yellow,colors.bgYellow.red,colors.bgYellow.yellow,colors.bgYellow.red,colors.bgRed.yellow,colors.bgRed.red];
+    //const decor0 = [`█`.inverse,`▉`.inverse,`▊`.inverse,`▋`.inverse,`▌`.inverse,`▍`.inverse,`▎`.inverse,`▏`.inverse,`▎`.inverse,`▍`.inverse,`▌`.inverse,`▋`.inverse,`▊`.inverse,`▉`.inverse,`█`.inverse]
+    const decor0 = [`█`,`▉`,`▊`,`▋`,`▌`,`▍`,`▎`,`▏`,`▎`,`▍`,`▌`,`▋`,`▊`,`▉`,`█`]
+    //const decor1 = [`▀`.bgYellow.red,`▀`.bgYellow.red]
+    //let decor2 = [colors.bgRed.red,colors.bgRed.yellow,colors.bgYellow.red,colors.bgYellow.yellow,colors.bgYellow.red,colors.bgRed.yellow,colors.bgRed.red];
+    let decor2 = [""];
     //let decor2 = [colors.bgRed.red,colors.bgRed.yellow,colors.bgYellow.red,colors.bgYellow.yellow,colors.bgYellow.red,colors.bgRed.yellow,colors.bgRed.red, colors.bgMagenta.cyan,colors.bgBlue.magenta,colors.bgGreen.green,colors.bgGreen.cyan,colors.bgCyan.cyan,colors.bgCyan.blue,colors.bgCyan.yellow];
     //const decor2 = [colors.bgMagenta.bold];
     const gradient4 = ['█','▓','▒','░',' ','░','▒','▓'];
@@ -137,8 +107,9 @@ export const ColourizeMsg = (msg:string, channel:string) => {
     //let grades = shuffle([gradient.join('').replace(',',''), gradient.slice(1, gradient.length-2).reverse().join('').replace(',','')].join('').replace(',','').split('').join(gradient4.join('')).split('').join(gradient3.join('')).split(''));
 
     //const grades = ['▚'];
-    const fillDecor = decor2;
+    const fillDecor:Array<string> = decor2;
     let m = `${msg}`;
+    /*
      m = `${m.replace("TypeError:", "TypeError:".bgRed.black.bold)}`;
      m = `${m.replace("Error:", "Error:".bgRed.black.bold)}`;
      m = `${m.replace("Error", "Error".bgRed.black.bold)}`;
@@ -187,6 +158,8 @@ export const ColourizeMsg = (msg:string, channel:string) => {
      m = `${m.replace(".bundle.js", ".bundle.js".blue)}`;
      m = `${m.replace("EADDRINUSE", "EADDRINUSE".red)}`;
      m = `${m.replace("listen", "listen".yellow)}`;
+
+     */
     //process.stdout.write(`${""+KitsuneHelper.kChar+""} : ${m}`+"\u001b[2K\u001b[0E\r");
     let fi:string = '';
     let fiArr:Array<string> = [];
@@ -196,7 +169,8 @@ export const ColourizeMsg = (msg:string, channel:string) => {
     const tg = msgs % grades.length;
 
     while(count < fillLength) {
-        fiArr.push(fillDecor[msgs % fillDecor.length](grades[count % grades.length]));
+        fiArr.push(fillDecor[msgs % fillDecor.length]);
+        //fiArr.push(fillDecor[msgs % fillDecor.length](grades[count % grades.length]));
         count++
     }
     /*
@@ -208,38 +182,11 @@ export const ColourizeMsg = (msg:string, channel:string) => {
     const channelFill = 7-channel.length;
     let cFill = ''
     while (cFill.length<channelFill){cFill = cFill + " "}
-    let KChannel = ""+KitsuneHelper.kChar+cFill+channel+""+decor0[msgs % decor0.length]+"".white.bgWhite+"";
+    let KChannel = ""+KitsuneHelper.kChar+cFill+channel+""+decor0[msgs % decor0.length]+"";
 
-    let channelCol = ""+f+"".black.bgWhite+"";
+    let channelCol = ""+f+"";
     let filler = fi;
-    if(channel === 'WS') {
-        KChannel = KChannel.bgCyan.cyan
-        channelCol = channelCol.bgCyan.cyan
-        filler = filler.bgCyan.cyan
-    }
-    else if(channel === 'WRAPPER') {
-        KChannel = KChannel.bgGreen.green
-        channelCol = channelCol.bgGreen.green
-        filler = filler.bgGreen.green
-    }
-    else if(channel === 'REST') {
-        KChannel = KChannel.bgMagenta.magenta
-        channelCol = channelCol.bgMagenta.magenta
-        filler = filler.bgMagenta.magenta
-    }
-    else if(channel === 'ASSET') {
-        KChannel = KChannel.bgYellow.yellow
-        channelCol = channelCol.bgYellow.yellow
-        filler = filler.bgYellow.yellow
-    }
-    else if(channel === 'MONGO') {
-        KChannel = KChannel.bgWhite.black
-        channelCol = channelCol.bgWhite.black
-        filler = filler.bgWhite.black
-    }
-    else KChannel = KChannel.bgBlack;
-    channelCol = channelCol.bgWhite.bgBlack
-    let out = ""+`${m}${cFill}${channelCol}`;
+    let out = ""+`${m}${cFill}${filler}${channelCol}`;
     ///KChannel=KChannel;
     process.stdout.write(`${KChannel}${out}\n\u001b[2K\u001b[0E\r`);
     msgs++;

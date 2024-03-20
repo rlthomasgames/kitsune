@@ -2,92 +2,29 @@
 > kitsune-rest-server@0.0.1 start
 > tsc && node ./app.js
 
-/home/rhys/Development/kGitCheck/server/kitsune-rest-server/node_modules/mongodb/lib/sdam/topology.js:292
-            const timeoutError = new error_1.MongoServerSelectionError(`Server selection timed out after ${options.serverSelectionTimeoutMS} ms`, this.description);
-                                 ^
+node:events:495
+      throw er; // Unhandled 'error' event
+      ^
 
-MongoServerSelectionError: connect ECONNREFUSED 127.0.0.1:27017
-    at EventTarget.<anonymous> (/home/rhys/Development/kGitCheck/server/kitsune-rest-server/node_modules/mongodb/lib/sdam/topology.js:292:34)
-    at [nodejs.internal.kHybridDispatch] (node:internal/event_target:786:20)
-    at EventTarget.dispatchEvent (node:internal/event_target:721:26)
-    at abortSignal (node:internal/abort_controller:369:10)
-    at TimeoutController.abort (node:internal/abort_controller:403:5)
-    at Timeout.<anonymous> (/home/rhys/Development/kGitCheck/server/kitsune-rest-server/node_modules/mongodb/lib/utils.js:1008:92)
-    at listOnTimeout (node:internal/timers:569:17)
-    at process.processTimers (node:internal/timers:512:7) {
-  reason: TopologyDescription {
-    type: 'Single',
-    servers: Map(1) {
-      '127.0.0.1:27017' => ServerDescription {
-        address: '127.0.0.1:27017',
-        type: 'Unknown',
-        hosts: [],
-        passives: [],
-        arbiters: [],
-        tags: {},
-        minWireVersion: 0,
-        maxWireVersion: 0,
-        roundTripTime: -1,
-        lastUpdateTime: 42959484,
-        lastWriteDate: 0,
-        error: MongoNetworkError: connect ECONNREFUSED 127.0.0.1:27017
-            at connectionFailureError (/home/rhys/Development/kGitCheck/server/kitsune-rest-server/node_modules/mongodb/lib/cmap/connect.js:357:20)
-            at Socket.<anonymous> (/home/rhys/Development/kGitCheck/server/kitsune-rest-server/node_modules/mongodb/lib/cmap/connect.js:268:44)
-            at Object.onceWrapper (node:events:632:26)
-            at Socket.emit (node:events:517:28)
-            at emitErrorNT (node:internal/streams/destroy:151:8)
-            at emitErrorCloseNT (node:internal/streams/destroy:116:3)
-            at process.processTicksAndRejections (node:internal/process/task_queues:82:21) {
-          [Symbol(errorLabels)]: Set(1) { 'ResetPool' },
-          [cause]: Error: connect ECONNREFUSED 127.0.0.1:27017
-              at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1549:16) {
-            errno: -111,
-            code: 'ECONNREFUSED',
-            syscall: 'connect',
-            address: '127.0.0.1',
-            port: 27017
-          }
-        },
-        topologyVersion: null,
-        setName: null,
-        setVersion: null,
-        electionId: null,
-        logicalSessionTimeoutMinutes: null,
-        primary: null,
-        me: null,
-        '$clusterTime': null
-      }
-    },
-    stale: false,
-    compatible: true,
-    heartbeatFrequencyMS: 10000,
-    localThresholdMS: 15,
-    setName: null,
-    maxElectionId: null,
-    maxSetVersion: null,
-    commonWireVersion: 0,
-    logicalSessionTimeoutMinutes: null
-  },
-  code: undefined,
-  [Symbol(errorLabels)]: Set(0) {},
-  [cause]: MongoNetworkError: connect ECONNREFUSED 127.0.0.1:27017
-      at connectionFailureError (/home/rhys/Development/kGitCheck/server/kitsune-rest-server/node_modules/mongodb/lib/cmap/connect.js:357:20)
-      at Socket.<anonymous> (/home/rhys/Development/kGitCheck/server/kitsune-rest-server/node_modules/mongodb/lib/cmap/connect.js:268:44)
-      at Object.onceWrapper (node:events:632:26)
-      at Socket.emit (node:events:517:28)
-      at emitErrorNT (node:internal/streams/destroy:151:8)
-      at emitErrorCloseNT (node:internal/streams/destroy:116:3)
-      at process.processTicksAndRejections (node:internal/process/task_queues:82:21) {
-    [Symbol(errorLabels)]: Set(1) { 'ResetPool' },
-    [cause]: Error: connect ECONNREFUSED 127.0.0.1:27017
-        at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1549:16) {
-      errno: -111,
-      code: 'ECONNREFUSED',
-      syscall: 'connect',
-      address: '127.0.0.1',
-      port: 27017
-    }
-  }
+Error: listen EADDRINUSE: address already in use :::3090
+    at Server.setupListenHandle [as _listen2] (node:net:1811:16)
+    at listenInCluster (node:net:1859:12)
+    at Server.listen (node:net:1947:7)
+    at Object.<anonymous> (/home/rhys/Development/fbuild/server/kitsune-rest-server/app.js:55:8)
+    at Module._compile (node:internal/modules/cjs/loader:1356:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1414:10)
+    at Module.load (node:internal/modules/cjs/loader:1197:32)
+    at Module._load (node:internal/modules/cjs/loader:1013:12)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:128:12)
+    at node:internal/main/run_main_module:28:49
+Emitted 'error' event on Server instance at:
+    at emitErrorNT (node:net:1838:8)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21) {
+  code: 'EADDRINUSE',
+  errno: -98,
+  syscall: 'listen',
+  address: '::',
+  port: 3090
 }
 
 Node.js v18.19.0
