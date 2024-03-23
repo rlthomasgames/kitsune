@@ -1,13 +1,30 @@
-{"t":{"$date":"2024-03-20T01:41:16.467+00:00"},"s":"I",  "c":"NETWORK",  "id":4915701, "ctx":"main","msg":"Initialized wire specification","attr":{"spec":{"incomingExternalClient":{"minWireVersion":0,"maxWireVersion":18},"incomingInternalClient":{"minWireVersion":0,"maxWireVersion":18},"outgoing":{"minWireVersion":6,"maxWireVersion":18},"isInternalClient":true}}}
-{"t":{"$date":"2024-03-20T01:41:16.469+00:00"},"s":"I",  "c":"CONTROL",  "id":23285,   "ctx":"main","msg":"Automatically disabling TLS 1.0, to force-enable TLS 1.0 specify --sslDisabledProtocols 'none'"}
-{"t":{"$date":"2024-03-20T01:41:16.492+00:00"},"s":"I",  "c":"NETWORK",  "id":4648601, "ctx":"main","msg":"Implicit TCP FastOpen unavailable. If TCP FastOpen is required, set tcpFastOpenServer, tcpFastOpenClient, and tcpFastOpenQueueSize."}
-{"t":{"$date":"2024-03-constructed builder
+
+> kitsune-asset-store@0.0.1 start
+> tsc; cd ./dist/ && node AssetVendorService.js
+
+[1m[45m[32mCLEARING STORE[39m[49m[22m
+AssetVendorService {} []
+┌─────────┬─────┬─────┐
+│ (index) │ Obj │ OBJ │
+├─────────┼─────┼─────┤
+│   Obj   │     │     │
+│   OBJ   │     │     │
+└─────────┴─────┴─────┘
+AssetVendorService {} []
+┌─────────┬─────┬─────┐
+│ (index) │ Obj │ OBJ │
+├─────────┼─────┼─────┤
+│   Obj   │     │     │
+│   OBJ   │     │     │
+└─────────┴─────┴─────┘
+FILES: bda65ec6-cfb6-4438-9f7e-407c15ff694c
+constructed builder
 building... ../uploaded/bda65ec6-cfb6-4438-9f7e-407c15ff694c/Rock_baseColor.png.zip
 building... ../uploaded/bda65ec6-cfb6-4438-9f7e-407c15ff694c/Rock_metallicRoughness.png.zip
 building... ../uploaded/bda65ec6-cfb6-4438-9f7e-407c15ff694c/base-all-anims_mixamo_animations_importer_script.glb.zip
 building... ../uploaded/bda65ec6-cfb6-4438-9f7e-407c15ff694c/labrynth.glb.zip
 🦊 ../uploaded/bda65ec6-cfb6-4438-9f7e-407c15ff694c/Rock_baseColor.png.zip got stats :
- [object Object] = {"dev":2050,"mode":33188,"nlink":1,"uid":1000,"gid":1000,"rdev":0,"blksize":4096,"ino":27527072,"size":1158076,"blocks":2264,"atimeMs":1710886289847.4653,"mtimeMs":1710882826992.3127,"ctimeMs":1710882826992.3127,"birthtimeMs":1710882826988.3127,"atime":"2024-03-19T22:11:29.847Z","mtime":"2024-03-19T21:13:46.992Z","ctime":"2024-03-19T21:13:46.992Z","birthtime":"2024-03-19T21:13:46.988Z"} 
+ [object Object] = {"dev":2050,"mode":33188,"nlink":1,"uid":1000,"gid":1000,"rdev":0,"blksize":4096,"ino":30431231,"size":1158076,"blocks":2264,"atimeMs":1711152864737.4346,"mtimeMs":1711125500575.6116,"ctimeMs":1711125500575.6116,"birthtimeMs":1711125500567.6116,"atime":"2024-03-23T00:14:24.737Z","mtime":"2024-03-22T16:38:20.576Z","ctime":"2024-03-22T16:38:20.576Z","birthtime":"2024-03-22T16:38:20.568Z"} 
 1158076truesplitting file Rock_baseColor.png.zip at path containing  [
   'AssetVendorService.js',
   'BuildPacketsFromUploadsService.js',
@@ -16,7 +33,7 @@ building... ../uploaded/bda65ec6-cfb6-4438-9f7e-407c15ff694c/labrynth.glb.zip
   'routes'
 ]
 🦊 ../uploaded/bda65ec6-cfb6-4438-9f7e-407c15ff694c/Rock_metallicRoughness.png.zip got stats :
- [object Object] = {"dev":2050,"mode":33188,"nlink":1,"uid":1000,"gid":1000,"rdev":0,"blksize":4096,"ino":27527073,"size":388889,"blocks":760,"atimeMs":1710886289831.4648,"mtimeMs":1710882826992.3127,"ctimeMs":1710882826992.3127,"birthtimeMs":1710882826992.3127,"atime":"2024-03-19T22:11:29.831Z","mtime":"2024-03-19T21:13:46.992Z","ctime":"2024-03-19T21:13:46.992Z","birthtime":"2024-03-19T21:13:46.992Z"} 
+ [object Object] = {"dev":2050,"mode":33188,"nlink":1,"uid":1000,"gid":1000,"rdev":0,"blksize":4096,"ino":30431232,"size":388889,"blocks":760,"atimeMs":1711152864729.4346,"mtimeMs":1711125500575.6116,"ctimeMs":1711125500575.6116,"birthtimeMs":1711125500575.6116,"atime":"2024-03-23T00:14:24.729Z","mtime":"2024-03-22T16:38:20.576Z","ctime":"2024-03-22T16:38:20.576Z","birthtime":"2024-03-22T16:38:20.576Z"} 
 388889truesplitting file Rock_metallicRoughness.png.zip at path containing  [
   'AssetVendorService.js',
   'BuildPacketsFromUploadsService.js',
@@ -25,7 +42,7 @@ building... ../uploaded/bda65ec6-cfb6-4438-9f7e-407c15ff694c/labrynth.glb.zip
   'routes'
 ]
 🦊 ../uploaded/bda65ec6-cfb6-4438-9f7e-407c15ff694c/base-all-anims_mixamo_animations_importer_script.glb.zip got stats :
- [object Object] = {"dev":2050,"mode":33188,"nlink":1,"uid":1000,"gid":1000,"rdev":0,"blksize":4096,"ino":27527074,"size":43902814,"blocks":85752,"atimeMs":1710883231889.1243,"mtimeMs":1710882827112.3142,"ctimeMs":1710882827112.3142,"birthtimeMs":1710882826992.3127,"atime":"2024-03-19T21:20:31.889Z","mtime":"2024-03-19T21:13:47.112Z","ctime":"2024-03-19T21:13:47.112Z","birthtime":"2024-03-19T21:13:46.992Z"} 
+ [object Object] = {"dev":2050,"mode":33188,"nlink":1,"uid":1000,"gid":1000,"rdev":0,"blksize":4096,"ino":30431233,"size":43902814,"blocks":85752,"atimeMs":1711152864829.4353,"mtimeMs":1711125500695.6125,"ctimeMs":1711125500695.6125,"birthtimeMs":1711125500575.6116,"atime":"2024-03-23T00:14:24.829Z","mtime":"2024-03-22T16:38:20.696Z","ctime":"2024-03-22T16:38:20.696Z","birthtime":"2024-03-22T16:38:20.576Z"} 
 43902814truesplitting file base-all-anims_mixamo_animations_importer_script.glb.zip at path containing  [
   'AssetVendorService.js',
   'BuildPacketsFromUploadsService.js',
@@ -34,7 +51,7 @@ building... ../uploaded/bda65ec6-cfb6-4438-9f7e-407c15ff694c/labrynth.glb.zip
   'routes'
 ]
 🦊 ../uploaded/bda65ec6-cfb6-4438-9f7e-407c15ff694c/labrynth.glb.zip got stats :
- [object Object] = {"dev":2050,"mode":33188,"nlink":1,"uid":1000,"gid":1000,"rdev":0,"blksize":4096,"ino":27527075,"size":1901974,"blocks":3720,"atimeMs":1710883232013.1257,"mtimeMs":1710882827120.3142,"ctimeMs":1710882827120.3142,"birthtimeMs":1710882827112.3142,"atime":"2024-03-19T21:20:32.013Z","mtime":"2024-03-19T21:13:47.120Z","ctime":"2024-03-19T21:13:47.120Z","birthtime":"2024-03-19T21:13:47.112Z"} 
+ [object Object] = {"dev":2050,"mode":33188,"nlink":1,"uid":1000,"gid":1000,"rdev":0,"blksize":4096,"ino":30431234,"size":1901974,"blocks":3720,"atimeMs":1711152864769.4348,"mtimeMs":1711125500703.6125,"ctimeMs":1711125500703.6125,"birthtimeMs":1711125500695.6125,"atime":"2024-03-23T00:14:24.769Z","mtime":"2024-03-22T16:38:20.704Z","ctime":"2024-03-22T16:38:20.704Z","birthtime":"2024-03-22T16:38:20.696Z"} 
 1901974truesplitting file labrynth.glb.zip at path containing  [
   'AssetVendorService.js',
   'BuildPacketsFromUploadsService.js',
@@ -42,32 +59,5 @@ building... ../uploaded/bda65ec6-cfb6-4438-9f7e-407c15ff694c/labrynth.glb.zip
   'encoding',
   'routes'
 ]
-node:events:495
-      throw er; // Unhandled 'error' event
-      ^
-
-Error: listen EADDRINUSE: address already in use :::8081
-    at Server.setupListenHandle [as _listen2] (node:net:1811:16)
-    at listenInCluster (node:net:1859:12)
-    at Server.listen (node:net:1947:7)
-    at Function.listen (/home/rhys/Development/fbuild/server/kitsune-asset-store/node_modules/express/lib/application.js:635:24)
-    at Timeout.startExpress [as _onTimeout] (/home/rhys/Development/fbuild/server/kitsune-asset-store/dist/AssetVendorService.js:49:9)
-    at listOnTimeout (node:internal/timers:569:17)
-    at process.processTimers (node:internal/timers:512:7)
-Emitted 'error' event on Server instance at:
-    at emitErrorNT (node:net:1838:8)
-    at process.processTicksAndRejections (node:internal/process/task_queues:82:21) {
-  code: 'EADDRINUSE',
-  errno: -98,
-  syscall: 'listen',
-  address: '::',
-  port: 8081
-}
-
-Node.js v18.19.0
-8, "ctx":"initandlisten","msg":"Shutting down the TTL monitor"}
-{"t":{"$date":"2024-03-20T01:41:16.623+00:00"},"s":"I",  "c":"CONTROL",  "id":6278511, "ctx":"initandlisten","msg":"Shutting down the Change Stream Expired Pre-images Remover"}
-{"t":{"$date":"2024-03-20T01:41:16.623+00:00"},"s":"I",  "c":"CONTROL",  "id":4784929, "ctx":"initandlisten","msg":"Acquiring the global lock for shutdown"}
-{"t":{"$date":"2024-03-20T01:41:16.623+00:00"},"s":"I",  "c":"-",        "id":4784931, "ctx":"initandlisten","msg":"Dropping the scope cache for shutdown"}
-{"t":{"$date":"2024-03-20T01:41:16.623+00:00"},"s":"I",  "c":"CONTROL",  "id":20565,   "ctx":"initandlisten","msg":"Now exiting"}
-{"t":{"$date":"2024-03-20T01:41:16.623+00:00"},"s":"I",  "c":"CONTROL",  "id":23138,   "ctx":"initandlisten","msg":"Shutting down","attr":{"exitCode":48}}
+listening port 8081
+Routes configured for UploadRoutes

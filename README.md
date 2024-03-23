@@ -1,5 +1,5 @@
 <h1><img height="64px" src="./kitsune.ico" width="64px"/> Kitsune Wrapper</h1>
-Kitsune Wrapper  -  a investigation into simple modular wrapper framework for use 
+Kitsune Wrapper  - investigation into simple modular wrapper framework for use 
 with applications or games.
 
 Wrapper extensions are loaded during runtime without any prior knowledge or footprint
@@ -37,46 +37,41 @@ Check out the repo
 git clone https://github.com/rlthomasgames/kitsune.git
 ```
 
-_**'kitsune-wrapper-library'**_ is included but no need to link this library
-directly unless you want to extend upon it, package.json already has
-the library referenced for installing.
-To build and launch..
-
-build all modules and launch wrapper and web socket server:
+build all modules and launch wrapper and web socket server *(requires mongoDB community installation)* :
 ```
-from root "kitsune" folder execute...
+npm i
 
-npm run build-from-scratch
+npm run install-build-launch
 
 then open your browser to localhost:8080
+
+currently not auto-generating lib folders, so might need to manually create them if this issue appears at build, sorry
 ```
 
 load up localhost:8080 in your browser and you'll be able to observe
 current loading examples from monitoring the information in dev tools.
 
 Main branch of the project contains:
+_*'client'*_
 ````
 kitsune-wrapper                 :   the wrapper
-
-kitsune-wrapper-library         :   the shared library
-
 kitsune-wrapper-extensions      :   early injectable extension examples, 
                                     dynamic loading and code execution of 
                                     external unlinked packages
-
 kitsune-application-test-dummy  :   rough WIP application
-
+````
+_*'server'*_
+````
 kitsune-ws-server               :   rough WIP web socket server
+kitsune-rest-server             :   rough WIP rest server
+kitsune-asset-store             :   rough WIP asset store
+kserver                         :   launcher for server and client
+````
+_*'shared'*_
+````
+kitsune-wrapper-library         :   the shared library
 ````
 
 # Further reading
 
 **More information coming...**
-<p style="font-size: smaller; font-style: italic" onclick="alert('you sweaty scumbag fox')" content="In Japanese folklore, kitsune are foxes that possess paranormal
-abilities that increase as they get older and wiser." />
-
-_In Japanese folklore, kitsune are foxes that possess paranormal
-abilities that increase as they get older and wiser._
-
-<div class="sketchfab-embed-wrapper"> <a href="https://sketchfab.com/3d-models/kitsune-token-4abcffef0f9e419caec61ba2f5a2f362?utm_medium=embed&utm_campaign=share-popup&utm_content=4abcffef0f9e419caec61ba2f5a2f362" target="_blank" rel="nofollow" style="font-weight: bold; color: #1CAAD9;"> kitsune_token </a> by <a href="https://sketchfab.com/rlthomasgames?utm_medium=embed&utm_campaign=share-popup&utm_content=4abcffef0f9e419caec61ba2f5a2f362" target="_blank" rel="nofollow" style="font-weight: bold; color: #1CAAD9;"> Rhys Thomas </a></div>
-

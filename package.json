@@ -9,7 +9,9 @@
     "server-link-lib": "npm run linklib --prefix ./server/kitsune-asset-store && npm run linklib --prefix ./server/kitsune-ws-server && npm run linklib --prefix ./server/kitsune-rest-server && npm run linklib --prefix ./server/kserver",
     "build-server": "npm run build --prefix ./server/kitsune-rest-server && npm run build --prefix ./server/kitsune-ws-server && npm run build --prefix ./server/kitsune-asset-store && npm run build --prefix ./server/kserver",
     "launch": "npm --watch run start --prefix ./server/kserver",
-    "stop": "pkill --signal SIGINT kasset-store && pkill --signal SIGINT kws-server && pkill --signal SIGINT krest-server && pkill --signal SIGINT kserver && pkill --signal SIGINT kwrapper"
+    "stop": "pkill --signal SIGINT kasset-store && pkill --signal SIGINT kws-server && pkill --signal SIGINT krest-server && pkill --signal SIGINT kserver && pkill --signal SIGINT kwrapper",
+    "startMongo": "sudo mongod --dbpath ~/mongodb/ --bind_ip 127.0.0.1 --port 27017",
+    "install-build-launch": "(npm run install-library && npm run build-library) && echo \"INSTALLED & BUILT LIBRARY\" && ((npm run install-server && npm run server-link-lib && npm run build-server) && echo \"INSTALLED & BUILT SERVER - Ctrl + C\") && ((npm run install-client && npm run client-link-lib && npm run build-client) && echo \"INSTALLED & BUILT CLIENT - Ctrl + C\") && (sleep 1 && (time ! npm run launch))\n"
   },
   "devDependencies": {
     "concurrently": "^8.2.2",
