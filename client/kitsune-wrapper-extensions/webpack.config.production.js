@@ -19,6 +19,9 @@ const moduleEntries = {
     },
     threeFrameworkExtension: {
         import: ['./extensions/ThreeFrameworkExtension.ts', 'three']
+    },
+    dracoParser: {
+        import: ['./extensions/DracoParser.ts'],
     }
 };
 module.exports = {

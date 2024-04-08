@@ -14,5 +14,5 @@ export interface IDataStore {
     }
     dataStore: {[x:string]:{[y:string]:Uint8Array}};
     appendBuffer(buffer1:ArrayBuffer, buffer2:ArrayBuffer):Uint8Array;
-    storeAssetResponseFromWS(data:unknown):void;
+    storeAssetResponseFromWS(data:unknown, started:number):void;
 }

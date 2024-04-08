@@ -8,7 +8,8 @@
   "modules": [
     { "moduleName":"HelloWorldExtension", "modulePath":"./extensions/helloWorldExtension.bundle.js", "gzipped": true},
     { "moduleName":"PixiFrameworkExtension", "modulePath":"./extensions/pixiFrameworkExtension.bundle.js", "gzipped":  true},
-    { "moduleName":"ThreeFrameworkExtension", "modulePath":"./extensions/threeFrameworkExtension.bundle.js", "gzipped":  true }
+    { "moduleName":"ThreeFrameworkExtension", "modulePath":"./extensions/threeFrameworkExtension.bundle.js", "gzipped":  true },
+    { "moduleName":"DracoParser", "modulePath":"./extensions/dracoParser.bundle.js", "gzipped":  true }
   ],
   "application": {"moduleName":"application", "modulePath":"./applications/test_dummy/index.js", "gzipped":  false},
   "uniqueID": null,

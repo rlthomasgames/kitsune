@@ -90,7 +90,7 @@ class KSockService extends AbstractSockComm implements IInjectableExtensionModul
             }
             responseData.total = this.totals[this.totals.length -1];
             console.log(`got parsed Asset Response : `, responseData, responseData.index, responseData.total, responseData.assetPackUUID)
-            this._assetData.storeAssetResponseFromWS(responseData)
+            this._assetData.storeAssetResponseFromWS(responseData, 0)
         })
 
         this.socket.connect().open();

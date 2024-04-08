@@ -52,7 +52,7 @@ class AssetDataVendor extends AbstractModule implements IInjectableExtensionModu
         console.log(`asset data vendor REQUEST ca;;ed with : ${valuedObject}  - ${gzipped}  |||`);
     }
 
-    storeAssetResponseFromWS(data: APResponseData) {
+    storeAssetResponseFromWS(data: APResponseData, start:number = 0) {
         console.log('STORE DATA:', data.data);
         if(this.dataWells[data.assetPackUUID] === undefined){
             this.dataWells[data.assetPackUUID] = {};

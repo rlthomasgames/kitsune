@@ -1,6 +1,10 @@
 //import {find} from 'node-emoji';
 
-export default class KitsuneHelper {
+interface Awaiter {
+    asyncAwait: <T>(prom:Promise<T>) => T;
+}
+
+export default class KitsuneHelper implements Awaiter {
 
     private static singletonInstance: KitsuneHelper;
 
@@ -26,8 +30,13 @@ export default class KitsuneHelper {
     }
 
     public static asyncAwait(p:Promise<any>) {
+        return KitsuneHelper.getInstance().asyncAwait(p)
+    }
+
+    asyncAwait(p:Promise<any>) {
         return <Awaited<any>>p.then((val)=>val);
     }
+
     private static readonly DEFAULT_PORTS = {
         MONGO_DB:27017,
         REST_SERVER:3090,

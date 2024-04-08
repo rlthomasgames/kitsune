@@ -1,7 +1,7 @@
 import {injectable} from "inversify";
-import * as _ from "lodash";
-import IAsyncRequest from "kitsune-wrapper-library/dist/base/interfaces/IAsyncRequest";
 import IWrapperConfig from "../IWrapperConfig";
+import IAsyncRequest from "../IAsyncRequest";
+import * as _ from "lodash";
 
 @injectable()
 export class FetchConfig implements IAsyncRequest {
