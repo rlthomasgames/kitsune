@@ -10,35 +10,35 @@
 > kitsune-wrapper@1.0.3 build
 > webpack --mode=production --stats-error-details
 
-Webpack Bundle Analyzer saved report to /home/rhys/Development/kitsune4/client/kitsune-wrapper/dist/report.html
-assets by path *.js 3.21 MiB
-  asset wrapper.js 3.16 MiB [emitted] [big] (name: wrapper)
+Webpack Bundle Analyzer saved report to /home/rhys/Development/kitsune_clean/client/kitsune-wrapper/dist/report.html
+assets by path *.js 3.2 MiB
+  asset wrapper.js 3.17 MiB [emitted] [big] (name: wrapper)
   asset 553.js 26.7 KiB [emitted]
-  asset main.js 20.7 KiB [emitted] [minimized] (name: index)
+  asset main.js 2.54 KiB [emitted] [minimized] (name: index)
 assets by path modules/*.js 1.09 MiB
   asset modules/lodash.bundle.js 987 KiB [emitted] [minimized] [big] (name: lodash) 1 related asset
   asset modules/shared.bundle.js 112 KiB [emitted] [minimized] (name: shared) 1 related asset
-  asset modules/kwl.bundle.js 17.8 KiB [emitted] [minimized] (name: kwl)
+  asset modules/kwl.bundle.js 18 KiB [emitted] [minimized] (name: kwl)
 asset assets/logo.png 76.7 KiB [emitted] [from: ../assets/logo.png] [copied]
 asset favicon.ico 76.7 KiB [emitted] [from: ../../../kitsune.ico] [copied]
-asset ./LowResOffScreenAnim.js 22.7 KiB [emitted] (name: LowResOffScreenAnim)
+asset ./LowResOffScreenAnim.js 22.5 KiB [emitted] (name: LowResOffScreenAnim)
 asset index.html 10.5 KiB [emitted]
 asset config/wrapper.json 697 bytes [emitted] [from: ../config/wrapper.json] [copied]
-orphan modules 492 KiB [orphan] 145 modules
+orphan modules 497 KiB [orphan] 145 modules
 runtime modules 4.2 KiB 12 modules
-built modules 1.78 MiB [built]
+built modules 1.79 MiB [built]
   modules by path ../ 1.41 MiB
     modules by path ../node_modules/ 766 KiB 27 modules
     modules by path ../../../ 675 KiB 13 modules
-  modules by path ./ 385 KiB
-    ./core/Wrapper.ts + 84 modules 377 KiB [built] [code generated]
-    ./index.ts + 1 modules 1.78 KiB [not cacheable] [built] [code generated]
+  modules by path ./ 388 KiB
+    ./core/Wrapper.ts + 85 modules 381 KiB [built] [code generated]
+    ./index.ts 826 bytes [built] [code generated]
     ./LowResOffScreenAnim.ts 6.42 KiB [built] [code generated]
   external "events" 42 bytes [built] [code generated]
   external "util" 42 bytes [built] [code generated]
   external "assert" 42 bytes [built] [code generated]
   external "buffer" 42 bytes [built] [code generated]
-webpack 5.91.0 compiled successfully in 3972 ms
+webpack 5.91.0 compiled successfully in 4376 ms
 
 > kitsune-wrapper@1.0.3 extensions
 > cd ../kitsune-wrapper-extensions/ && npm run build
@@ -47,7 +47,7 @@ webpack 5.91.0 compiled successfully in 3972 ms
 > kitsune-wrapper-extensions@0.0.1 build
 > webpack --mode=production --stats-error-details
 
-Webpack Bundle Analyzer saved report to /home/rhys/Development/kitsune4/client/kitsune-wrapper-extensions/dist/report.html
+Webpack Bundle Analyzer saved report to /home/rhys/Development/kitsune_clean/client/kitsune-wrapper-extensions/dist/report.html
 assets by status 13.3 MiB [big]
   asset ../../kitsune-wrapper/dist/extensions/pixiFrameworkExtension.bundle.js 6.83 MiB [emitted] [minimized] [big] (name: pixiFrameworkExtension) 2 related assets
   asset ../../kitsune-wrapper/dist/extensions/threeFrameworkExtension.bundle.js 6.47 MiB [emitted] [minimized] [big] (name: threeFrameworkExtension) 2 related assets
@@ -68,7 +68,7 @@ cacheable modules 5.44 MiB
       + 2 modules
     ./index.ts 1 bytes [built] [code generated]
     ./util.inspect (ignored) 15 bytes [built] [code generated]
-webpack 5.91.0 compiled successfully in 9062 ms
+webpack 5.91.0 compiled successfully in 16748 ms
 
 > kitsune-wrapper@1.0.3 start
 > npm run extensions && npm run dev && open http://localhost:8080/
@@ -81,7 +81,7 @@ webpack 5.91.0 compiled successfully in 9062 ms
 > kitsune-wrapper-extensions@0.0.1 build
 > webpack --mode=production --stats-error-details
 
-Webpack Bundle Analyzer saved report to /home/rhys/Development/kitsune4/client/kitsune-wrapper-extensions/dist/report.html
+Webpack Bundle Analyzer saved report to /home/rhys/Development/kitsune_clean/client/kitsune-wrapper-extensions/dist/report.html
 assets by status 13.3 MiB [big]
   asset ../../kitsune-wrapper/dist/extensions/pixiFrameworkExtension.bundle.js 6.83 MiB [compared for emit] [minimized] [big] (name: pixiFrameworkExtension) 2 related assets
   asset ../../kitsune-wrapper/dist/extensions/threeFrameworkExtension.bundle.js 6.47 MiB [compared for emit] [minimized] [big] (name: threeFrameworkExtension) 2 related assets
@@ -102,26 +102,26 @@ cacheable modules 5.44 MiB
       + 2 modules
     ./index.ts 1 bytes [built] [code generated]
     ./util.inspect (ignored) 15 bytes [built] [code generated]
-webpack 5.91.0 compiled successfully in 9221 ms
+webpack 5.91.0 compiled successfully in 9511 ms
 
 > kitsune-wrapper@1.0.3 dev
 > webpack serve --open --mode=development --https
 
-(node:10789) [DEP_WEBPACK_DEV_SERVER_HTTPS] DeprecationWarning: 'https' option is deprecated. Please use the 'server' option.
+(node:46284) [DEP_WEBPACK_DEV_SERVER_HTTPS] DeprecationWarning: 'https' option is deprecated. Please use the 'server' option.
 (Use `node --trace-deprecation ...` to show where the warning was created)
-<i> [webpack-dev-server] Generating SSL certificate...
-<i> [webpack-dev-server] SSL certificate: /home/rhys/Development/kitsune4/client/kitsune-wrapper/node_modules/.cache/webpack-dev-server/server.pem
+<i> [webpack-dev-server] SSL certificate: /home/rhys/Development/kitsune_clean/client/kitsune-wrapper/node_modules/.cache/webpack-dev-server/server.pem
 <i> [webpack-dev-server] Project is running at:
 <i> [webpack-dev-server] Loopback: https://localhost:8080/, https://[::1]:8080/
 <i> [webpack-dev-server] Content not from webpack is served from './dist' directory
-Error parsing bundle asset "/home/rhys/Development/kitsune4/client/kitsune-wrapper/dist/vendors-node_modules_util_util_js.js": no such file
-Error parsing bundle asset "/home/rhys/Development/kitsune4/client/kitsune-wrapper/dist/LowResOffScreenAnim_ts.js": no such file
-Webpack Bundle Analyzer saved report to /home/rhys/Development/kitsune4/client/kitsune-wrapper/dist/report.html
-assets by path *.js 3.59 MiB
-  asset wrapper.js 3 MiB [emitted] [big] (name: wrapper)
+<i> [webpack-dev-middleware] wait until bundle finished: /
+Error parsing bundle asset "/home/rhys/Development/kitsune_clean/client/kitsune-wrapper/dist/vendors-node_modules_util_util_js.js": no such file
+Error parsing bundle asset "/home/rhys/Development/kitsune_clean/client/kitsune-wrapper/dist/LowResOffScreenAnim_ts.js": no such file
+Webpack Bundle Analyzer saved report to /home/rhys/Development/kitsune_clean/client/kitsune-wrapper/dist/report.html
+assets by path *.js 3.55 MiB
+  asset wrapper.js 3.01 MiB [emitted] [big] (name: wrapper)
   asset vendors-node_modules_util_util_js.js 440 KiB [emitted] (id hint: vendors)
   asset LowResOffScreenAnim_ts.js 108 KiB [emitted]
-  asset main.js 56.4 KiB [emitted] [minimized] (name: index) 1 related asset
+  asset main.js 2.93 KiB [emitted] [minimized] (name: index) 1 related asset
 assets by path modules/*.js 2.34 MiB
   asset modules/lodash.bundle.js 1.89 MiB [emitted] [minimized] [big] (name: lodash) 1 related asset
   asset modules/shared.bundle.js 443 KiB [emitted] [minimized] (name: shared) 1 related asset
@@ -131,128 +131,112 @@ asset favicon.ico 76.7 KiB [emitted] [from: ../../../kitsune.ico] [copied]
 asset index.html 10.9 KiB [emitted]
 asset config/wrapper.json 697 bytes [emitted] [from: ../config/wrapper.json] [copied]
 runtime modules 54.8 KiB 29 modules
-modules by path ../node_modules/ 1.38 MiB 184 modules
+modules by path ../node_modules/ 1.37 MiB 183 modules
 modules by path ../../../ 675 KiB
   modules by path ../../../shared/kitsune-wrapper-library/node_modules/inversify/es/ 125 KiB 53 modules
   modules by path ../../../shared/kitsune-wrapper-library/dist/ 19.1 KiB 11 modules
   ../../../node_modules/lodash/lodash.js 531 KiB [built] [code generated]
-modules by path ./ 57 KiB
-  modules by path ./core/ 48.8 KiB 10 modules
-  modules by path ./*.ts 8.16 KiB
-    ./index.ts 1.74 KiB [built] [code generated]
+modules by path ./ 60.6 KiB
+  modules by path ./core/ 53.3 KiB 11 modules
+  modules by path ./*.ts 7.23 KiB
+    ./index.ts 826 bytes [built] [code generated]
     ./LowResOffScreenAnim.ts 6.42 KiB [built] [code generated]
 util (ignored) 15 bytes [built] [code generated]
 util (ignored) 15 bytes [built] [code generated]
-webpack 5.91.0 compiled successfully in 4685 ms
-Error parsing bundle asset "/home/rhys/Development/kitsune4/client/kitsune-wrapper/dist/vendors-node_modules_util_util_js.js": no such file
-Error parsing bundle asset "/home/rhys/Development/kitsune4/client/kitsune-wrapper/dist/LowResOffScreenAnim_ts.js": no such file
-Error parsing bundle asset "/home/rhys/Development/kitsune4/client/kitsune-wrapper/dist/index.055099d76d746a8ffc82.hot-update.js": no such file
-Error parsing bundle asset "/home/rhys/Development/kitsune4/client/kitsune-wrapper/dist/lodash.055099d76d746a8ffc82.hot-update.js": no such file
-Error parsing bundle asset "/home/rhys/Development/kitsune4/client/kitsune-wrapper/dist/LowResOffScreenAnim_ts.055099d76d746a8ffc82.hot-update.js": no such file
-Webpack Bundle Analyzer saved report to /home/rhys/Development/kitsune4/client/kitsune-wrapper/dist/report.html
-assets by status 4.04 MiB [cached] 8 assets
-assets by path . 2.01 MiB
-  assets by path *.js 118 KiB
-    assets by info 6.64 KiB [immutable]
-      asset index.055099d76d746a8ffc82.hot-update.js 3.85 KiB [emitted] [immutable] [hmr] (name: index)
-      asset lodash.055099d76d746a8ffc82.hot-update.js 2.1 KiB [emitted] [immutable] [hmr] (name: lodash)
-      asset LowResOffScreenAnim_ts.055099d76d746a8ffc82.hot-update.js 711 bytes [emitted] [immutable] [hmr]
+webpack 5.91.0 compiled successfully in 6027 ms
+Error parsing bundle asset "/home/rhys/Development/kitsune_clean/client/kitsune-wrapper/dist/vendors-node_modules_util_util_js.js": no such file
+Error parsing bundle asset "/home/rhys/Development/kitsune_clean/client/kitsune-wrapper/dist/LowResOffScreenAnim_ts.js": no such file
+Error parsing bundle asset "/home/rhys/Development/kitsune_clean/client/kitsune-wrapper/dist/wrapper.9d93e0b34b82f68b2732.hot-update.js": no such file
+Error parsing bundle asset "/home/rhys/Development/kitsune_clean/client/kitsune-wrapper/dist/lodash.9d93e0b34b82f68b2732.hot-update.js": no such file
+Error parsing bundle asset "/home/rhys/Development/kitsune_clean/client/kitsune-wrapper/dist/LowResOffScreenAnim_ts.9d93e0b34b82f68b2732.hot-update.js": no such file
+Webpack Bundle Analyzer saved report to /home/rhys/Development/kitsune_clean/client/kitsune-wrapper/dist/report.html
+assets by status 1.04 MiB [cached] 8 assets
+assets by status 5.03 MiB [emitted]
+  assets by path *.js 3.14 MiB
+    assets by info 20.5 KiB [immutable]
+      asset wrapper.9d93e0b34b82f68b2732.hot-update.js 17.7 KiB [emitted] [immutable] [hmr] (name: wrapper)
+      asset lodash.9d93e0b34b82f68b2732.hot-update.js 2.1 KiB [emitted] [immutable] [hmr] (name: lodash)
+      asset LowResOffScreenAnim_ts.9d93e0b34b82f68b2732.hot-update.js 711 bytes [emitted] [immutable] [hmr]
+    asset wrapper.js 3.01 MiB [emitted] [big] (name: wrapper)
     asset LowResOffScreenAnim_ts.js 108 KiB [emitted]
-    asset main.js 3.29 KiB [emitted] [minimized] (name: index) 1 related asset
-  assets by path *.json 168 bytes
-    asset a327445edbfe56f2a14b.055099d76d746a8ffc82.hot-update.json 88 bytes [emitted] [immutable] [hmr]
-    asset lodash.055099d76d746a8ffc82.hot-update.json 80 bytes [emitted] [immutable] [hmr]
+  assets by path *.json 86 bytes
+    asset a327445edbfe56f2a14b.9d93e0b34b82f68b2732.hot-update.json 46 bytes [emitted] [immutable] [hmr]
+    asset lodash.9d93e0b34b82f68b2732.hot-update.json 40 bytes [emitted] [immutable] [hmr]
   asset modules/lodash.bundle.js 1.89 MiB [emitted] [minimized] [big] (name: lodash) 1 related asset
-Entrypoint index 7.14 KiB = main.js 3.29 KiB index.055099d76d746a8ffc82.hot-update.js 3.85 KiB
-Entrypoint wrapper [big] 3 MiB = wrapper.js
+Entrypoint index 2.93 KiB = main.js
+Entrypoint wrapper [big] 3.03 MiB = wrapper.js 3.01 MiB wrapper.9d93e0b34b82f68b2732.hot-update.js 17.7 KiB
 Entrypoint kwl 14.8 KiB = modules/kwl.bundle.js
-Entrypoint lodash [big] 1.89 MiB = modules/lodash.bundle.js 1.89 MiB lodash.055099d76d746a8ffc82.hot-update.js 2.1 KiB
+Entrypoint lodash [big] 1.89 MiB = modules/lodash.bundle.js 1.89 MiB lodash.9d93e0b34b82f68b2732.hot-update.js 2.1 KiB
+Entrypoint shared 443 KiB = modules/shared.bundle.js
+cached modules 2.07 MiB [cached] 259 modules
+runtime modules 54.8 KiB 29 modules
+javascript modules 17.5 KiB
+  modules by path ./core/commands/*.ts 8.18 KiB
+    ./core/commands/InitWrapper.ts 5.31 KiB [built] [code generated]
+    ./core/commands/InitWrapperComplete.ts 2.87 KiB [built] [code generated]
+  ./core/ioc/ioc_mapping.ts 1.25 KiB [built] [code generated]
+  ./core/service/LoadModule.ts 8.12 KiB [built] [code generated]
+webpack 5.91.0 compiled successfully in 2582 ms
+Error parsing bundle asset "/home/rhys/Development/kitsune_clean/client/kitsune-wrapper/dist/vendors-node_modules_util_util_js.js": no such file
+Error parsing bundle asset "/home/rhys/Development/kitsune_clean/client/kitsune-wrapper/dist/LowResOffScreenAnim_ts.js": no such file
+Error parsing bundle asset "/home/rhys/Development/kitsune_clean/client/kitsune-wrapper/dist/wrapper.b2158ec0d433823a1911.hot-update.js": no such file
+Error parsing bundle asset "/home/rhys/Development/kitsune_clean/client/kitsune-wrapper/dist/LowResOffScreenAnim_ts.b2158ec0d433823a1911.hot-update.js": no such file
+Error parsing bundle asset "/home/rhys/Development/kitsune_clean/client/kitsune-wrapper/dist/lodash.b2158ec0d433823a1911.hot-update.js": no such file
+Webpack Bundle Analyzer saved report to /home/rhys/Development/kitsune_clean/client/kitsune-wrapper/dist/report.html
+assets by status 1.04 MiB [cached] 8 assets
+assets by status 5.02 MiB [emitted]
+  assets by path *.js 3.13 MiB
+    assets by info 12.2 KiB [immutable]
+      asset wrapper.b2158ec0d433823a1911.hot-update.js 10.9 KiB [emitted] [immutable] [hmr] (name: wrapper)
+      asset LowResOffScreenAnim_ts.b2158ec0d433823a1911.hot-update.js 711 bytes [emitted] [immutable] [hmr]
+      asset lodash.b2158ec0d433823a1911.hot-update.js 675 bytes [emitted] [immutable] [hmr] (name: lodash)
+    asset wrapper.js 3.01 MiB [emitted] [big] (name: wrapper)
+    asset LowResOffScreenAnim_ts.js 108 KiB [emitted]
+  assets by path *.json 86 bytes
+    asset a327445edbfe56f2a14b.b2158ec0d433823a1911.hot-update.json 46 bytes [emitted] [immutable] [hmr]
+    asset lodash.b2158ec0d433823a1911.hot-update.json 40 bytes [emitted] [immutable] [hmr]
+  asset modules/lodash.bundle.js 1.89 MiB [emitted] [minimized] [big] (name: lodash) 1 related asset
+Entrypoint index 2.93 KiB = main.js
+Entrypoint wrapper [big] 3.02 MiB = wrapper.js 3.01 MiB wrapper.b2158ec0d433823a1911.hot-update.js 10.9 KiB
+Entrypoint kwl 14.8 KiB = modules/kwl.bundle.js
+Entrypoint lodash [big] 1.89 MiB = modules/lodash.bundle.js 1.89 MiB lodash.b2158ec0d433823a1911.hot-update.js 675 bytes
 Entrypoint shared 443 KiB = modules/shared.bundle.js
 cached modules 2.08 MiB [cached] 261 modules
 runtime modules 54.8 KiB 29 modules
-./index.ts 1.07 KiB [built] [code generated]
-webpack 5.91.0 compiled successfully in 2503 ms
-Error parsing bundle asset "/home/rhys/Development/kitsune4/client/kitsune-wrapper/dist/vendors-node_modules_util_util_js.js": no such file
-Error parsing bundle asset "/home/rhys/Development/kitsune4/client/kitsune-wrapper/dist/LowResOffScreenAnim_ts.js": no such file
-Error parsing bundle asset "/home/rhys/Development/kitsune4/client/kitsune-wrapper/dist/index.6c6ab4cce5f5a980b28d.hot-update.js": no such file
-Error parsing bundle asset "/home/rhys/Development/kitsune4/client/kitsune-wrapper/dist/LowResOffScreenAnim_ts.6c6ab4cce5f5a980b28d.hot-update.js": no such file
-Error parsing bundle asset "/home/rhys/Development/kitsune4/client/kitsune-wrapper/dist/lodash.6c6ab4cce5f5a980b28d.hot-update.js": no such file
-Webpack Bundle Analyzer saved report to /home/rhys/Development/kitsune4/client/kitsune-wrapper/dist/report.html
-assets by status 4.04 MiB [cached] 8 assets
-assets by path . 2 MiB
-  assets by path *.js 116 KiB
-    assets by info 4.54 KiB [immutable]
-      asset index.6c6ab4cce5f5a980b28d.hot-update.js 3.18 KiB [emitted] [immutable] [hmr] (name: index)
-      asset LowResOffScreenAnim_ts.6c6ab4cce5f5a980b28d.hot-update.js 711 bytes [emitted] [immutable] [hmr]
-      asset lodash.6c6ab4cce5f5a980b28d.hot-update.js 675 bytes [emitted] [immutable] [hmr] (name: lodash)
+javascript modules 4.18 KiB
+  ./core/ioc/ioc_mapping.ts 1.25 KiB [built] [code generated]
+  ./core/commands/InitWrapperComplete.ts 2.94 KiB [built] [code generated]
+webpack 5.91.0 compiled successfully in 2237 ms
+<i> [webpack-dev-middleware] wait until bundle finished: /lodash.b2158ec0d433823a1911.hot-update.json
+<i> [webpack-dev-middleware] wait until bundle finished: /
+<i> [webpack-dev-middleware] wait until bundle finished: /
+Error parsing bundle asset "/home/rhys/Development/kitsune_clean/client/kitsune-wrapper/dist/vendors-node_modules_util_util_js.js": no such file
+Error parsing bundle asset "/home/rhys/Development/kitsune_clean/client/kitsune-wrapper/dist/LowResOffScreenAnim_ts.js": no such file
+Error parsing bundle asset "/home/rhys/Development/kitsune_clean/client/kitsune-wrapper/dist/wrapper.9c645b201e67422feede.hot-update.js": no such file
+Error parsing bundle asset "/home/rhys/Development/kitsune_clean/client/kitsune-wrapper/dist/LowResOffScreenAnim_ts.9c645b201e67422feede.hot-update.js": no such file
+Error parsing bundle asset "/home/rhys/Development/kitsune_clean/client/kitsune-wrapper/dist/lodash.9c645b201e67422feede.hot-update.js": no such file
+Webpack Bundle Analyzer saved report to /home/rhys/Development/kitsune_clean/client/kitsune-wrapper/dist/report.html
+assets by status 1.04 MiB [cached] 8 assets
+assets by status 5.02 MiB [emitted]
+  assets by path *.js 3.13 MiB
+    assets by info 8.19 KiB [immutable]
+      asset wrapper.9c645b201e67422feede.hot-update.js 6.84 KiB [emitted] [immutable] [hmr] (name: wrapper)
+      asset LowResOffScreenAnim_ts.9c645b201e67422feede.hot-update.js 711 bytes [emitted] [immutable] [hmr]
+      asset lodash.9c645b201e67422feede.hot-update.js 675 bytes [emitted] [immutable] [hmr] (name: lodash)
+    asset wrapper.js 3.01 MiB [emitted] [big] (name: wrapper)
     asset LowResOffScreenAnim_ts.js 108 KiB [emitted]
-    asset main.js 2.93 KiB [emitted] [minimized] (name: index) 1 related asset
-  assets by path *.json 84 bytes
-    asset a327445edbfe56f2a14b.6c6ab4cce5f5a980b28d.hot-update.json 46 bytes [emitted] [immutable] [hmr]
-    asset lodash.6c6ab4cce5f5a980b28d.hot-update.json 38 bytes [emitted] [immutable] [hmr]
+  assets by path *.json 86 bytes
+    asset a327445edbfe56f2a14b.9c645b201e67422feede.hot-update.json 46 bytes [emitted] [immutable] [hmr]
+    asset lodash.9c645b201e67422feede.hot-update.json 40 bytes [emitted] [immutable] [hmr]
   asset modules/lodash.bundle.js 1.89 MiB [emitted] [minimized] [big] (name: lodash) 1 related asset
-Entrypoint index 6.11 KiB = main.js 2.93 KiB index.6c6ab4cce5f5a980b28d.hot-update.js 3.18 KiB
-Entrypoint wrapper [big] 3 MiB = wrapper.js
+Entrypoint index 2.93 KiB = main.js
+Entrypoint wrapper [big] 3.02 MiB = wrapper.js 3.01 MiB wrapper.9c645b201e67422feede.hot-update.js 6.84 KiB
 Entrypoint kwl 14.8 KiB = modules/kwl.bundle.js
-Entrypoint lodash [big] 1.89 MiB = modules/lodash.bundle.js 1.89 MiB lodash.6c6ab4cce5f5a980b28d.hot-update.js 675 bytes
+Entrypoint lodash [big] 1.89 MiB = modules/lodash.bundle.js 1.89 MiB lodash.9c645b201e67422feede.hot-update.js 675 bytes
 Entrypoint shared 443 KiB = modules/shared.bundle.js
 cached modules 2.08 MiB [cached] 261 modules
 runtime modules 54.8 KiB 29 modules
-./index.ts 826 bytes [built] [code generated]
-webpack 5.91.0 compiled successfully in 2554 ms
-Error parsing bundle asset "/home/rhys/Development/kitsune4/client/kitsune-wrapper/dist/vendors-node_modules_util_util_js.js": no such file
-Error parsing bundle asset "/home/rhys/Development/kitsune4/client/kitsune-wrapper/dist/LowResOffScreenAnim_ts.js": no such file
-Error parsing bundle asset "/home/rhys/Development/kitsune4/client/kitsune-wrapper/dist/index.7a244f506456b46c1b0b.hot-update.js": no such file
-Error parsing bundle asset "/home/rhys/Development/kitsune4/client/kitsune-wrapper/dist/LowResOffScreenAnim_ts.7a244f506456b46c1b0b.hot-update.js": no such file
-Error parsing bundle asset "/home/rhys/Development/kitsune4/client/kitsune-wrapper/dist/lodash.7a244f506456b46c1b0b.hot-update.js": no such file
-Webpack Bundle Analyzer saved report to /home/rhys/Development/kitsune4/client/kitsune-wrapper/dist/report.html
-assets by status 4.04 MiB [cached] 8 assets
-assets by path . 2 MiB
-  assets by path *.js 116 KiB
-    assets by info 4.56 KiB [immutable]
-      asset index.7a244f506456b46c1b0b.hot-update.js 3.2 KiB [emitted] [immutable] [hmr] (name: index)
-      asset LowResOffScreenAnim_ts.7a244f506456b46c1b0b.hot-update.js 711 bytes [emitted] [immutable] [hmr]
-      asset lodash.7a244f506456b46c1b0b.hot-update.js 675 bytes [emitted] [immutable] [hmr] (name: lodash)
-    asset LowResOffScreenAnim_ts.js 108 KiB [emitted]
-    asset main.js 2.78 KiB [emitted] [minimized] (name: index) 1 related asset
-  assets by path *.json 84 bytes
-    asset a327445edbfe56f2a14b.7a244f506456b46c1b0b.hot-update.json 46 bytes [emitted] [immutable] [hmr]
-    asset lodash.7a244f506456b46c1b0b.hot-update.json 38 bytes [emitted] [immutable] [hmr]
-  asset modules/lodash.bundle.js 1.89 MiB [emitted] [minimized] [big] (name: lodash) 1 related asset
-Entrypoint index 5.98 KiB = main.js 2.78 KiB index.7a244f506456b46c1b0b.hot-update.js 3.2 KiB
-Entrypoint wrapper [big] 3 MiB = wrapper.js
-Entrypoint kwl 14.8 KiB = modules/kwl.bundle.js
-Entrypoint lodash [big] 1.89 MiB = modules/lodash.bundle.js 1.89 MiB lodash.7a244f506456b46c1b0b.hot-update.js 675 bytes
-Entrypoint shared 443 KiB = modules/shared.bundle.js
-cached modules 2.08 MiB [cached] 261 modules
-runtime modules 54.8 KiB 29 modules
-./index.ts 829 bytes [built] [code generated]
-webpack 5.91.0 compiled successfully in 2142 ms
-Error parsing bundle asset "/home/rhys/Development/kitsune4/client/kitsune-wrapper/dist/vendors-node_modules_util_util_js.js": no such file
-Error parsing bundle asset "/home/rhys/Development/kitsune4/client/kitsune-wrapper/dist/LowResOffScreenAnim_ts.js": no such file
-Error parsing bundle asset "/home/rhys/Development/kitsune4/client/kitsune-wrapper/dist/index.be941a03e98b7561bf40.hot-update.js": no such file
-Error parsing bundle asset "/home/rhys/Development/kitsune4/client/kitsune-wrapper/dist/LowResOffScreenAnim_ts.be941a03e98b7561bf40.hot-update.js": no such file
-Error parsing bundle asset "/home/rhys/Development/kitsune4/client/kitsune-wrapper/dist/lodash.be941a03e98b7561bf40.hot-update.js": no such file
-Webpack Bundle Analyzer saved report to /home/rhys/Development/kitsune4/client/kitsune-wrapper/dist/report.html
-assets by status 4.04 MiB [cached] 8 assets
-assets by path . 2 MiB
-  assets by path *.js 116 KiB
-    assets by info 4.54 KiB [immutable]
-      asset index.be941a03e98b7561bf40.hot-update.js 3.18 KiB [emitted] [immutable] [hmr] (name: index)
-      asset LowResOffScreenAnim_ts.be941a03e98b7561bf40.hot-update.js 711 bytes [emitted] [immutable] [hmr]
-      asset lodash.be941a03e98b7561bf40.hot-update.js 675 bytes [emitted] [immutable] [hmr] (name: lodash)
-    asset LowResOffScreenAnim_ts.js 108 KiB [emitted]
-    asset main.js 2.93 KiB [emitted] [minimized] (name: index) 1 related asset
-  assets by path *.json 84 bytes
-    asset a327445edbfe56f2a14b.be941a03e98b7561bf40.hot-update.json 46 bytes [emitted] [immutable] [hmr]
-    asset lodash.be941a03e98b7561bf40.hot-update.json 38 bytes [emitted] [immutable] [hmr]
-  asset modules/lodash.bundle.js 1.89 MiB [emitted] [minimized] [big] (name: lodash) 1 related asset
-Entrypoint index 6.11 KiB = main.js 2.93 KiB index.be941a03e98b7561bf40.hot-update.js 3.18 KiB
-Entrypoint wrapper [big] 3 MiB = wrapper.js
-Entrypoint kwl 14.8 KiB = modules/kwl.bundle.js
-Entrypoint lodash [big] 1.89 MiB = modules/lodash.bundle.js 1.89 MiB lodash.be941a03e98b7561bf40.hot-update.js 675 bytes
-Entrypoint shared 443 KiB = modules/shared.bundle.js
-cached modules 2.08 MiB [cached] 261 modules
-runtime modules 54.8 KiB 29 modules
-./index.ts 826 bytes [built] [code generated]
-webpack 5.91.0 compiled successfully in 2150 ms
+javascript modules 3.07 KiB
+  ./core/ioc/ioc_mapping.ts 1.25 KiB [built] [code generated]
+  ./core/commands/StartApplication.ts 1.82 KiB [built] [code generated]
+webpack 5.91.0 compiled successfully in 2163 ms

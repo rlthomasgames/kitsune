@@ -32,9 +32,21 @@ export class InitWrapperComplete implements ICommand {
     }
 
     loadApplication(applicationValuedObject:ExtensionValuedObject) {
+        console.log(`||||||||||| INIT WRAPPER COMPLETE CMD |||||||||||`);
         // @ts-ignore
         this._moduleLoader.request(applicationValuedObject!, false).then((returnedApplicationInstance)=>{
-            container.get(CoreState.START_APPLICATION);
+            //container.get(CoreState.START_APPLICATION);
+            console.log("CONNECTING TO SERVER...");
+            //container.get(CoreState.INIT_COMPLETE);
+            /*
+            const originalPayload = { assetPackREQ: this._wrapperConfig.getConfig().assetPacks };
+            this.sendGZipEmit(originalPayload).then((value)=>{
+                console.log('on full filled =', value);
+            });
+
+             */
+            const connectCommand = container.get<ICommand>(CoreState.CONNECT_TO_SERVER);
+            connectCommand.run();
         })
     }
 }

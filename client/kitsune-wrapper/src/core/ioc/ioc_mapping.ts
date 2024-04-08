@@ -14,6 +14,7 @@ import ISockComm from "kitsune-wrapper-library/dist/base/interfaces/extensions/I
 import {IDataStore} from "kitsune-wrapper-library/dist/base/interfaces/extensions/IDataStore";
 import AssetDataVendor from "../service/AssetDataVendor";
 import KSockService from "../service/KSockService";
+import {ConnectToServer} from "../commands/ConnectToServer";
 
 let container = new Container({ skipBaseClassChecks: true });
 
@@ -24,5 +25,6 @@ container.bind<ICommand>(CoreState.INIT_COMPLETE).to(InitWrapperComplete);
 container.bind<ICommand>(CoreState.START_APPLICATION).to(StartApplication);
 container.bind<ISockComm>((TYPES.Socket)).to(KSockService);
 container.bind<IDataStore>(TYPES.AssetData).to(AssetDataVendor);
+container.bind<ICommand>(CoreState.CONNECT_TO_SERVER).to(ConnectToServer);
 
 export default container;

@@ -30,6 +30,8 @@ export class LoadModule implements IAsyncRequest {
     private totalModules: number;
     private totalLoaded: number = 0;
 
+    private _config:IWrapperConfig;
+
     cacheKeys: Array<String>;
 
     constructor() {
@@ -42,7 +44,8 @@ export class LoadModule implements IAsyncRequest {
     }
 
     loadModules(wrapperConfig: IWrapperConfig) {
-        this._socket.run(wrapperConfig);
+        this._config = wrapperConfig;
+        console.log('wrapper may not be needed here', this._config);
         const modules = wrapperConfig.modules
         if (!modules) {
             return;

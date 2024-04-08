@@ -6,6 +6,8 @@ import {IDataStore} from "kitsune-wrapper-library/dist/base/interfaces/extension
 import IAsyncRequest from "kitsune-wrapper-library/dist/base/interfaces/IAsyncRequest";
 import {APResponseData} from "kitsune-wrapper-library/dist/base/constants/SockConn";
 import {unzipSync} from "fflate";
+import container from "../ioc/ioc_mapping";
+import CoreState from "../constants/CoreState";
 //import {unzipSync} from "fflate";
 
 
@@ -37,6 +39,9 @@ class AssetDataVendor extends AbstractModule implements IInjectableExtensionModu
     dataStore:{[x:string]:{[y:string]:Uint8Array}} = {};
 
     dataWells: { [a: string]: { [p: string]: StoredPacketData } } = {};
+
+    toUnzip = 0;
+    unzipped = 0;
 
     startModule() {
         console.log('running asset vendor')
@@ -110,6 +115,7 @@ class AssetDataVendor extends AbstractModule implements IInjectableExtensionModu
                     }
                     if(lastArrReady !== null){
                         fileCount++;
+                        this.toUnzip = fileCount;
                         //if(i === sortableData.length) {
                             console.log(`all files ready to build... files:${fileCount}`)
                             if(missingArr !== null){
@@ -180,9 +186,12 @@ class AssetDataVendor extends AbstractModule implements IInjectableExtensionModu
                     console.log('final array buffer >>>>', value);
                     let newUint = new Uint8Array(value)
                     const unzipped = unzipSync(newUint);
-                    console.log('decompressed = ', unzipped)
-                    if(percentLoaded === 100) {
-                        this.finalStore(unzipped, assetPACKID);
+                    console.log('decompressed = ', unzipped);
+                    this.finalStore(unzipped, assetPACKID);
+                    this.unzipped++;
+                    console.log('unzipped ',this.unzipped, 'of', this.toUnzip)
+                    if(this.toUnzip == this.unzipped) {
+                        container.get(CoreState.START_APPLICATION);
                     }
                 }
                 return value;
@@ -196,7 +205,6 @@ class AssetDataVendor extends AbstractModule implements IInjectableExtensionModu
                 fileArrayBuffer = index===0 ? value : fileArrayBuffer;
                 (index > 0) ? fileArrayBuffer = assetDataStore.appendBuffer(fileArrayBuffer, value):fileArrayBuffer;
             })
-
              */
         };
         fileReader.readAsArrayBuffer(zippedBlob);

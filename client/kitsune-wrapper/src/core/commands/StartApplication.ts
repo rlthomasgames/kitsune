@@ -14,6 +14,7 @@ export class StartApplication implements ICommand {
     }
 
     run(): void {
+        console.log(`||||||||||| START APPLICATION CMD |||||||||||`);
         if (this._application) {
             this._application?.startModule();
         } else {

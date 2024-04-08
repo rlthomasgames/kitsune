@@ -2,7 +2,7 @@ import { inject, injectable } from "inversify";
 import { TYPES} from "kitsune-wrapper-library";
 import { LoadModule } from "../service/LoadModule";
 import container from "../ioc/ioc_mapping";
-import CoreState from "../constants/CoreState";
+//import CoreState from "../constants/CoreState";
 import IInjectableExtensionModule from "kitsune-wrapper-library/dist/base/interfaces/IInjectableExtensionModule";
 import ICommand from "kitsune-wrapper-library/dist/base/interfaces/ICommand";
 import * as fflate from "fflate";
@@ -37,6 +37,7 @@ export class InitWrapper implements ICommand {
 
     run() {
         console.log(KitsuneHelper.kitsuneASCII)
+        console.log(`||||||||||| INIT WRAPPER CMD |||||||||||`);
         //console.table(this, Object.keys(this));
         this._wrapperConfig.request().then((value)=>{
             this._moduleLoader.loadModules(this._wrapperConfig.getConfig())
@@ -102,11 +103,7 @@ export class InitWrapper implements ICommand {
     }
 
     completeInit() {
-        container.get(CoreState.INIT_COMPLETE);
-        const originalPayload = { assetPackREQ: this._wrapperConfig.getConfig().assetPacks };
-        this.sendGZipEmit(originalPayload).then((value)=>{
-            console.log('on full filled =', value);
-        });
+
     }
 }
 

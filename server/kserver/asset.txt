@@ -17,14 +17,14 @@ AssetVendorService {} []
 │   Obj   │     │     │
 │   OBJ   │     │     │
 └─────────┴─────┴─────┘
-FILES: bda65ec6-cfb6-4438-9f7e-407c15ff694c
+FILES: 5454f1d6-3fe0-4f1a-83cc-90ec8eb4383f,70f5aacd-c476-4d88-bd18-1aaeff69a4d5,bda65ec6-cfb6-4438-9f7e-407c15ff694c
 constructed builder
 building... ../uploaded/bda65ec6-cfb6-4438-9f7e-407c15ff694c/Rock_baseColor.png.zip
 building... ../uploaded/bda65ec6-cfb6-4438-9f7e-407c15ff694c/Rock_metallicRoughness.png.zip
 building... ../uploaded/bda65ec6-cfb6-4438-9f7e-407c15ff694c/base-all-anims_mixamo_animations_importer_script.glb.zip
 building... ../uploaded/bda65ec6-cfb6-4438-9f7e-407c15ff694c/labrynth.glb.zip
 🦊 ../uploaded/bda65ec6-cfb6-4438-9f7e-407c15ff694c/Rock_baseColor.png.zip got stats :
- [object Object] = {"dev":2050,"mode":33188,"nlink":1,"uid":1000,"gid":1000,"rdev":0,"blksize":4096,"ino":30431231,"size":1158076,"blocks":2264,"atimeMs":1711152864737.4346,"mtimeMs":1711125500575.6116,"ctimeMs":1711125500575.6116,"birthtimeMs":1711125500567.6116,"atime":"2024-03-23T00:14:24.737Z","mtime":"2024-03-22T16:38:20.576Z","ctime":"2024-03-22T16:38:20.576Z","birthtime":"2024-03-22T16:38:20.568Z"} 
+ [object Object] = {"dev":2050,"mode":33188,"nlink":1,"uid":1000,"gid":1000,"rdev":0,"blksize":4096,"ino":29516035,"size":1158076,"blocks":2264,"atimeMs":1712430152270.1445,"mtimeMs":1712424647957.9795,"ctimeMs":1712424647957.9795,"birthtimeMs":1712424647953.9795,"atime":"2024-04-06T19:02:32.270Z","mtime":"2024-04-06T17:30:47.958Z","ctime":"2024-04-06T17:30:47.958Z","birthtime":"2024-04-06T17:30:47.954Z"} 
 1158076truesplitting file Rock_baseColor.png.zip at path containing  [
   'AssetVendorService.js',
   'BuildPacketsFromUploadsService.js',
@@ -33,7 +33,7 @@ building... ../uploaded/bda65ec6-cfb6-4438-9f7e-407c15ff694c/labrynth.glb.zip
   'routes'
 ]
 🦊 ../uploaded/bda65ec6-cfb6-4438-9f7e-407c15ff694c/Rock_metallicRoughness.png.zip got stats :
- [object Object] = {"dev":2050,"mode":33188,"nlink":1,"uid":1000,"gid":1000,"rdev":0,"blksize":4096,"ino":30431232,"size":388889,"blocks":760,"atimeMs":1711152864729.4346,"mtimeMs":1711125500575.6116,"ctimeMs":1711125500575.6116,"birthtimeMs":1711125500575.6116,"atime":"2024-03-23T00:14:24.729Z","mtime":"2024-03-22T16:38:20.576Z","ctime":"2024-03-22T16:38:20.576Z","birthtime":"2024-03-22T16:38:20.576Z"} 
+ [object Object] = {"dev":2050,"mode":33188,"nlink":1,"uid":1000,"gid":1000,"rdev":0,"blksize":4096,"ino":29516036,"size":388889,"blocks":760,"atimeMs":1712430152250.1443,"mtimeMs":1712424647957.9795,"ctimeMs":1712424647957.9795,"birthtimeMs":1712424647957.9795,"atime":"2024-04-06T19:02:32.250Z","mtime":"2024-04-06T17:30:47.958Z","ctime":"2024-04-06T17:30:47.958Z","birthtime":"2024-04-06T17:30:47.958Z"} 
 388889truesplitting file Rock_metallicRoughness.png.zip at path containing  [
   'AssetVendorService.js',
   'BuildPacketsFromUploadsService.js',
@@ -42,7 +42,7 @@ building... ../uploaded/bda65ec6-cfb6-4438-9f7e-407c15ff694c/labrynth.glb.zip
   'routes'
 ]
 🦊 ../uploaded/bda65ec6-cfb6-4438-9f7e-407c15ff694c/base-all-anims_mixamo_animations_importer_script.glb.zip got stats :
- [object Object] = {"dev":2050,"mode":33188,"nlink":1,"uid":1000,"gid":1000,"rdev":0,"blksize":4096,"ino":30431233,"size":43902814,"blocks":85752,"atimeMs":1711152864829.4353,"mtimeMs":1711125500695.6125,"ctimeMs":1711125500695.6125,"birthtimeMs":1711125500575.6116,"atime":"2024-03-23T00:14:24.829Z","mtime":"2024-03-22T16:38:20.696Z","ctime":"2024-03-22T16:38:20.696Z","birthtime":"2024-03-22T16:38:20.576Z"} 
+ [object Object] = {"dev":2050,"mode":33188,"nlink":1,"uid":1000,"gid":1000,"rdev":0,"blksize":4096,"ino":29516037,"size":43902814,"blocks":85752,"atimeMs":1712428267986.7747,"mtimeMs":1712424648081.9802,"ctimeMs":1712424648081.9802,"birthtimeMs":1712424647957.9795,"atime":"2024-04-06T18:31:07.987Z","mtime":"2024-04-06T17:30:48.082Z","ctime":"2024-04-06T17:30:48.082Z","birthtime":"2024-04-06T17:30:47.958Z"} 
 43902814truesplitting file base-all-anims_mixamo_animations_importer_script.glb.zip at path containing  [
   'AssetVendorService.js',
   'BuildPacketsFromUploadsService.js',
@@ -51,8 +51,28 @@ building... ../uploaded/bda65ec6-cfb6-4438-9f7e-407c15ff694c/labrynth.glb.zip
   'routes'
 ]
 🦊 ../uploaded/bda65ec6-cfb6-4438-9f7e-407c15ff694c/labrynth.glb.zip got stats :
- [object Object] = {"dev":2050,"mode":33188,"nlink":1,"uid":1000,"gid":1000,"rdev":0,"blksize":4096,"ino":30431234,"size":1901974,"blocks":3720,"atimeMs":1711152864769.4348,"mtimeMs":1711125500703.6125,"ctimeMs":1711125500703.6125,"birthtimeMs":1711125500695.6125,"atime":"2024-03-23T00:14:24.769Z","mtime":"2024-03-22T16:38:20.704Z","ctime":"2024-03-22T16:38:20.704Z","birthtime":"2024-03-22T16:38:20.696Z"} 
+ [object Object] = {"dev":2050,"mode":33188,"nlink":1,"uid":1000,"gid":1000,"rdev":0,"blksize":4096,"ino":29516038,"size":1901974,"blocks":3720,"atimeMs":1712428268658.686,"mtimeMs":1712424648089.9802,"ctimeMs":1712424648089.9802,"birthtimeMs":1712424648081.9802,"atime":"2024-04-06T18:31:08.659Z","mtime":"2024-04-06T17:30:48.090Z","ctime":"2024-04-06T17:30:48.090Z","birthtime":"2024-04-06T17:30:48.082Z"} 
 1901974truesplitting file labrynth.glb.zip at path containing  [
+  'AssetVendorService.js',
+  'BuildPacketsFromUploadsService.js',
+  'FlushAssetStoreService.js',
+  'encoding',
+  'routes'
+]
+building... ../uploaded/5454f1d6-3fe0-4f1a-83cc-90ec8eb4383f/frame04.png.zip
+building... ../uploaded/70f5aacd-c476-4d88-bd18-1aaeff69a4d5/plasma0C.png.zip
+🦊 ../uploaded/5454f1d6-3fe0-4f1a-83cc-90ec8eb4383f/frame04.png.zip got stats :
+ [object Object] = {"dev":2050,"mode":33188,"nlink":1,"uid":0,"gid":0,"rdev":0,"blksize":4096,"ino":30671279,"size":886,"blocks":8,"atimeMs":1712494572679.406,"mtimeMs":1712494572663.406,"ctimeMs":1712494572663.406,"birthtimeMs":1712494572663.406,"atime":"2024-04-07T12:56:12.679Z","mtime":"2024-04-07T12:56:12.663Z","ctime":"2024-04-07T12:56:12.663Z","birthtime":"2024-04-07T12:56:12.663Z"} 
+886truesplitting file frame04.png.zip at path containing  [
+  'AssetVendorService.js',
+  'BuildPacketsFromUploadsService.js',
+  'FlushAssetStoreService.js',
+  'encoding',
+  'routes'
+]
+🦊 ../uploaded/70f5aacd-c476-4d88-bd18-1aaeff69a4d5/plasma0C.png.zip got stats :
+ [object Object] = {"dev":2050,"mode":33188,"nlink":1,"uid":0,"gid":0,"rdev":0,"blksize":4096,"ino":30671282,"size":491924,"blocks":968,"atimeMs":1712431692269.9905,"mtimeMs":1712431692253.9902,"ctimeMs":1712431692261.9905,"birthtimeMs":1712431692253.9902,"atime":"2024-04-06T19:28:12.270Z","mtime":"2024-04-06T19:28:12.254Z","ctime":"2024-04-06T19:28:12.262Z","birthtime":"2024-04-06T19:28:12.254Z"} 
+491924truesplitting file plasma0C.png.zip at path containing  [
   'AssetVendorService.js',
   'BuildPacketsFromUploadsService.js',
   'FlushAssetStoreService.js',
@@ -61,3 +81,19 @@ building... ../uploaded/bda65ec6-cfb6-4438-9f7e-407c15ff694c/labrynth.glb.zip
 ]
 listening port 8081
 Routes configured for UploadRoutes
+Client":true},"newSpec":{"incomingExternalClient":{"minWireVersion":0,"maxWireVersion":18},"incomingInternalClient":{"minWireVersion":18,"maxWireVersion":18},"outgoing":{"minWireVersion":18,"maxWireVersion":18},"isInternalClient":true}}}
+{"t":{"$date":"2024-04-08T13:19:50.778+01:00"},"s":"I",  "c":"REPL",     "id":5853300, "ctx":"initandlisten","msg":"current featureCompatibilityVersion value","attr":{"featureCompatibilityVersion":"6.1","context":"startup"}}
+{"t":{"$date":"2024-04-08T13:19:50.778+01:00"},"s":"I",  "c":"STORAGE",  "id":5071100, "ctx":"initandlisten","msg":"Clearing temp directory"}
+{"t":{"$date":"2024-04-08T13:19:50.779+01:00"},"s":"I",  "c":"CONTROL",  "id":20536,   "ctx":"initandlisten","msg":"Flow Control is enabled on this deployment"}
+{"t":{"$date":"2024-04-08T13:19:50.780+01:00"},"s":"I",  "c":"FTDC",     "id":20625,   "ctx":"initandlisten","msg":"Initializing full-time diagnostic data capture","attr":{"dataDirectory":"/root/mongodb/diagnostic.data"}}
+{"t":{"$date":"2024-04-08T13:19:50.880+01:00"},"s":"I",  "c":"REPL",     "id":6015317, "ctx":"initandlisten","msg":"Setting new configuration state","attr":{"newState":"ConfigReplicationDisabled","oldState":"ConfigPreStart"}}
+{"t":{"$date":"2024-04-08T13:19:50.880+01:00"},"s":"I",  "c":"STORAGE",  "id":22262,   "ctx":"initandlisten","msg":"Timestamp monitor starting"}
+{"t":{"$date":"2024-04-08T13:19:50.881+01:00"},"s":"I",  "c":"NETWORK",  "id":23015,   "ctx":"listener","msg":"Listening on","attr":{"address":"/tmp/mongodb-27017.sock"}}
+{"t":{"$date":"2024-04-08T13:19:50.881+01:00"},"s":"I",  "c":"NETWORK",  "id":23015,   "ctx":"listener","msg":"Listening on","attr":{"address":"127.0.0.1"}}
+{"t":{"$date":"2024-04-08T13:19:50.881+01:00"},"s":"I",  "c":"NETWORK",  "id":23016,   "ctx":"listener","msg":"Waiting for connections","attr":{"port":27017,"ssl":"off"}}
+{"t":{"$date":"2024-04-08T13:20:05.873+01:00"},"s":"I",  "c":"NETWORK",  "id":22943,   "ctx":"listener","msg":"Connection accepted","attr":{"remote":"127.0.0.1:40254","uuid":{"uuid":{"$uuid":"7f2dabe7-fe44-4965-9f7f-6845d16a0da6"}},"connectionId":1,"connectionCount":1}}
+{"t":{"$date":"2024-04-08T13:20:05.882+01:00"},"s":"I",  "c":"NETWORK",  "id":51800,   "ctx":"conn1","msg":"client metadata","attr":{"remote":"127.0.0.1:40254","client":"conn1","doc":{"driver":{"name":"nodejs","version":"6.5.0"},"platform":"Node.js v18.19.0, LE","os":{"name":"linux","architecture":"x64","version":"6.6.9-amd64","type":"Linux"}}}}
+{"t":{"$date":"2024-04-08T13:20:05.897+01:00"},"s":"I",  "c":"NETWORK",  "id":22943,   "ctx":"listener","msg":"Connection accepted","attr":{"remote":"127.0.0.1:40256","uuid":{"uuid":{"$uuid":"7c56524a-97c7-4cfd-8a96-e07a6aac6bc8"}},"connectionId":2,"connectionCount":2}}
+{"t":{"$date":"2024-04-08T13:20:05.898+01:00"},"s":"I",  "c":"NETWORK",  "id":51800,   "ctx":"conn2","msg":"client metadata","attr":{"remote":"127.0.0.1:40256","client":"conn2","doc":{"driver":{"name":"nodejs","version":"6.5.0"},"platform":"Node.js v18.19.0, LE","os":{"name":"linux","architecture":"x64","version":"6.6.9-amd64","type":"Linux"}}}}
+{"t":{"$date":"2024-04-08T13:20:16.393+01:00"},"s":"I",  "c":"NETWORK",  "id":22943,   "ctx":"listener","msg":"Connection accepted","attr":{"remote":"127.0.0.1:44250","uuid":{"uuid":{"$uuid":"6211b2f0-f72b-48d7-b48a-2a5233abb9b9"}},"connectionId":3,"connectionCount":3}}
+{"t":{"$date":"2024-04-08T13:20:16.395+01:00"},"s":"I",  "c":"NETWORK",  "id":51800,   "ctx":"conn3","msg":"client metadata","attr":{"remote":"127.0.0.1:44250","client":"conn3","doc":{"driver":{"name":"nodejs","version":"6.5.0"},"platform":"Node.js v18.19.0, LE","os":{"name":"linux","architecture":"x64","version":"6.6.9-amd64","type":"Linux"}}}}
