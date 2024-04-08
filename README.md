@@ -46,6 +46,9 @@ npm run install-build-launch
 then open your browser to localhost:8080
 
 currently not auto-generating lib folders, so might need to manually create them if this issue appears at build, sorry
+
+also if not loading whilst webpack-devserver is running, re-build ./client/kitsune-wrapper-extensions then ./client/kitsune-application-test-dummy, 
+check you have correct privledges, insure mongoDB and rest server is running, will try to deliver a easier to build version soon..
 ```
 
 load up localhost:8080 in your browser and you'll be able to observe
