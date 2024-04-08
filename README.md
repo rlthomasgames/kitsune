@@ -11,16 +11,19 @@ size with required extensions specified by the application / game the wrapper ho
 
 Current implementation should include examples of -
 
-      ~   loading external unknown modules    
-      ~   factory methods to extract extension's that are loaded           
-      ~   instantiation and execution of the extension's                 
+      ~   load application and assets in compressed formats
+      ~   loading of modules into client adhereing to library interfaces              
       ~   dependency injection providing accesibility of extension's
       ~   loose coupling between all parts using a shared library of interfaces
+      ~   multiple file uploader to asset store
+      ~   compression, encryption, storage and delivery of assets
+      ~   delivery of assets over WS connections using encrypted, chunked, binary, data
+      ~   re-assembly of data ready for parsing using preffered extensions
+      
 This should also help speed up implementing of boilerplate / common tasks which are often required.
 As well as hopefully some nice to haves.
 
 e.g
-
 
       ~   asset loading
       ~   third party services / platform integration
