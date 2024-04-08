@@ -51,7 +51,7 @@
     "fflate": "^0.8.0",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.5.0",
-    "kitsune-wrapper-library": "^0.0.47",
+    "kitsune-wrapper-library": "^0.0.48",
     "node-polyfill-webpack-plugin": "^3.0.0",
     "npm-watch": "^0.11.0",
     "stream": "^0.0.2",

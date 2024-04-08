@@ -31,6 +31,6 @@
     "cors": "^2.8.5",
     "express-fileupload": "^1.4.3",
     "fflate": "^0.8.2",
-    "kitsune-wrapper-library": "^0.0.34"
+    "kitsune-wrapper-library": "^0.0.48"
   }
 }

@@ -31,6 +31,6 @@
     "@types/jsonwebtoken": "^9.0.4",
     "@types/sha256": "^0.2.2",
     "colors": "^1.4.0",
-    "kitsune-wrapper-library": "^0.0.17"
+    "kitsune-wrapper-library": "^0.0.48"
   }
 }
