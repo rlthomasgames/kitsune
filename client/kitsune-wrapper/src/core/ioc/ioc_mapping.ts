@@ -15,6 +15,8 @@ import {IDataStore} from "kitsune-wrapper-library/dist/base/interfaces/extension
 import AssetDataVendor from "../service/AssetDataVendor";
 import KSockService from "../service/KSockService";
 import {ConnectToServer} from "../commands/ConnectToServer";
+import {ConnectionEstablished} from "../commands/ConnectionEstablished";
+import {LoadAssetPakData} from "../commands/LoadAssetPakData";
 
 let container = new Container({ skipBaseClassChecks: true });
 
@@ -22,9 +24,13 @@ container.bind<ICommand>(CoreState.INIT).to(InitWrapper);
 container.bind<IAsyncRequest>(TYPES.FetchConfig).to(FetchConfig).inSingletonScope();
 container.bind<LoadModule>(TYPES.LoadModule).to(LoadModule).inSingletonScope();
 container.bind<ICommand>(CoreState.INIT_COMPLETE).to(InitWrapperComplete);
-container.bind<ICommand>(CoreState.START_APPLICATION).to(StartApplication);
-container.bind<ISockComm>((TYPES.Socket)).to(KSockService);
-container.bind<IDataStore>(TYPES.AssetData).to(AssetDataVendor);
-container.bind<ICommand>(CoreState.CONNECT_TO_SERVER).to(ConnectToServer);
 
+container.bind<ICommand>(CoreState.CONNECT_TO_SERVER).to(ConnectToServer);
+container.bind<ISockComm>((TYPES.Socket)).to(KSockService);
+container.bind<ICommand>(CoreState.CONNECTION_ESTABLISHED).to(ConnectionEstablished);
+
+container.bind<ICommand>(CoreState.LOAD_ASSET_DATA).to(LoadAssetPakData);
+container.bind<IDataStore>(TYPES.AssetData).to(AssetDataVendor);
+
+container.bind<ICommand>(CoreState.START_APPLICATION).to(StartApplication);
 export default container;
