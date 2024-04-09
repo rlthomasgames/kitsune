@@ -8,6 +8,9 @@ import ISockComm from "kitsune-wrapper-library/dist/base/interfaces/extensions/I
 import * as fflate from "fflate";
 import KitsuneHelper from "kitsune-wrapper-library/dist/base/helper/KitsuneHelper";
 import {IDataStore} from "kitsune-wrapper-library/dist/base/interfaces/extensions/IDataStore";
+import container from "../ioc/ioc_mapping";
+import CoreState from "../constants/CoreState";
+import ICommand from "kitsune-wrapper-library/dist/base/interfaces/ICommand";
 
 @injectable()
 class KSockService extends AbstractSockComm implements IInjectableExtensionModule, ISockComm {
@@ -62,21 +65,26 @@ class KSockService extends AbstractSockComm implements IInjectableExtensionModul
             });
 
         this.socket.on(SOCK.CONNECT, ()=> {
+            const connectCommand = container.get<ICommand>(CoreState.CONNECTION_ESTABLISHED);
+            connectCommand.run();
             this.id = this.socket.id ? this.socket.id : crypto.randomUUID();
             console.log('connect established :', this.socket, this.socket.id);
             this.clientMap.set(SOCK.CONNECT as unknown as string, true);
             if(this.id) {
                 this.clientMap.set(SOCK.SOCK_ID, this.id);
             }
+
         });
 
         this.socket.on(SOCK.AUTH_TOKEN, (authMsg : AuthMsg) => {
             console.log('received  auth token', authMsg);
+            const authCommand = container.get<ICommand>(CoreState.CLIENT_AUTH);
+            authCommand.run();
             sessionStorage.setItem(SOCK.AUTH_TOKEN, authMsg.auth_token);
             this.clientMap.set(SOCK.AUTH_TOKEN, true);
-            const sentSockID = this.socket?.id !== undefined ? this.socket!.id : 'MISSING';
-            const originalPayload = {assetPackREQ: this._wrapperConfig.getConfig().assetPacks, sock: sentSockID};
-            this.sendAssetPakReq(originalPayload);
+            //const sentSockID = this.socket?.id !== undefined ? this.socket!.id : 'MISSING';
+            //const originalPayload = {assetPackREQ: this._wrapperConfig.getConfig().assetPacks, sock: sentSockID};
+            //this.sendAssetPakReq(originalPayload);
         })
 
         this.socket.on(SOCK.AP_RES, (responseData: {

@@ -6,6 +6,9 @@ import {WebGLRenderer} from 'three';
 import KitsuneHelper from "kitsune-wrapper-library/dist/base/helper/KitsuneHelper";
 import {TYPES} from "kitsune-wrapper-library";
 import IAsyncRequest from "kitsune-wrapper-library/dist/base/interfaces/IAsyncRequest";
+import {IDataStore} from "kitsune-wrapper-library/dist/base/interfaces/extensions/IDataStore";
+import IInjectParser from "kitsune-wrapper-library/dist/base/interfaces/extensions/IInjectParser";
+import {GLTF} from "three/examples/jsm/loaders/GLTFLoader";
 
 interface IConciseConfig {
     assetPacks: string;
@@ -26,6 +29,13 @@ export class application extends BaseApplication implements IInjectableExtension
 
     @inject('ThreeFrameworkExtension')
     _three: IInjectableExtensionModule;
+
+    @inject('DracoParser')
+    _dParser: IInjectableExtensionModule;
+
+    @inject(TYPES.AssetData)
+    _assetData: IDataStore;
+
     constructor() {
         super();
     }
@@ -35,11 +45,16 @@ export class application extends BaseApplication implements IInjectableExtension
         if(this._pixi && this._three) {
             this._pixi.startModule();
             this._three.startModule();
+            this._dParser.startModule();
             console.log('hello from pixi?', (this._pixi.container as Application), this._pixi);
             console.log('hello from three?', (this._three.container as ThreeContainer), this._three);
 
             document.getElementById('content')!.appendChild((this._pixi.container as Application).view);
             document.getElementById('content')!.appendChild((this._three.container! as ThreeContainer).canvas);
+            setTimeout(()=>{
+                const gltf = (this._dParser as unknown as IInjectParser).parse<GLTF>(this._assetData.dataStore[this._wrapperConfig.getConfig().assetPacks[0]]['labrynth.glb'], 'labrynth.glb')
+                console.log("parsed data using draco ", gltf, KitsuneHelper.asyncAwait(gltf as unknown as Promise<GLTF>));
+            }, 5000)
         }
     }
 }

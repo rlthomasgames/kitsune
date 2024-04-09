@@ -7,6 +7,7 @@ import container from "../ioc/ioc_mapping";
 import CoreState from "../constants/CoreState";
 import {ExtensionValuedObject} from "./InitWrapper";
 import {FetchConfig} from "kitsune-wrapper-library/dist/base/interfaces/extensions/FetchConfig";
+import {Flow} from "./flow/Flow";
 
 @injectable()
 export class InitWrapperComplete implements ICommand {
@@ -33,6 +34,7 @@ export class InitWrapperComplete implements ICommand {
 
     loadApplication(applicationValuedObject:ExtensionValuedObject) {
         console.log(`||||||||||| INIT WRAPPER COMPLETE CMD |||||||||||`);
+        Flow.HISTORY.push(CoreState.INIT_COMPLETE);
         // @ts-ignore
         this._moduleLoader.request(applicationValuedObject!, false).then((returnedApplicationInstance)=>{
             //container.get(CoreState.START_APPLICATION);

@@ -17,6 +17,7 @@ import KSockService from "../service/KSockService";
 import {ConnectToServer} from "../commands/ConnectToServer";
 import {ConnectionEstablished} from "../commands/ConnectionEstablished";
 import {LoadAssetPakData} from "../commands/LoadAssetPakData";
+import {ClientAuthorized} from "../commands/ClientAuthorized";
 
 let container = new Container({ skipBaseClassChecks: true });
 
@@ -25,12 +26,13 @@ container.bind<IAsyncRequest>(TYPES.FetchConfig).to(FetchConfig).inSingletonScop
 container.bind<LoadModule>(TYPES.LoadModule).to(LoadModule).inSingletonScope();
 container.bind<ICommand>(CoreState.INIT_COMPLETE).to(InitWrapperComplete);
 
-container.bind<ICommand>(CoreState.CONNECT_TO_SERVER).to(ConnectToServer);
-container.bind<ISockComm>((TYPES.Socket)).to(KSockService);
-container.bind<ICommand>(CoreState.CONNECTION_ESTABLISHED).to(ConnectionEstablished);
+container.bind<ICommand>(CoreState.CONNECT_TO_SERVER).to(ConnectToServer).inSingletonScope();
+container.bind<ISockComm>((TYPES.Socket)).to(KSockService).inSingletonScope();
+container.bind<ICommand>(CoreState.CONNECTION_ESTABLISHED).to(ConnectionEstablished).inSingletonScope();
+container.bind<ICommand>(CoreState.CLIENT_AUTH).to(ClientAuthorized).inSingletonScope();
 
 container.bind<ICommand>(CoreState.LOAD_ASSET_DATA).to(LoadAssetPakData);
-container.bind<IDataStore>(TYPES.AssetData).to(AssetDataVendor);
+container.bind<IDataStore>(TYPES.AssetData).to(AssetDataVendor).inSingletonScope();
 
-container.bind<ICommand>(CoreState.START_APPLICATION).to(StartApplication);
+container.bind<ICommand>(CoreState.START_APPLICATION).to(StartApplication).inSingletonScope();
 export default container;

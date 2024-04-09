@@ -2,7 +2,6 @@ import { inject, injectable } from "inversify";
 import { TYPES} from "kitsune-wrapper-library";
 import { LoadModule } from "../service/LoadModule";
 import container from "../ioc/ioc_mapping";
-//import CoreState from "../constants/CoreState";
 import IInjectableExtensionModule from "kitsune-wrapper-library/dist/base/interfaces/IInjectableExtensionModule";
 import ICommand from "kitsune-wrapper-library/dist/base/interfaces/ICommand";
 import * as fflate from "fflate";
@@ -13,9 +12,12 @@ import {Socket} from "socket.io-client";
 import ISockComm from "kitsune-wrapper-library/dist/base/interfaces/extensions/ISockComm";
 import KitsuneHelper from "kitsune-wrapper-library/dist/base/helper/KitsuneHelper";
 import IWrapperConfig from "../interfaces/IWrapperConfig";
+import CoreState from "../constants/CoreState";
+import {Flow} from "./flow/Flow";
 
 @injectable()
 export class InitWrapper implements ICommand {
+
     @inject(TYPES.FetchConfig)
     _wrapperConfig:FetchConfig = container.get(TYPES.FetchConfig);
 
@@ -36,6 +38,7 @@ export class InitWrapper implements ICommand {
     // TODO : !!!!!!!IMPORTANT!!!!!!!! - clean web sockets and gzip out into separate command and / or module !!!
 
     run() {
+        Flow.HISTORY.push(CoreState.INIT);
         console.log(KitsuneHelper.kitsuneASCII)
         console.log(`||||||||||| INIT WRAPPER CMD |||||||||||`);
         //console.table(this, Object.keys(this));

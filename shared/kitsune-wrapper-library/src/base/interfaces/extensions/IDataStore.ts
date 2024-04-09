@@ -12,6 +12,7 @@ export interface IDataStore {
             [w:string]:{data:ArrayBuffer, file:number}//asset data
         }
     }
+    // dataStore [assetPackUUID][filename]
     dataStore: {[x:string]:{[y:string]:Uint8Array}};
     appendBuffer(buffer1:ArrayBuffer, buffer2:ArrayBuffer):Uint8Array;
     storeAssetResponseFromWS(data:unknown, started:number):void;

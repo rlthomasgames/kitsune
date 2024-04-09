@@ -75,12 +75,12 @@ export default class BuildPacketsFromUploadsService {
         //zip.add(defl);
 
 
-        const ind = 819200; //8K with sqRt 2
+        const ind = 262144*4; //8x8x8x8x8x8x4
         const splitFileName = file.split('/');
         const filename = splitFileName[splitFileName.length-1];
         console.log('splitting file', filename, 'at path containing ', fs.readdirSync('./'));
         !fs.existsSync(`../packets/${assetPackUUID}/`) ? fs.mkdirSync(`../packets/${assetPackUUID}/`) : null;
-        exec(`split -b 819200 ../uploaded/${assetPackUUID}/${filename} --additional-suffix=.part --suffix-length=3 -d "../packets/${assetPackUUID}/p`+fileNum+`|"`);
+        exec(`split -b ${ind} ../uploaded/${assetPackUUID}/${filename} --additional-suffix=.part --suffix-length=3 -d "../packets/${assetPackUUID}/p`+fileNum+`|"`);
 
         /*
         const stringFile = fs.readFileSync(filePath, {encoding: 'binary'}).split('')

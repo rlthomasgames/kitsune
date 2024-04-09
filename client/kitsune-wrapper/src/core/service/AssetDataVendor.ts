@@ -8,20 +8,6 @@ import {APResponseData} from "kitsune-wrapper-library/dist/base/constants/SockCo
 import {unzipSync} from "fflate";
 import container from "../ioc/ioc_mapping";
 import CoreState from "../constants/CoreState";
-//import {unzipSync} from "fflate";
-
-
-/*
-    ===================================================================
-    ======= ASSET PACK FILE STRUCT LITTLE STRICT AT THE MOMENT ========
-    ===================================================================
-    ===================================================================
-    ===================================================================
-    Asset Packs Represent a Group of Files broken into Smaller Partials
-
-    Asset Pak (Grouping for a collection of files) =>
-
- */
 export type StoredPacketData = {
     file:number,
     packet:number,
@@ -43,6 +29,8 @@ class AssetDataVendor extends AbstractModule implements IInjectableExtensionModu
     toUnzip = 0;
     unzipped = 0;
 
+    private started:number;
+
     startModule() {
         console.log('running asset vendor')
         this.container = {dataVendor: this.dataStore};
@@ -52,8 +40,9 @@ class AssetDataVendor extends AbstractModule implements IInjectableExtensionModu
         console.log(`asset data vendor REQUEST ca;;ed with : ${valuedObject}  - ${gzipped}  |||`);
     }
 
-    storeAssetResponseFromWS(data: APResponseData, start:number = 0) {
-        console.log('STORE DATA:', data.data);
+    storeAssetResponseFromWS(data: APResponseData, started:number = 0) {
+        this.started = started;
+        console.log('STORE DATA:', data.data, this.started);
         if(this.dataWells[data.assetPackUUID] === undefined){
             this.dataWells[data.assetPackUUID] = {};
         }
@@ -138,23 +127,6 @@ class AssetDataVendor extends AbstractModule implements IInjectableExtensionModu
                     KitsuneHelper.getInstance().debugObject(collectedFileArrays, collection)
                 }
             }
-            /*
-            let dataParts:Array<ArrayBuffer> = [];
-            keys.forEach((p)=>{
-                dataParts.push(this.dataWells[data.assetPackUUID][p].data)
-            });
-            const zippedBlob = new Blob(dataParts, {type:'application/zip'});
-            let fileReader = new FileReader();
-            fileReader.onload = function(event) {
-                const arrayBuffer:ArrayBuffer = event.target!.result as ArrayBuffer;
-                console.log('final array buffer >>>>', arrayBuffer);
-                let newUint = new Uint8Array(arrayBuffer)
-                const unzipped = unzipSync(newUint);
-                console.log('decompressed = ', unzipped)
-            };
-            fileReader.readAsArrayBuffer(zippedBlob);
-
-             */
         }
     }
     appendBuffer(buffer1:ArrayBuffer, buffer2:ArrayBuffer) {
@@ -200,12 +172,6 @@ class AssetDataVendor extends AbstractModule implements IInjectableExtensionModu
                 console.log('check completed', fileArrayBuffer);
                 percentLoaded = 0;
             }
-            /*
-            arrData.forEach((value, index)=> {
-                fileArrayBuffer = index===0 ? value : fileArrayBuffer;
-                (index > 0) ? fileArrayBuffer = assetDataStore.appendBuffer(fileArrayBuffer, value):fileArrayBuffer;
-            })
-             */
         };
         fileReader.readAsArrayBuffer(zippedBlob);
     }
