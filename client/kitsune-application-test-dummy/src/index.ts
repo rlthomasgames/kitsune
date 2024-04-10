@@ -51,8 +51,11 @@ export class application extends BaseApplication implements IInjectableExtension
 
             document.getElementById('content')!.appendChild((this._pixi.container as Application).view);
             document.getElementById('content')!.appendChild((this._three.container! as ThreeContainer).canvas);
+            const labU8A: Uint8Array = this._assetData.dataStore[this._wrapperConfig.getConfig().assetPacks[0]]['labrynth.glb'];
+            const labArrBuff: ArrayBuffer = <ArrayBuffer>KitsuneHelper.asyncAwait(new Blob([labU8A]).arrayBuffer());
+
             setTimeout(()=>{
-                const gltf = (this._dParser as unknown as IInjectParser).parse<GLTF>(this._assetData.dataStore[this._wrapperConfig.getConfig().assetPacks[0]]['labrynth.glb'], 'labrynth.glb')
+                const gltf = (this._dParser as unknown as IInjectParser).parse<GLTF>(labArrBuff, 'labrynth.glb')
                 console.log("parsed data using draco ", gltf, KitsuneHelper.asyncAwait(gltf as unknown as Promise<GLTF>));
             }, 5000)
         }
