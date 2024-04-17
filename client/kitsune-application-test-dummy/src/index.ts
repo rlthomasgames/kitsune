@@ -51,13 +51,20 @@ export class application extends BaseApplication implements IInjectableExtension
 
             document.getElementById('content')!.appendChild((this._pixi.container as Application).view);
             document.getElementById('content')!.appendChild((this._three.container! as ThreeContainer).canvas);
-            const labU8A: Uint8Array = this._assetData.dataStore[this._wrapperConfig.getConfig().assetPacks[0]]['labrynth.glb'];
-            const labArrBuff: ArrayBuffer = <ArrayBuffer>KitsuneHelper.asyncAwait(new Blob([labU8A]).arrayBuffer());
+            const labU8A: Uint8Array = this._assetData.dataStore[this._wrapperConfig.getConfig().assetPacks[0]]['base-all-anims_mixamo_animations_importer_script.glb'];
+            const blob = new Blob([labU8A], {type:'model/gltf-binary'});
+            console.log('the blob = ', blob);
+            const url = URL.createObjectURL(blob);
+            console.log('the url = ', url);
 
             setTimeout(()=>{
-                const gltf = (this._dParser as unknown as IInjectParser).parse<GLTF>(labArrBuff, 'labrynth.glb')
-                console.log("parsed data using draco ", gltf, KitsuneHelper.asyncAwait(gltf as unknown as Promise<GLTF>));
-            }, 5000)
+                const gltf = (this._dParser as unknown as IInjectParser).parse<Promise<GLTF>>(url)
+                console.log("parsed data using draco ", gltf);
+                console.log("parsed data using draco ", gltf);
+                gltf.then((scene3d)=>{
+                    //this._three.container.renderer.render()
+                })
+            }, 12000)
         }
     }
 }

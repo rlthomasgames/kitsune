@@ -21,6 +21,7 @@ class DracoParser extends AbstractModule implements IInjectParser, IInjectableEx
         this._gltfLoader.setDRACOLoader(dracoLoader);
     }
 
+    /*
     parse<GLTF>(data:ArrayBuffer|string, path:string): GLTF {
         console.log('draco parser ready', data, path);
         const dracoLoader = new DRACOLoader(this.loadingManager);
@@ -29,6 +30,23 @@ class DracoParser extends AbstractModule implements IInjectParser, IInjectableEx
         const promise = new Promise<GLTF>(resolve => {
             console.log("should parse");
             this._gltfLoader.parse(data, path, (gltf)=>{
+                console.log("parsed", gltf);
+                resolve(gltf as GLTF);
+            }, (err:any)=>{
+                console.log("parse error", err);
+            });
+        })
+        return KitsuneHelper.asyncAwait(promise) as GLTF
+    }
+     */
+
+    parse<GLTF>(url:string){
+        const dracoLoader = new DRACOLoader(this.loadingManager);
+        this._gltfLoader.manager = this.loadingManager;
+        this._gltfLoader.setDRACOLoader(dracoLoader);
+        const promise = new Promise<GLTF>(resolve => {
+            console.log("should parse");
+            this._gltfLoader.load(url, (gltf)=>{
                 console.log("parsed", gltf);
                 resolve(gltf as GLTF);
             }, (err:any)=>{

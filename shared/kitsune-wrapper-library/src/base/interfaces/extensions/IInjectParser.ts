@@ -1,5 +1,5 @@
 export default interface IInjectParser {
     name: string;
     startModule: () => void;
-    parse: <T>(data:ArrayBuffer|string, path:string) => T;
+    parse: <T>(url:string) => T;
 }
