@@ -56,15 +56,12 @@ export class application extends BaseApplication implements IInjectableExtension
             console.log('the blob = ', blob);
             const url = URL.createObjectURL(blob);
             console.log('the url = ', url);
-
-            setTimeout(()=>{
-                const gltf = (this._dParser as unknown as IInjectParser).parse<Promise<GLTF>>(url)
-                console.log("parsed data using draco ", gltf);
-                console.log("parsed data using draco ", gltf);
-                gltf.then((scene3d)=>{
-                    //this._three.container.renderer.render()
-                })
-            }, 12000)
+            const gltf = (this._dParser as unknown as IInjectParser).parse<Promise<GLTF>>(url)
+            console.log("parsed data using draco ", gltf);
+            console.log("parsed data using draco ", gltf);
+            gltf.then((scene3d)=>{
+                //this._three.container.renderer.render()
+            })
         }
     }
 }
