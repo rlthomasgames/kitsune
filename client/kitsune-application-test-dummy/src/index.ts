@@ -51,6 +51,7 @@ export class application extends BaseApplication implements IInjectableExtension
 
             document.getElementById('content')!.appendChild((this._pixi.container as Application).view);
             document.getElementById('content')!.appendChild((this._three.container! as ThreeContainer).canvas);
+
             const labU8A: Uint8Array = this._assetData.dataStore[this._wrapperConfig.getConfig().assetPacks[0]]['base-all-anims_mixamo_animations_importer_script.glb'];
             const blob = new Blob([labU8A], {type:'model/gltf-binary'});
             console.log('the blob = ', blob);
@@ -60,7 +61,9 @@ export class application extends BaseApplication implements IInjectableExtension
             console.log("parsed data using draco ", gltf);
             console.log("parsed data using draco ", gltf);
             gltf.then((scene3d)=>{
-                //this._three.container.renderer.render()
+                //const renderer = (this._three.container! as ThreeContainer).renderer;
+                //create a camera and add to gltf scene, or have a scene with a camera and add the gltf
+                //renderer.render() // <--- using camera / scene
             })
         }
     }
